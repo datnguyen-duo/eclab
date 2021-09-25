@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'NeutraText-Bold';
+  src: url('../fonts/NeutraText-Bold.eot');
+  src: url('../fonts/NeutraText-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/NeutraText-Bold.woff') format('woff'), url('../fonts/NeutraText-Bold.ttf') format('truetype'), url('../fonts/NeutraText-Bold.svg#icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NeutraText-BoldItalic';
+  src: url('../fonts/NeutraText-BoldItalic.eot');
+  src: url('../fonts/NeutraText-BoldItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/NeutraText-BoldItalic.woff') format('woff'), url('../fonts/NeutraText-BoldItalic.ttf') format('truetype'), url('../fonts/NeutraText-BoldItalic.svg#icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NeutraText-Book';
+  src: url('../fonts/NeutraText-Book.eot');
+  src: url('../fonts/NeutraText-Book.eot?#iefix') format('embedded-opentype'), url('../fonts/NeutraText-Book.woff') format('woff'), url('../fonts/NeutraText-Book.ttf') format('truetype'), url('../fonts/NeutraText-Book.svg#icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NeutraText-BookItalic';
+  src: url('../fonts/NeutraText-BookItalic.eot');
+  src: url('../fonts/NeutraText-BookItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/NeutraText-BookItalic.woff') format('woff'), url('../fonts/NeutraText-BookItalic.ttf') format('truetype'), url('../fonts/NeutraText-BookItalic.svg#icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Opulent-Normal';
+  src: url('../fonts/Opulent-Normal.eot');
+  src: url('../fonts/Opulent-Normal.eot?#iefix') format('embedded-opentype'), url('../fonts/Opulent-Normal.woff') format('woff'), url('../fonts/Opulent-Normal.ttf') format('truetype'), url('../fonts/Opulent-Normal.svg#icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
