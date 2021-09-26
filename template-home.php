@@ -4,7 +4,7 @@ get_header();
 
 error_reporting(1);
 $api_key = "78e7e43ff662bc958e6b869a9ea44307";
-$form_id = "fe289885-c119-4ee7-a543-d3e92a0ce691";
+$form_id = "0256972e-f4ad-4a1f-985a-e8944d2f85ae";
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -182,6 +182,15 @@ $person_link = array_reverse($person_link);
                         $person_data = json_decode($response);
                         $custom_fields = $person_data->custom_fields;
 
+                        $tags = $custom_fields->tag;
+                        $tags_name ="";
+                        if($tags){
+                            $tags = explode(",", $tags);
+                            foreach ($tags as $key => $value) {
+                                $tags_name .="<span class='filter-tag' filter='".$value."'>".$value."</span><br>";
+                            }
+                        }
+
                         switch ($custom_fields->radio) {
                             case 'I’m a family member and/or caregiver':
                                 $category = 'families';
@@ -206,7 +215,7 @@ $person_link = array_reverse($person_link);
                         }
                         if ( ($category == 'families' && $count_family <= 4) || ($category == 'educators' && $count_edu <= 4) ||
                         ($category == 'providers' && $count_pro <= 4) || ($category == 'supporters' && $count_sup <= 4) ) {
-                        echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" style="display: '.$display.';">
+                        echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" tag="'.$custom_fields->tag.'" style="display: '.$display.';">
                                 <div class="single_story_wrap ">
                                     <div class="single_story">
                                         <div class="image_holder">
@@ -224,6 +233,7 @@ $person_link = array_reverse($person_link);
                                                 '.ucfirst($category).'
                                             </div>
                                             <div class="story_content" hidden>'.$custom_fields->story.'</div>
+                                            <div class="story_tags" hidden>'.$tags_name.'</div>
                                         </div>
                                     </div>
                                 </div>
@@ -253,7 +263,7 @@ $person_link = array_reverse($person_link);
                 <?php if( $img_with_desc_section['title'] ): ?>
                     <h2><?php echo $img_with_desc_section['title']; ?></h2>
                 <?php endif; ?>
-                <form class="form_swiper">
+                <form id="tn-form" class="form_swiper">
                     <div class="third_section_content sinlge_box">
                     
                         <div class="left">
@@ -673,11 +683,13 @@ $person_link = array_reverse($person_link);
             let story_author = $(this).find('.story_author').text();
             let category = $(this).find(".category").text();
             let popup = $(".single_news_popup");
+            let tags = $(this).find(".story_tags").html();
             popup.find('h2').text(story_title);
             popup.find('.author').text(story_author);
             popup.find('.image_holder img').attr('src',story_img);
-            popup.find('.left p').text(story_content);
+            popup.find('.news_content .left p').text(story_content);
             popup.find('.category').text(category);
+            popup.find(".tags").html(tags);
     
             $(".single_news_popup").fadeIn();
             $("body").addClass("no_scroll");
@@ -698,6 +710,7 @@ $person_link = array_reverse($person_link);
           let story_author = $(this).find(".story_author").text();
 
           let category = $(this).find(".category").text();
+          let tags = $(this).find(".story_tags").html();
 
           let popup = $(".single_news_popup");
 
@@ -705,7 +718,6 @@ $person_link = array_reverse($person_link);
 
           counter = $(this).index();
 
-          // console.log(counter+'old');
 
           popup.find("h2").text(story_title);
 
@@ -716,10 +728,7 @@ $person_link = array_reverse($person_link);
           popup.find(".news_content .left p").text(story_content);
 
           popup.find(".category").text(category);
-
-          // popup.attr("counter",counter);
-
-          // console.log(popup.attr('counter'));
+          popup.find(".tags").html(tags);
 
           $(".single_news_popup").fadeIn();
 
@@ -770,6 +779,7 @@ $person_link = array_reverse($person_link);
           let story_author = $(plusSlide).find(".story_author").text();
 
           let category = $(plusSlide).find(".category").text();
+          let tags = $(plusSlide).find(".story_tags").html();
 
           let popup = $(".single_news_popup");
 
@@ -782,6 +792,7 @@ $person_link = array_reverse($person_link);
           popup.find(".news_content .left p").text(story_content);
 
           popup.find(".category").text(category);
+          popup.find(".tags").html(tags);
 
         });
     })
@@ -800,12 +811,12 @@ function readFile() {
 
     FR.addEventListener("load", function(e) {
       img.addEventListener("load", function () {
-          if (this.width > 500 || this.height > 500) {
-            alert("Width and Height must not exceed 300px");
-            ele.value = "";
-          } else {
+          // if (this.width > 500 || this.height > 500) {
+          //   alert("Width and Height must not exceed 300px");
+          //   ele.value = "";
+          // } else {
             document.getElementById("base64_img").value = e.target.result;
-          }
+          // }
       });
       img.src = objectUrl;
     }); 

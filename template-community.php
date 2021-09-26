@@ -4,7 +4,7 @@ get_header(); ?>
 <?php 
 error_reporting(1);
 $api_key = "78e7e43ff662bc958e6b869a9ea44307";
-$form_id = "fe289885-c119-4ee7-a543-d3e92a0ce691";
+$form_id = "0256972e-f4ad-4a1f-985a-e8944d2f85ae";
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -111,6 +111,15 @@ $person_link = array_reverse($person_link);
                     $response = curl_exec($ch);
                     $person_data = json_decode($response);
                     $custom_fields = $person_data->custom_fields;
+                    $tags = $custom_fields->tag;
+                    $tags_name ="";
+                    if($tags){
+                        $tags = explode(",", $tags);
+                        foreach ($tags as $key => $value) {
+                            $tags_name .="<span class='filter-tag' filter='".$value."'>".$value."</span><br>";
+                        }
+                    }
+                    // echo "<div hidden='tag-hidden'>".$tags."</div>";
                     switch ($custom_fields->radio) {
                         case 'I’m a family member and/or caregiver':
                             $category = 'families'; $count_family++;
@@ -146,7 +155,7 @@ $person_link = array_reverse($person_link);
                             }
                             break;
                     }
-                    echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" data-show="'.$show_attr.'">
+                    echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" data-show="'.$show_attr.'" tag="'.$custom_fields->tag.'">
                             <div class="single_story_wrap ">
                                 <div class="single_story">
                                     <div class="image_holder">
@@ -164,6 +173,7 @@ $person_link = array_reverse($person_link);
                                             '.ucfirst($category).'
                                         </div>
                                         <div class="story_content" hidden>'.$custom_fields->story.'</div>
+                                        <div class="story_tags" hidden>'.$tags_name.'</div>
                                     </div>
                                 </div>
                             </div>

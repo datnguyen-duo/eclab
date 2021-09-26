@@ -24,6 +24,18 @@ $google_analytics_script = get_field('google_analytics_script', 'option');
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer="defer"></script>
 
 	<?php wp_head(); ?>
+	<style type="text/css">
+		.single_news_popup .single_news_popup_content .news_content .right .tags {
+		    text-align: right;
+		    font-family: "neusa-next-std";
+		    font-display: auto;
+		    font-style: normal;
+		    font-weight: 400;
+		    color: #d5714f;
+		    font-size: 24px;
+		    cursor: pointer;
+		}
+	</style>
 </head>
 
 <body <?php body_class(); ?>>
@@ -238,6 +250,10 @@ if( isset($_POST['popup_submit']) && (isset($_POST['popup_fname'])&& !empty($_PO
                         <p>Story from</p>
                         <div class="category">
                             Families
+                        </div>
+                        <p style="margin-top: 10px;">Tags:</p>
+                        <div class="tags">
+                            #RightToCare
                         </div>
                     </div>
                 </div>

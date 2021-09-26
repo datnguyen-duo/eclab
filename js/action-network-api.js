@@ -46,6 +46,7 @@
       let story_img = $(this).find(".story_image").attr("src");
       let story_author = $(this).find(".story_author").text();
       let category = $(this).find(".category").text();
+      let tags = $(this).find(".story_tags").html();
       let popup = $(".single_news_popup");
 
       counter = $(this).index();
@@ -58,6 +59,7 @@
       popup.find(".image_holder img").attr("src", story_img);
       popup.find(".news_content .left p").text(story_content);
       popup.find(".category").text(category);
+      popup.find(".tags").html(tags);
       // popup.attr("counter",counter);
       // console.log(popup.attr('counter'));
       $(".single_news_popup").fadeIn();
@@ -65,9 +67,10 @@
     });
     
     $('.plus-slides').click(function(e){
-      console.log(storiesnew);
-      console.log(counter);
-      let step = parseInt($(this).attr('step')); console.log('step' + step)
+      // console.log(storiesnew);
+      // console.log(counter);
+      let step = parseInt($(this).attr('step')); 
+      // console.log('step' + step)
       // console.log(counter);
       counter = parseInt(counter)+step;  
       // console.log(stories.length);
@@ -79,7 +82,7 @@
       if( counter < 0 ){
         counter = storiesnew.length + counter;
       }
-      console.log('counter'+counter)
+      // console.log('counter'+counter)
       let plusSlide = storiesnew[counter];
       // console.log(plusSlide);
       let story_content = $(plusSlide).find(".story_content").text();
@@ -87,12 +90,29 @@
       let story_img = $(plusSlide).find(".story_image").attr("src");
       let story_author = $(plusSlide).find(".story_author").text();
       let category = $(plusSlide).find(".category").text();
+      let tags = $(plusSlide).find(".story_tags").html();
       let popup = $(".single_news_popup");
       popup.find("h2").text(story_title);
       popup.find(".author").text(story_author);
       popup.find(".image_holder img").attr("src", story_img);
       popup.find(".news_content .left p").text(story_content);
       popup.find(".category").text(category);
+      popup.find(".tags").html(tags);
+    });
+    $(document).on("click","span.filter-tag",function(e){
+      let tag_filter = $(this).attr('filter');
+      $(".single_news_popup").fadeOut();
+      $("body").removeClass("no_scroll");
+      stories.hide().removeClass('slide_show');
+      var checkcout = 0;
+      $('.single_story_holder').each(function() { 
+        if ($(this).attr('tag')!=='' && $(this).attr('tag').includes(tag_filter) && $(this).attr('data-show') == 'show4') {
+          checkcout++;
+          $(this).show().addClass('slide_show').attr('step', checkcout);
+          // stories = $(".single_story_holder").filter('[rel="' + rel + '"]');
+          storiesnew = $('.slide_show');
+        }
+      })
     });
   });
 })(jQuery);

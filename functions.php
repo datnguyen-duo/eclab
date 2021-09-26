@@ -116,6 +116,10 @@ function eclab_scripts() {
 		wp_enqueue_script( 'action-network-api', get_template_directory_uri() . '/js/action-network-api.js', array(), _S_VERSION, true );
 	}
 
+	if ( is_front_page() ) {
+		wp_enqueue_script( 'validate', get_template_directory_uri() . '/js/jquery.validate.min.js', array(), _S_VERSION, true );
+	}
+
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
@@ -184,19 +188,21 @@ function get_pll_home_url($slug = '') {
 add_action('wp_ajax_t311_submissions' , 't311_submissions');
 add_action('wp_ajax_nopriv_t311_submissions','t311_submissions');
 function t311_submissions() {
+	print_r($_POST);
     if( (isset($_POST['fname']) && !empty($_POST['fname'])) &&
 		(isset($_POST['lname']) && !empty($_POST['lname'])) &&
 		(isset($_POST['email']) && !empty($_POST['email'])) &&
 		(isset($_POST['story']) && !empty($_POST['story'])) &&
 		(isset($_POST['storytile']) && !empty($_POST['storytile'])) &&
 		(isset($_POST['checkbox']) && !empty($_POST['checkbox'])) &&
-		(isset($_POST['topic']) && !empty($_POST['topic'])) &&
-		(isset($_POST['phonenumber']) && !empty($_POST['phonenumber'])) &&
 		(isset($_POST['radio']) && !empty($_POST['radio'])) &&
-		(isset($_POST['radios']) && !empty($_POST['radios'])) &&
-		(isset($_POST['zipcode']) &&!empty($_POST['zipcode'])) ){
+		(isset($_POST['radios']) && !empty($_POST['radios'])) ){
 
-    	$add_tags = explode(',', $_POST['tags']);
+    	$img_url = '';
+    	if(!empty($_FILES)) {
+    	 	$img_url = upload_user_file($_FILES['file']);
+    	}
+    	$add_tags = $_POST['tags'];
 
     	$api_key = "78e7e43ff662bc958e6b869a9ea44307";
 		$api_request_url = "https://actionnetwork.org/api/v2/forms/fe289885-c119-4ee7-a543-d3e92a0ce691/submissions/";
@@ -219,23 +225,15 @@ function t311_submissions() {
 					'topic' => $_POST['topic'],
 					'radios' => $_POST['radios'],
 					'zipcode' => $_POST['zipcode'],
-					'base64_img' => $_POST['base64_img'],
-					'radio' => $_POST['radio']
+					'base64_img' => $img_url,
+					'radio' => $_POST['radio'],
+					'tag' => $add_tags
 				)
-			),
-			"add_tags" => $add_tags
+			)
 		);
 
 
 		error_reporting(1);
-		$api_key = "78e7e43ff662bc958e6b869a9ea44307";
-		$form_id = "fe289885-c119-4ee7-a543-d3e92a0ce691";
-
-
-		$first_name = 'new';
-		$last_name = 'testing1';
-		$email = 'testnew@gmail.com';
-		$zipcode = '10000';
 		$api_key = "78e7e43ff662bc958e6b869a9ea44307";
 		$api_request_url = "https://actionnetwork.org/api/v2/forms/fe289885-c119-4ee7-a543-d3e92a0ce691/submissions/";
 		$headers = array(
@@ -258,4 +256,68 @@ function t311_submissions() {
 		print_r($server_output);
     }
     die();
+}
+
+add_action('wp_ajax_t311_upload_image' , 't311_upload_image');
+add_action('wp_ajax_nopriv_t311_upload_image','t311_upload_image');
+function t311_upload_image() {
+	if(!empty($_FILES)) {
+	 	$img_url = upload_user_file($_FILES['photo']);
+	}
+    die();
+}
+
+function upload_user_file( $file ) {    
+    require( dirname(__FILE__) . '/../../../wp-load.php' );
+
+	$wordpress_upload_dir = wp_upload_dir();
+	// $wordpress_upload_dir['path'] is the full server path to wp-content/uploads/2017/05, for multisite works good as well
+	// $wordpress_upload_dir['url'] the absolute URL to the same folder, actually we do not need it, just to show the link to file
+	$i = 1; // number of tries when the file with the same name is already exists
+
+	$profilepicture = $file;
+	$new_file_path = $wordpress_upload_dir['path'] . '/' . $profilepicture['name'];
+	$new_file_mime = mime_content_type( $profilepicture['tmp_name'] );
+
+	if( empty( $profilepicture ) )
+		die( 'File is not selected.' );
+
+	if( $profilepicture['error'] )
+		die( $profilepicture['error'] );
+		
+	if( $profilepicture['size'] > wp_max_upload_size() )
+		die( 'It is too large than expected.' );
+		
+	if( !in_array( $new_file_mime, get_allowed_mime_types() ) )
+		die( 'WordPress doesn\'t allow this type of uploads.' );
+		
+	while( file_exists( $new_file_path ) ) {
+		$i++;
+		$new_file_path = $wordpress_upload_dir['path'] . '/' . $i . '_' . $profilepicture['name'];
+	}
+
+	// looks like everything is OK
+	if( move_uploaded_file( $profilepicture['tmp_name'], $new_file_path ) ) {
+		
+
+		$upload_id = wp_insert_attachment( array(
+			'guid'           => $new_file_path, 
+			'post_mime_type' => $new_file_mime,
+			'post_title'     => preg_replace( '/\.[^.]+$/', '', $profilepicture['name'] ),
+			'post_content'   => '',
+			'post_status'    => 'inherit'
+		), $new_file_path );
+
+		// wp_generate_attachment_metadata() won't work if you do not include this file
+		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+		// Generate and save the attachment metas into the database
+		wp_update_attachment_metadata( $upload_id, wp_generate_attachment_metadata( $upload_id, $new_file_path ) );
+
+		// Show the uploaded file in browser
+		// wp_redirect( $wordpress_upload_dir['url'] . '/' . basename( $new_file_path ) );
+
+	}
+
+	return $wordpress_upload_dir['url'] . '/' . basename( $new_file_path );
 }
