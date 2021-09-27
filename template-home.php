@@ -517,7 +517,7 @@ $person_link = array_reverse($person_link);
     $files_section = get_field('files_section'); 
     if( $files_section['title'] || $files_section['description'] || $files_section['graphics_title'] || $files_section['graphics'] || $files_section['documents_title'] || $files_section['documents'] ): ?>
         <div class="fourth_section" id="fourth_section">
-            <div class="content_holder">
+            <div class="content_holder" id="get-involved">
                 <div class="fourth_section_content">
                     <?php if( $files_section['title'] ):?>
                         <h2><?php echo $files_section['title']; ?></h2>
