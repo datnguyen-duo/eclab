@@ -221,13 +221,18 @@ if( isset($_POST['popup_submit']) && (isset($_POST['popup_fname'])&& !empty($_PO
                         </div>
                         <div class="social_wrap">
                             <p>Social</p>
-                            <a href="">
+                            <a href="" class="facebook" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                  target="_blank"
+                  title="Share on Facebook">
                                 <img src="<?php echo get_template_directory_uri(); ?>/images/facebook.svg" alt="facebook-icon">
                             </a>
-                            <a href="">
+                            <a href="" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                  target="_blank"
+                  title="Share on Twitter"
+                  class="twitter">
                                 <img src="<?php echo get_template_directory_uri(); ?>/images/twitter.svg" alt="twitter-icon">
                             </a>
-                            <a href="">
+                            <a href="" class="email" target="_blank">
                                 <img src="<?php echo get_template_directory_uri(); ?>/images/mail.svg" alt="mail-icon">
                             </a>
 

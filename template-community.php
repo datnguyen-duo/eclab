@@ -112,6 +112,9 @@ $person_link = array_reverse($person_link);
                     $person_data = json_decode($response);
                     $custom_fields = $person_data->custom_fields;
                     $tags = $custom_fields->tag;
+                    $sotryUrl = str_replace(' ', '_', $custom_fields->storytile);
+                    $sotryUrl = str_replace('.', '', $sotryUrl);
+                    $sotryUrl = str_replace('’', '', $sotryUrl);
                     $tags_name ="";
                     if($tags){
                         $tags = explode(",", $tags);
@@ -155,7 +158,7 @@ $person_link = array_reverse($person_link);
                             }
                             break;
                     }
-                    echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" data-show="'.$show_attr.'" tag="'.$custom_fields->tag.'">
+                    echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" data-show="'.$show_attr.'" tag="'.$custom_fields->tag.'" data-url="'.$sotryUrl.'">
                             <div class="single_story_wrap ">
                                 <div class="single_story">
                                     <div class="image_holder">

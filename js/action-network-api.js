@@ -2,6 +2,23 @@
   $(document).ready(function () {
     let stories = $(".single_story_holder");
     let storiesnew = $(".single_story_holder");
+
+    var newUrl;
+
+    var url_string = window.location.href; //window.location.href
+    var url = new URL(url_string);
+    var paramValue = url.searchParams.get("story");
+    
+    setTimeout(() => {
+        if (paramValue) {
+        $(".single_story_holder").each(function() {
+            if ($(this).data('url') == paramValue) {
+                $(this).click();
+            }
+        });
+    }
+    }, 1000);
+
     $(document).on("click", ".filter_wrap li", function (e) {
       if ($(this).attr("rel")) {
         var rel = $(this).attr("rel");
@@ -62,6 +79,19 @@
       popup.find(".tags").html(tags);
       // popup.attr("counter",counter);
       // console.log(popup.attr('counter'));
+
+      var currentUrl = $(this).data('url');
+      newUrl = '?story=' + currentUrl + '';
+      window.history.pushState("", "", newUrl);
+
+      var shareFacebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.href + '&t=' + story_title.trim()
+      var shareTwitterUrl = 'https://twitter.com/share?url=' + window.location.href + '&text=' + story_title.trim()
+      var shareMailUrl = 'mailto:?subject='+story_title.trim()+'&body='+window.location.href+''
+
+      popup.find('.facebook').attr('href', shareFacebookUrl);
+      popup.find('.twitter').attr('href', shareTwitterUrl);
+      popup.find('.email').attr('href', shareMailUrl);
+
       $(".single_news_popup").fadeIn();
       $("body").addClass("no_scroll");
     });
@@ -96,6 +126,21 @@
       popup.find(".author").text(story_author);
       popup.find(".image_holder img").attr("src", story_img);
       popup.find(".news_content .left p").text(story_content);
+      popup.find(".category").text(category);
+      popup.find(".tags").html(tags);
+
+      var currentUrl = $(plusSlide).data('url');
+      var newUrl = '?story=' + currentUrl + '';
+      window.history.pushState("", "", newUrl);
+
+      var shareFacebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.href + '&t=' + story_title.trim()
+      var shareTwitterUrl = 'https://twitter.com/share?url=' + window.location.href + '&text=' + story_title.trim()
+      var shareMailUrl = 'mailto:?subject='+story_title.trim()+'&body='+window.location.href+''
+
+      popup.find('.facebook').attr('href', shareFacebookUrl);
+      popup.find('.twitter').attr('href', shareTwitterUrl);
+      popup.find('.email').attr('href', shareMailUrl);
+
       popup.find(".category").text(category);
       popup.find(".tags").html(tags);
     });

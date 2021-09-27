@@ -182,6 +182,10 @@ $person_link = array_reverse($person_link);
                         $person_data = json_decode($response);
                         $custom_fields = $person_data->custom_fields;
 
+                        $sotryUrl = str_replace(' ', '_', $custom_fields->storytile);
+                        $sotryUrl = str_replace('.', '', $sotryUrl);
+                        $sotryUrl = str_replace('’', '', $sotryUrl);
+                        
                         $tags = $custom_fields->tag;
                         $tags_name ="";
                         if($tags){
@@ -213,9 +217,10 @@ $person_link = array_reverse($person_link);
                                 $display = 'none';
                                 break;
                         }
+                        
                         if ( ($category == 'families' && $count_family <= 4) || ($category == 'educators' && $count_edu <= 4) ||
-                        ($category == 'providers' && $count_pro <= 4) || ($category == 'supporters' && $count_sup <= 4) ) {
-                        echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" tag="'.$custom_fields->tag.'" style="display: '.$display.';">
+                        ($category == 'providers' && $count_pro <= 4) || ($category == 'supporters' && $count_sup <= 4) ) { 
+                        echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" tag="'.$custom_fields->tag.'" style="display: '.$display.';" data-url="'. $sotryUrl .'">
                                 <div class="single_story_wrap ">
                                     <div class="single_story">
                                         <div class="image_holder">
@@ -684,6 +689,23 @@ $person_link = array_reverse($person_link);
           return false;
         });
 
+        var newUrl;
+
+        var url_string = window.location.href; //window.location.href
+        var url = new URL(url_string);
+        var paramValue = url.searchParams.get("story");
+        
+        setTimeout(() => {
+            if (paramValue) {
+            $(".single_story_holder").each(function() {
+                if ($(this).data('url') == paramValue) {
+                    $(this).click();
+                }
+            });
+        }
+        }, 1000);
+       
+
         $(".single_story_holder").on("click", function (event) {
             let story_content = $(this).find(".story_content").text();
             let story_title = $(this).find(".story_title").text();
@@ -698,6 +720,18 @@ $person_link = array_reverse($person_link);
             popup.find('.news_content .left p').text(story_content);
             popup.find('.category').text(category);
             popup.find(".tags").html(tags);
+
+            var currentUrl = $(this).data('url');
+            newUrl = '?story=' + currentUrl + '';
+            window.history.pushState("", "", newUrl);
+
+            var shareFacebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.href + '&t=' + story_title.trim()
+            var shareTwitterUrl = 'https://twitter.com/share?url=' + window.location.href + '&text=' + story_title.trim()
+            var shareMailUrl = 'mailto:?subject='+story_title.trim()+'&body='+window.location.href+''
+
+            popup.find('.facebook').attr('href', shareFacebookUrl);
+            popup.find('.twitter').attr('href', shareTwitterUrl);
+            popup.find('.email').attr('href', shareMailUrl);
     
             $(".single_news_popup").fadeIn();
             $("body").addClass("no_scroll");
@@ -798,6 +832,18 @@ $person_link = array_reverse($person_link);
           popup.find(".image_holder img").attr("src", story_img);
 
           popup.find(".news_content .left p").text(story_content);
+
+          var currentUrl = $(plusSlide).data('url');
+           var newUrl = '?story=' + currentUrl + '';
+            window.history.pushState("", "", newUrl);
+
+            var shareFacebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.href + '&t=' + story_title.trim()
+            var shareTwitterUrl = 'https://twitter.com/share?url=' + window.location.href + '&text=' + story_title.trim()
+            var shareMailUrl = 'mailto:?subject='+story_title.trim()+'&body='+window.location.href+''
+
+            popup.find('.facebook').attr('href', shareFacebookUrl);
+            popup.find('.twitter').attr('href', shareTwitterUrl);
+            popup.find('.email').attr('href', shareMailUrl);
 
           popup.find(".category").text(category);
           popup.find(".tags").html(tags);
