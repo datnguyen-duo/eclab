@@ -383,10 +383,18 @@ $person_link = array_reverse($person_link);
                                 </div>
                             </div>
                         </div>
-                        <div class="single_question last">
+                        <div class="single_question last select_input">
                             <p class="question">Please specify.</p>
-                            <div class="input_wrap">
-                                <input type="text" placeholder="Choose your topic" name="topic">
+                            <div class="input_wrap select-wrapper">
+                                <select name="" class="specify_select">
+                                    <option value="Affordability">Affordability</option>
+                                    <option value="Access">Access</option>
+                                    <option value="Quality">Quality</option>
+                                    <option value="Equity">Equity</option>
+                                    <option value="Consistency">Consistency</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <!-- <input type="text" placeholder="Choose your topic" name="topic"> -->
                             </div>
                         </div>
                     </div>
@@ -425,10 +433,10 @@ $person_link = array_reverse($person_link);
                                 </div>
                             </div>
                             <div class="single_column">
-                                <div class="single_question">
+                                <!-- <div class="single_question">
                                 <p class="question">Tag your story</p>
                                 <input type="text" id="tags" name="tags">
-                                </div>
+                                </div> -->
                                 
                             </div>
                         </div>

@@ -1043,6 +1043,17 @@
           }
         }
       }
+
+      .select_input{
+        opacity: 0;
+        visibility: hidden;
+
+        &.visible{
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+      
       .single_question {
         margin-bottom: 50px;
         width: 100%;
@@ -1111,7 +1122,7 @@
         }
 
         input[type="text"],
-        input[type="email"] {
+        input[type="email"], select {
           width: 100%;
           background-color: #fff;
           border: none;
@@ -1146,6 +1157,25 @@
               width: 100%;
             }
           }
+        }
+
+        select {
+          -webkit-appearance: none;
+          appearance: none;
+        }
+
+        .select-wrapper {
+          position: relative;
+          max-width: 540px;
+        }
+        
+        .select-wrapper::after {
+          content: "▼";
+          font-size: 1em;
+          right: 10px;
+          position: absolute;
+          transform: translateY(-50%);
+          top: 50%
         }
       }
 
@@ -1231,7 +1261,7 @@
         .font1RI();
         margin-bottom: 35px;
         width: 100%;
-        line-height: 1.4;
+        line-height: 1.4em;
 
         @media @750 {
           font-size: 20px;
@@ -1347,6 +1377,19 @@
     }
 
     .thankyou_message {
+
+      .right{
+        .sticker{
+          @media @1020 {
+            bottom: -10%;
+          }
+
+          @media @750 {
+            bottom: -15%;
+          }
+        }
+        
+      }
       .left {
         display: flex;
         flex-direction: column;

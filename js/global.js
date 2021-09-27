@@ -11,6 +11,14 @@
       // autoplay: true,
     });
 
+    $('#tn-form input').on('change', function() {
+      if($('input[name=radios]:checked', '#tn-form').val() == 'challenges'){
+        $('.select_input').addClass('visible');
+      } else{
+        $('.select_input').removeClass('visible');
+      }
+   });
+
     $(".form_swiper").slick({
       dots: true,
       speed: 300,
@@ -167,15 +175,17 @@
 
     if ($("body").hasClass("page-template-template-home")) {
       var timeoutId = setTimeout(function () {
-        $(".email_popup").fadeIn();
-        // $("body").addClass("no_scroll");
+        if(($.cookie('email_popup') == undefined || $.cookie('email_popup')== null)){
+          $(".email_popup").fadeIn();
+        }
       }, 5000);
     }
 
     if ($("body").hasClass("page-template-template-community")) {
       setTimeout(function () {
-        $(".tell_story_popup").fadeIn();
-        // $("body").addClass("no_scroll");
+        if(($.cookie('tell_story') == undefined || $.cookie('tell_story')== null)){
+          $(".tell_story_popup").fadeIn();
+        }
       }, 5000);
     }
 
@@ -187,10 +197,12 @@
     $(".close_email_popup").on("click", function (event) {
       $(".email_popup").fadeOut();
       $("body").removeClass("no_scroll");
+      $.cookie('email_popup', 'true', { expires: 1, path: '/' });
     });
 
     $(".close_tell_story_popup").on("click", function (event) {
       $(".tell_story_popup").fadeOut();
+      $.cookie('tell_story', 'true', { expires: 1, path: '/' });
       $("body").removeClass("no_scroll");
     });
 
@@ -204,13 +216,13 @@
       );
     });
 
-    $('input:radio[name="radios"]').change(function () {
-      if ($(this).is(":checked") && $(this).val() == "challenges") {
-        $(".third_section .single_question.last").show();
-      } else {
-        $(".third_section .single_question.last").hide();
-      }
-    });
+    // $('input:radio[name="radios"]').change(function () {
+    //   if ($(this).is(":checked") && $(this).val() == "challenges") {
+    //     $(".third_section .single_question.last").show();
+    //   } else {
+    //     $(".third_section .single_question.last").hide();
+    //   }
+    // });
   });
 
   var lastScrollTop = 0;
