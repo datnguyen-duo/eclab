@@ -320,7 +320,7 @@ $person_link = array_reverse($person_link);
                             <p class="question">What perspective do you bring to the issue?</p>
                             <div class="checkbox_wrap">
                                 <div class="single_checkbox">
-                                    <input type="radio" id="check_1" name="radio" value="I’m a family member and/or caregiver">
+                                    <input type="radio" id="check_1" name="radio" checked="" value="I’m a family member and/or caregiver">
                                     <label for="check_1">
                                     I’m a family member and/or caregiver
                                     </label>
@@ -357,7 +357,7 @@ $person_link = array_reverse($person_link);
                             <p class="question">Tell us about your experience with early childhood education in Illinois. What would you like to share?</p>
                             <div class="checkbox_wrap">
                                 <div class="single_checkbox">
-                                    <input type="radio" id="check1" name="radios" value="challenges">
+                                    <input type="radio" id="check1" name="radios" checked="" value="challenges">
                                     <label for="check1">
                                     Challenges I’ve faced
                                     </label>
@@ -408,13 +408,13 @@ $person_link = array_reverse($person_link);
                             <div class="single_question">
                                 <p class="question">Share as much as you are comfortable</p>
                                 <textarea name="story" id="story" cols="30" rows="10" placeholder="Tell your story…"></textarea>
-                                <span>0 / 200 words</span>
+                                <!-- <span>0 / 200 words</span> -->
 
                             </div>
                             <div class="single_question last">
                                 <p class="question">Title your story</p>
                                 <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="Name your story…"></textarea>
-                                <span>0 / 10 words</span>
+                                <!-- <span>0 / 10 words</span> -->
                             </div>
                         </div>
                         
@@ -422,7 +422,7 @@ $person_link = array_reverse($person_link);
                     <div class="third_section_content sinlge_box">
                         <div class="two_columns">
                             <div class="single_column">
-                                <p class="question">Have a photo to pair with your story? You may upload it now.</p>
+                                <p class="question">Have a photo to pair with your story? You may upload it now. (optional)</p>
                                 <div class="image-upload-wrap">
                                     <input class="file-upload-input" name="photo" id="photo" type='file' accept="image/*" />
                                     <input type="hidden" id="base64_img" name="base64_img" value="">
@@ -438,10 +438,10 @@ $person_link = array_reverse($person_link);
                                 </div>
                             </div>
                             <div class="single_column">
-                                <!-- <div class="single_question">
-                                <p class="question">Tag your story</p>
+                                <div class="single_question">
+                                <p class="question">Tag your story (optional)</p>
                                 <input type="text" id="tags" name="tags">
-                                </div> -->
+                                </div>
                                 
                             </div>
                         </div>
@@ -455,7 +455,7 @@ $person_link = array_reverse($person_link);
                                 <input name="fname" type="text" placeholder="First name" class="half">
                                 <input name="lname" type="text" placeholder="Last name" class="half">
                                 <input name="email" type="email" placeholder="Email Address">
-                                <input name="phonenumber" type="text" placeholder="Phone" class="half">
+                                <input name="phonenumber" type="text" placeholder="Phone (optional)" class="half">
                                 <input name="zipcode" type="text" placeholder="Zip Code" class="half">
                             </div>
                         </div>
@@ -880,6 +880,86 @@ function readFile() {
   }
 } 
 document.getElementById("photo").addEventListener("change", readFile);
+
+jQuery(document).ready(function ($) {
+    $('#home_submit_button').click(function(event) {
+        if ($("#tn-form").valid()) {
+            var file_data = $('#photo')[0].files[0];
+            var form_data = new FormData();
+            form_data.append('action', 't311_submissions');           
+            form_data.append('file',  $('#photo')[0].files[0]);
+            form_data.append('fname', $('input[name="fname"]').val() );
+            form_data.append('lname', $('input[name="lname"]').val() );
+            form_data.append('email', $('input[name="email"]').val() );
+            form_data.append('story', $('textarea[name="story"]').val() );
+            form_data.append('storytile', $('textarea[name="storytile"]').val() );
+            form_data.append('checkbox', $('input[name="checkbox"]').val() );
+            form_data.append('topic', $('input[name="topic"]').val() );
+            form_data.append('phonenumber', $('input[name="phonenumber"]').val() );
+            form_data.append('radio', $('input[name="radio"]').val() );
+            form_data.append('radios', $('input[name="radios"]').val() );
+            form_data.append('zipcode', $('input[name="zipcode"]').val() );
+            form_data.append('tags', $('input[name="tags"]').val() );
+            
+            jQuery.ajax({
+                type: 'POST',
+                url: admin_ajax_url,
+                data: form_data, 
+                processData: false,
+                contentType: false,
+                success: function(data, textStatus, XMLHttpRequest) {
+                    console.log(data);
+                },
+                error: function(MLHttpRequest, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+
+            });
+
+            $(".form_swiper").slick("slickNext");
+        } else {
+            alert('Please complete the required fields');
+        }
+    })
+
+    if ($("#tn-form").length > 0) {
+        $("#tn-form").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                fname: "required",
+                lname: "required",
+                story: "required",
+                storytile: "required",
+                checkbox: "required",
+            },
+            messages: {
+                email: "This field is required",
+                fname: "This field is required",
+                lname: "This field is required",
+                story: "This field is required",
+                storytile: "This field is required",
+                checkbox: "This field is required",
+            },
+        });
+    }
+
+    $(document).on("click","span.filter-tag",function(e){
+        let tag_filter = $(this).attr('filter'); console.log(tag_filter)
+        $(".single_news_popup").fadeOut();
+        $("body").removeClass("no_scroll");
+        $('.single_story_holder').hide();
+        var checkcout = 0;
+        $('.single_story_holder').each(function() { 
+            if ($(this).attr('tag')!=='' && $(this).attr('tag').includes(tag_filter)) {
+                checkcout++;
+                $(this).show();
+            }
+        })
+    });
+})
 </script>
 <?php
 get_footer(); ?>
