@@ -11,13 +11,13 @@
       // autoplay: true,
     });
 
-    $('#tn-form input').on('change', function() {
-      if($('input[name=radios]:checked', '#tn-form').val() == 'challenges'){
-        $('.select_input').addClass('visible');
-      } else{
-        $('.select_input').removeClass('visible');
+    $("#tn-form input").on("change", function () {
+      if ($("input[name=radios]:checked", "#tn-form").val() == "challenges") {
+        $(".select_input").addClass("visible");
+      } else {
+        $(".select_input").removeClass("visible");
       }
-   });
+    });
 
     $(".form_swiper").slick({
       dots: true,
@@ -29,9 +29,9 @@
       accessibility: false,
       focusOnSelect: false,
       prevArrow:
-        "<div class='left'><img src='https://datn14.sg-host.com/wp-content/themes/eclab/images/left_arrow.svg'>PREVIOUS</div>",
+        "<div class='left'><img src='https://www.righttocareil.com/wp-content/themes/eclab/images/left_arrow.svg'>PREVIOUS</div>",
       nextArrow:
-        "<div class='right'>NEXT<img src='https://datn14.sg-host.com/wp-content/themes/eclab/images/right_arrow.svg'></div>",
+        "<div class='right'>NEXT<img src='https://www.righttocareil.com/wp-content/themes/eclab/images/right_arrow.svg'></div>",
     });
 
     //   window.addEventListener("keydown", function(e) {
@@ -175,7 +175,10 @@
 
     if ($("body").hasClass("page-template-template-home")) {
       var timeoutId = setTimeout(function () {
-        if(($.cookie('email_popup') == undefined || $.cookie('email_popup')== null)){
+        if (
+          $.cookie("email_popup") == undefined ||
+          $.cookie("email_popup") == null
+        ) {
           $(".email_popup").fadeIn();
         }
       }, 5000);
@@ -183,7 +186,10 @@
 
     if ($("body").hasClass("page-template-template-community")) {
       setTimeout(function () {
-        if(($.cookie('tell_story') == undefined || $.cookie('tell_story')== null)){
+        if (
+          $.cookie("tell_story") == undefined ||
+          $.cookie("tell_story") == null
+        ) {
           $(".tell_story_popup").fadeIn();
         }
       }, 5000);
@@ -197,12 +203,12 @@
     $(".close_email_popup").on("click", function (event) {
       $(".email_popup").fadeOut();
       $("body").removeClass("no_scroll");
-      $.cookie('email_popup', 'true', { expires: 1, path: '/' });
+      $.cookie("email_popup", "true", { expires: 1, path: "/" });
     });
 
     $(".close_tell_story_popup").on("click", function (event) {
       $(".tell_story_popup").fadeOut();
-      $.cookie('tell_story', 'true', { expires: 1, path: '/' });
+      $.cookie("tell_story", "true", { expires: 1, path: "/" });
       $("body").removeClass("no_scroll");
     });
 

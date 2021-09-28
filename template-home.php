@@ -408,13 +408,13 @@ $person_link = array_reverse($person_link);
                             <div class="single_question">
                                 <p class="question">Share as much as you are comfortable</p>
                                 <textarea name="story" id="story" cols="30" rows="10" placeholder="Tell your story…"></textarea>
-                                <span>0 / 200 words</span>
+                                <!-- <span>0 / 200 words</span> -->
 
                             </div>
                             <div class="single_question last">
                                 <p class="question">Title your story</p>
                                 <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="Name your story…"></textarea>
-                                <span>0 / 10 words</span>
+                                <!-- <span>0 / 10 words</span> -->
                             </div>
                         </div>
                         
@@ -422,7 +422,7 @@ $person_link = array_reverse($person_link);
                     <div class="third_section_content sinlge_box">
                         <div class="two_columns">
                             <div class="single_column">
-                                <p class="question">Have a photo to pair with your story? You may upload it now.</p>
+                                <p class="question">Have a photo to pair with your story? You may upload it now. (optional)</p>
                                 <div class="image-upload-wrap">
                                     <input class="file-upload-input" name="photo" id="photo" type='file' accept="image/*" />
                                     <input type="hidden" id="base64_img" name="base64_img" value="">
@@ -439,7 +439,7 @@ $person_link = array_reverse($person_link);
                             </div>
                             <div class="single_column">
                                 <div class="single_question">
-                                <p class="question">Tag your story</p>
+                                <p class="question">Tag your story (optional)</p>
                                 <input type="text" id="tags" name="tags">
                                 </div>
                                 
@@ -455,7 +455,7 @@ $person_link = array_reverse($person_link);
                                 <input name="fname" type="text" placeholder="First name" class="half">
                                 <input name="lname" type="text" placeholder="Last name" class="half">
                                 <input name="email" type="email" placeholder="Email Address">
-                                <input name="phonenumber" type="text" placeholder="Phone" class="half">
+                                <input name="phonenumber" type="text" placeholder="Phone (optional)" class="half">
                                 <input name="zipcode" type="text" placeholder="Zip Code" class="half">
                             </div>
                         </div>
@@ -882,11 +882,8 @@ function readFile() {
 document.getElementById("photo").addEventListener("change", readFile);
 
 jQuery(document).ready(function ($) {
-    console.log('aaa');
     $('#home_submit_button').click(function(event) {
         if ($("#tn-form").valid()) {
-            $(".form_swiper").slick("slickNext");
-
             var file_data = $('#photo')[0].files[0];
             var form_data = new FormData();
             form_data.append('action', 't311_submissions');           
