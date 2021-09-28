@@ -7,11 +7,14 @@ get_header(); ?>
 	$desc_1 = get_field('description_1');
 	$desc_2 = get_field('description_2');
 
+	$title_1 = get_field('headline_1');
+	$title_2 = get_field('headline_2');
+
 	if( $desc_1 ): ?>
 		<div class="single_box">
 			<div class="content_holder">
 				<div class="header">
-					<h2>Privacy Policy</h2>
+					<h2><?php echo $title_1 ?></h2>
 					<img src="<?php echo get_template_directory_uri(); ?>/images/dropdown_arrow.svg" alt="">
 				</div>
 
@@ -26,7 +29,7 @@ get_header(); ?>
 		<div class="single_box">
 			<div class="content_holder">
 				<div class="header">
-					<h2>Terms of Services</h2>
+				<h2><?php echo $title_2 ?></h2>
 					<img src="<?php echo get_template_directory_uri(); ?>/images/dropdown_arrow.svg" alt="">
 				</div>
 				<div class="description">
