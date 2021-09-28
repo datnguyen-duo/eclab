@@ -110,10 +110,10 @@
       clearTimeout(timeoutId);
     });
 
-    $(".submit_button").on("click", function (event) {
-      event.preventDefault();
-      $(".form_swiper").slick("slickNext");
-    });
+    // $(".submit_button").on("click", function (event) {
+    //   event.preventDefault();
+    //   $(".form_swiper").slick("slickNext");
+    // });
 
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
       if (currentSlide == 0 || currentSlide == 7) {

@@ -109,8 +109,8 @@ function eclab_scripts() {
 	wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', array(), null, true);
 	// wp_enqueue_script('jquery-ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js', array(), null, true);
 	wp_enqueue_script( 'cookie', get_template_directory_uri() . '/js/jquery.cookie.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'global', get_template_directory_uri() . '/js/global.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'home', get_template_directory_uri() . '/js/home.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'global', get_template_directory_uri() . '/js/global.js?v=1013', array(), _S_VERSION, true );
+	// wp_enqueue_script( 'home', get_template_directory_uri() . '/js/home.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'tags', get_template_directory_uri() . '/js/tags.js', array(), _S_VERSION, true );
 	wp_enqueue_script('gsap', get_template_directory_uri() . '/js/gsap.min.js', true);
 	if( !is_front_page() ) {
@@ -119,6 +119,7 @@ function eclab_scripts() {
 
 	if ( is_front_page() ) {
 		wp_enqueue_script( 'validate', get_template_directory_uri() . '/js/jquery.validate.min.js', array(), _S_VERSION, true );
+		wp_enqueue_script( 'validate-steps', get_template_directory_uri() . '/js/jquery.steps.js', array(), _S_VERSION, true );
 	}
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
@@ -205,12 +206,6 @@ function t311_submissions() {
     	}
     	$add_tags = $_POST['tags'];
 
-    	$api_key = "78e7e43ff662bc958e6b869a9ea44307";
-		$api_request_url = "https://actionnetwork.org/api/v2/forms/fe289885-c119-4ee7-a543-d3e92a0ce691/submissions/";
-		$headers = array(
-		       "Content-Type: application/json",
-		       'OSDI-API-Token: '.$api_key
-		    );
 		$post_data = array(
 			"person" => array(
 				'email_addresses' => array(
@@ -236,7 +231,7 @@ function t311_submissions() {
 
 		error_reporting(1);
 		$api_key = "78e7e43ff662bc958e6b869a9ea44307";
-		$api_request_url = "https://actionnetwork.org/api/v2/forms/fe289885-c119-4ee7-a543-d3e92a0ce691/submissions/";
+		$api_request_url = "https://actionnetwork.org/api/v2/forms/0256972e-f4ad-4a1f-985a-e8944d2f85ae/submissions/";
 		$headers = array(
 		       "Content-Type: application/json",
 		       'OSDI-API-Token: '.$api_key
@@ -263,7 +258,8 @@ add_action('wp_ajax_t311_upload_image' , 't311_upload_image');
 add_action('wp_ajax_nopriv_t311_upload_image','t311_upload_image');
 function t311_upload_image() {
 	if(!empty($_FILES)) {
-	 	$img_url = upload_user_file($_FILES['photo']);
+	 	$img_url = upload_user_file($_FILES['file']);
+	 	echo $img_url;
 	}
     die();
 }
@@ -322,3 +318,8 @@ function upload_user_file( $file ) {
 
 	return $wordpress_upload_dir['url'] . '/' . basename( $new_file_path );
 }
+
+function add_cors_http_header(){
+    header("Access-Control-Allow-Origin: *");
+}
+add_action('init','add_cors_http_header');

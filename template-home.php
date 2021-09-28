@@ -182,6 +182,10 @@ $person_link = array_reverse($person_link);
                         $person_data = json_decode($response);
                         $custom_fields = $person_data->custom_fields;
 
+                        $sotryUrl = str_replace(' ', '_', $custom_fields->storytile);
+                        $sotryUrl = str_replace('.', '', $sotryUrl);
+                        $sotryUrl = str_replace('’', '', $sotryUrl);
+                        
                         $tags = $custom_fields->tag;
                         $tags_name ="";
                         if($tags){
@@ -213,9 +217,10 @@ $person_link = array_reverse($person_link);
                                 $display = 'none';
                                 break;
                         }
+                        
                         if ( ($category == 'families' && $count_family <= 4) || ($category == 'educators' && $count_edu <= 4) ||
-                        ($category == 'providers' && $count_pro <= 4) || ($category == 'supporters' && $count_sup <= 4) ) {
-                        echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" tag="'.$custom_fields->tag.'" style="display: '.$display.';">
+                        ($category == 'providers' && $count_pro <= 4) || ($category == 'supporters' && $count_sup <= 4) ) { 
+                        echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" tag="'.$custom_fields->tag.'" style="display: '.$display.';" data-url="'. $sotryUrl .'">
                                 <div class="single_story_wrap ">
                                     <div class="single_story">
                                         <div class="image_holder">
@@ -315,7 +320,7 @@ $person_link = array_reverse($person_link);
                             <p class="question">What perspective do you bring to the issue?</p>
                             <div class="checkbox_wrap">
                                 <div class="single_checkbox">
-                                    <input type="radio" id="check_1" name="radio" value="I’m a family member and/or caregiver">
+                                    <input type="radio" id="check_1" name="radio" checked="" value="I’m a family member and/or caregiver">
                                     <label for="check_1">
                                     I’m a family member and/or caregiver
                                     </label>
@@ -352,7 +357,7 @@ $person_link = array_reverse($person_link);
                             <p class="question">Tell us about your experience with early childhood education in Illinois. What would you like to share?</p>
                             <div class="checkbox_wrap">
                                 <div class="single_checkbox">
-                                    <input type="radio" id="check1" name="radios" value="challenges">
+                                    <input type="radio" id="check1" name="radios" checked="" value="challenges">
                                     <label for="check1">
                                     Challenges I’ve faced
                                     </label>
@@ -433,10 +438,10 @@ $person_link = array_reverse($person_link);
                                 </div>
                             </div>
                             <div class="single_column">
-                                <!-- <div class="single_question">
+                                <div class="single_question">
                                 <p class="question">Tag your story</p>
                                 <input type="text" id="tags" name="tags">
-                                </div> -->
+                                </div>
                                 
                             </div>
                         </div>
@@ -455,12 +460,13 @@ $person_link = array_reverse($person_link);
                             </div>
                         </div>
                     </div>
+                    <?php $tell_story_form_fields = get_field('tell_story_form_fields',get_pll_option_page()); ?>
                     <div class="third_section_content sinlge_box">
                         <p class="question">By submitting your story and/or photo you acknowledge that you’ve read our privacy policy and are ok with being contacted further from our coalition partners. Thank you!</p>
                         <div class="single_question last">
                             <div class="privacy_box">
                                 <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                <?php echo $tell_story_form_fields['privacy_box']; ?>
                                 </p>
                             </div>
                             <div class="bottom_section">
@@ -684,6 +690,23 @@ $person_link = array_reverse($person_link);
           return false;
         });
 
+        var newUrl;
+
+        var url_string = window.location.href; //window.location.href
+        var url = new URL(url_string);
+        var paramValue = url.searchParams.get("story");
+        
+        setTimeout(() => {
+            if (paramValue) {
+            $(".single_story_holder").each(function() {
+                if ($(this).data('url') == paramValue) {
+                    $(this).click();
+                }
+            });
+        }
+        }, 1000);
+       
+
         $(".single_story_holder").on("click", function (event) {
             let story_content = $(this).find(".story_content").text();
             let story_title = $(this).find(".story_title").text();
@@ -698,6 +721,18 @@ $person_link = array_reverse($person_link);
             popup.find('.news_content .left p').text(story_content);
             popup.find('.category').text(category);
             popup.find(".tags").html(tags);
+
+            var currentUrl = $(this).data('url');
+            newUrl = '?story=' + currentUrl + '';
+            window.history.pushState("", "", newUrl);
+
+            var shareFacebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.href + '&t=' + story_title.trim()
+            var shareTwitterUrl = 'https://twitter.com/share?url=' + window.location.href + '&text=' + story_title.trim()
+            var shareMailUrl = 'mailto:?subject='+story_title.trim()+'&body='+window.location.href+''
+
+            popup.find('.facebook').attr('href', shareFacebookUrl);
+            popup.find('.twitter').attr('href', shareTwitterUrl);
+            popup.find('.email').attr('href', shareMailUrl);
     
             $(".single_news_popup").fadeIn();
             $("body").addClass("no_scroll");
@@ -799,6 +834,18 @@ $person_link = array_reverse($person_link);
 
           popup.find(".news_content .left p").text(story_content);
 
+          var currentUrl = $(plusSlide).data('url');
+           var newUrl = '?story=' + currentUrl + '';
+            window.history.pushState("", "", newUrl);
+
+            var shareFacebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.href + '&t=' + story_title.trim()
+            var shareTwitterUrl = 'https://twitter.com/share?url=' + window.location.href + '&text=' + story_title.trim()
+            var shareMailUrl = 'mailto:?subject='+story_title.trim()+'&body='+window.location.href+''
+
+            popup.find('.facebook').attr('href', shareFacebookUrl);
+            popup.find('.twitter').attr('href', shareTwitterUrl);
+            popup.find('.email').attr('href', shareMailUrl);
+
           popup.find(".category").text(category);
           popup.find(".tags").html(tags);
 
@@ -833,6 +880,89 @@ function readFile() {
   }
 } 
 document.getElementById("photo").addEventListener("change", readFile);
+
+jQuery(document).ready(function ($) {
+    console.log('aaa');
+    $('#home_submit_button').click(function(event) {
+        if ($("#tn-form").valid()) {
+            $(".form_swiper").slick("slickNext");
+
+            var file_data = $('#photo')[0].files[0];
+            var form_data = new FormData();
+            form_data.append('action', 't311_submissions');           
+            form_data.append('file',  $('#photo')[0].files[0]);
+            form_data.append('fname', $('input[name="fname"]').val() );
+            form_data.append('lname', $('input[name="lname"]').val() );
+            form_data.append('email', $('input[name="email"]').val() );
+            form_data.append('story', $('textarea[name="story"]').val() );
+            form_data.append('storytile', $('textarea[name="storytile"]').val() );
+            form_data.append('checkbox', $('input[name="checkbox"]').val() );
+            form_data.append('topic', $('input[name="topic"]').val() );
+            form_data.append('phonenumber', $('input[name="phonenumber"]').val() );
+            form_data.append('radio', $('input[name="radio"]').val() );
+            form_data.append('radios', $('input[name="radios"]').val() );
+            form_data.append('zipcode', $('input[name="zipcode"]').val() );
+            form_data.append('tags', $('input[name="tags"]').val() );
+            
+            jQuery.ajax({
+                type: 'POST',
+                url: admin_ajax_url,
+                data: form_data, 
+                processData: false,
+                contentType: false,
+                success: function(data, textStatus, XMLHttpRequest) {
+                    console.log(data);
+                },
+                error: function(MLHttpRequest, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+
+            });
+
+            $(".form_swiper").slick("slickNext");
+        } else {
+            alert('Please complete the required fields');
+        }
+    })
+
+    if ($("#tn-form").length > 0) {
+        $("#tn-form").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                fname: "required",
+                lname: "required",
+                story: "required",
+                storytile: "required",
+                checkbox: "required",
+            },
+            messages: {
+                email: "This field is required",
+                fname: "This field is required",
+                lname: "This field is required",
+                story: "This field is required",
+                storytile: "This field is required",
+                checkbox: "This field is required",
+            },
+        });
+    }
+
+    $(document).on("click","span.filter-tag",function(e){
+        let tag_filter = $(this).attr('filter'); console.log(tag_filter)
+        $(".single_news_popup").fadeOut();
+        $("body").removeClass("no_scroll");
+        $('.single_story_holder').hide();
+        var checkcout = 0;
+        $('.single_story_holder').each(function() { 
+            if ($(this).attr('tag')!=='' && $(this).attr('tag').includes(tag_filter)) {
+                checkcout++;
+                $(this).show();
+            }
+        })
+    });
+})
 </script>
 <?php
 get_footer(); ?>
