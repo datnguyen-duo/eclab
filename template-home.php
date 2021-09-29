@@ -918,29 +918,29 @@ jQuery(document).ready(function ($) {
         }
     })
 
-    if ($("#tn-form").length > 0) {
-        $("#tn-form").validate({
-            rules: {
-                email: {
-                    required: true,
-                    email: true
-                },
-                fname: "required",
-                lname: "required",
-                story: "required",
-                storytile: "required",
-                checkbox: "required",
-            },
-            messages: {
-                email: "This field is required",
-                fname: "This field is required",
-                lname: "This field is required",
-                story: "This field is required",
-                storytile: "This field is required",
-                checkbox: "This field is required",
-            },
-        });
-    }
+    // if ($("#tn-form").length > 0) {
+    //     $("#tn-form").validate({
+    //         rules: {
+    //             email: {
+    //                 required: true,
+    //                 email: true
+    //             },
+    //             fname: "required",
+    //             lname: "required",
+    //             story: "required",
+    //             storytile: "required",
+    //             checkbox: "required",
+    //         },
+    //         messages: {
+    //             email: "This field is required",
+    //             fname: "This field is required",
+    //             lname: "This field is required",
+    //             story: "This field is required",
+    //             storytile: "This field is required",
+    //             checkbox: "This field is required",
+    //         },
+    //     });
+    // }
 
     $('.inputTags-list').prepend('<i id="tn-icon-hagtag">#</i>');
     $('.inputTags-autocomplete-item').each(function() {

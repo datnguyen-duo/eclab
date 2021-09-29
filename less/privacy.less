@@ -3,6 +3,10 @@
     background-color: @color3;
     padding-bottom: 60px;
 
+    @media @750 {
+      padding-bottom: 30px;
+    }
+
     .header {
       display: flex;
       cursor: pointer;
@@ -10,17 +14,37 @@
       padding-top: 60px;
       box-sizing: border-box;
 
+      @media @750 {
+        padding-top: 30px;
+      }
+
       h2 {
         font-size: 38px;
         color: @color2;
-        .font1B();
+        .font1R();
         margin-right: 15px;
+
+        @media @1100 {
+          font-size: 32px;
+        }
+  
+        @media @1020 {
+          font-size: 28px;
+        }
+  
+        @media @750 {
+          font-size: 24px;
+        }
       }
 
       img {
         .transition();
         position: relative;
         transform: rotate(0deg);
+
+        @media @750 {
+          max-width: 20px;
+        }
       }
 
       &.active {
@@ -44,8 +68,21 @@
         box-sizing: border-box;
         font-size: 24px;
         color: @color2;
-        line-height: 1.3em;
+        line-height: 1.4em;
         .font2();
+
+        @media @1100 {
+          font-size: 20px;
+        }
+
+        @media @1020 {
+          font-size: 22px;
+        }
+
+        @media @750 {
+          padding-right: 40px;
+          font-size: 18px;
+        }
       }
     }
 
