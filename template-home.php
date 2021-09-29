@@ -24,6 +24,18 @@ foreach ($submissions->_embedded->{"osdi:submissions"} as $key => $value) {
 }
 $person_link = array_reverse($person_link);
 ?>
+<style type="text/css">
+    #tn-icon-hagtag {
+        position: absolute;
+        z-index: 9999;
+        font-size: 26px;
+        font-weight: bold;
+        padding: 11px 0 0 16px;
+    }
+    .inputTags-field {
+        padding-left: 30px!important;
+    }
+</style>
 <div class="home_wrap">
 
     <?php $hero_section = get_field('hero_section'); ?>
@@ -388,7 +400,7 @@ $person_link = array_reverse($person_link);
                                 </div>
                             </div>
                         </div>
-                        <div class="single_question last select_input">
+                        <div class="single_question last select_input visible">
                             <p class="question">Please specify.</p>
                             <div class="input_wrap select-wrapper">
                                 <select name="" class="specify_select">
@@ -439,8 +451,8 @@ $person_link = array_reverse($person_link);
                             </div>
                             <div class="single_column">
                                 <div class="single_question">
-                                <p class="question">Tag your story (optional)</p>
-                                <input type="text" id="tags" name="tags">
+                                    <p class="question">Tag your story (optional)</p>
+                                    <input type="text" id="tags" name="tags">
                                 </div>
                                 
                             </div>
@@ -855,32 +867,6 @@ $person_link = array_reverse($person_link);
 var admin_ajax_url = '<?php echo admin_url('admin-ajax.php'); ?>';
 </script>
 <script type="text/javascript">
-function readFile() {
-  var ele = this;
-  if (ele.files && ele.files[0]) {
-    var _URL = window.URL || window.webkitURL;
-    var FR= new FileReader();
-    var file = ele.files[0];
-    var img = new Image();
-    var objectUrl = _URL.createObjectURL(file);
-
-    FR.addEventListener("load", function(e) {
-      img.addEventListener("load", function () {
-          // if (this.width > 500 || this.height > 500) {
-          //   alert("Width and Height must not exceed 300px");
-          //   ele.value = "";
-          // } else {
-            document.getElementById("base64_img").value = e.target.result;
-          // }
-      });
-      img.src = objectUrl;
-    }); 
-    FR.readAsDataURL(file);
-    
-  }
-} 
-document.getElementById("photo").addEventListener("change", readFile);
-
 jQuery(document).ready(function ($) {
     $('#home_submit_button').click(function(event) {
         if ($("#tn-form").valid()) {
@@ -946,6 +932,13 @@ jQuery(document).ready(function ($) {
         });
     }
 
+    $('.inputTags-list').prepend('<i id="tn-icon-hagtag">#</i>');
+    $('.inputTags-autocomplete-item').each(function() {
+        $(this).attr('data-val', $(this).text().slice(1));
+    })
+    $('.inputTags-field').keyup(function() {
+        console.log($(this).val());
+    })
     $(document).on("click","span.filter-tag",function(e){
         let tag_filter = $(this).attr('filter'); console.log(tag_filter)
         $(".single_news_popup").fadeOut();

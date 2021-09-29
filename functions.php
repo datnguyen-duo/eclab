@@ -111,7 +111,7 @@ function eclab_scripts() {
 	wp_enqueue_script( 'cookie', get_template_directory_uri() . '/js/jquery.cookie.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'global', get_template_directory_uri() . '/js/global.js?v=1013', array(), _S_VERSION, true );
 	// wp_enqueue_script( 'home', get_template_directory_uri() . '/js/home.js', array(), _S_VERSION, true );
-	wp_enqueue_script( 'tags', get_template_directory_uri() . '/js/tags.js', array(), _S_VERSION, true );
+	wp_enqueue_script( 'tags', get_template_directory_uri() . '/js/tags.js?v=132', array(), _S_VERSION, true );
 	wp_enqueue_script('gsap', get_template_directory_uri() . '/js/gsap.min.js', true);
 	if( !is_front_page() ) {
 		wp_enqueue_script( 'action-network-api', get_template_directory_uri() . '/js/action-network-api.js', array(), _S_VERSION, true );

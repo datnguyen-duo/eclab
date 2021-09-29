@@ -780,7 +780,7 @@
       change: false,
       editable: true,
       autocomplete: {
-        values: ["#RightToCareIL", "#Families", "#ILoveMotherNature"],
+        values: ["RightToCareIL", "Families", "ILoveMotherNature"],
         only: false,
       },
       errors: {
