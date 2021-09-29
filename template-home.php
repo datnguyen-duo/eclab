@@ -327,132 +327,139 @@ $person_link = array_reverse($person_link);
                             <?php endif; ?>
                         </div>
                     </div>
+
+                    <?php $first_slide = get_field('first_slide',get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="single_question">
-                            <p class="question">What perspective do you bring to the issue?</p>
+                            <p class="question"><?php echo $first_slide['headline_1']; ?></p>
                             <div class="checkbox_wrap">
                                 <div class="single_checkbox">
                                     <input type="radio" id="check_1" name="radio" checked="" value="I’m a family member and/or caregiver">
                                     <label for="check_1">
-                                    I’m a family member and/or caregiver
+                                    <?php echo $first_slide['perspective_1']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check_2" name="radio" value="I’m an early childhood educator">
                                     <label for="check_2">
-                                    I’m an early childhood educator
+                                    <?php echo $first_slide['perspective_2']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check_3" name="radio" value="I’m a provider">
                                     <label for="check_3">
-                                    I’m a provider
+                                    <?php echo $first_slide['perspective_3']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check_4" name="radio" value="I’m a supporter">
                                     <label for="check_4">
-                                    I’m a supporter
+                                    <?php echo $first_slide['perspective_4']; ?>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="single_question last">
-                            <p class="question">What’s your Illinois Zipcode?</p>
+                            <p class="question"><?php echo $first_slide['headline_2']; ?></p>
                             <div class="input_wrap">
-                                <input type="text" placeholder="Enter your Zipcode" name="zipcode">
+                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode">
                             </div>
                         </div>
                     </div>
+                    <?php $second_slide = get_field('second_slide',get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="single_question">
-                            <p class="question">Tell us about your experience with early childhood education in Illinois. What would you like to share?</p>
+                            <p class="question"><?php echo $second_slide['headline_1']; ?></p>
                             <div class="checkbox_wrap">
                                 <div class="single_checkbox">
                                     <input type="radio" id="check1" name="radios" checked="" value="challenges">
                                     <label for="check1">
-                                    Challenges I’ve faced
+                                    <?php echo $second_slide['experience_1']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check2" name="radios" value="successes">
                                     <label for="check2">
-                                    My child and/or family’s successes
+                                    <?php echo $second_slide['experience_2']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check3" name="radios" value="thank">
                                     <label for="check3">
-                                    Thank an early educator
+                                    <?php echo $second_slide['experience_3']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check4" name="radios" value="share">
                                     <label for="check4">
-                                    Share my dreams and hope for this moment
+                                    <?php echo $second_slide['experience_4']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check5" name="radios" value="other">
                                     <label for="check5">
-                                    Other
+                                    <?php echo $second_slide['experience_5']; ?>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="single_question last select_input visible">
-                            <p class="question">Please specify.</p>
+                            <p class="question"><?php echo $second_slide['headline_2']; ?></p>
                             <div class="input_wrap select-wrapper">
                                 <select name="" class="specify_select">
-                                    <option value="Affordability">Affordability</option>
-                                    <option value="Access">Access</option>
-                                    <option value="Quality">Quality</option>
-                                    <option value="Equity">Equity</option>
-                                    <option value="Consistency">Consistency</option>
-                                    <option value="Other">Other</option>
+                                    <option value="Affordability"><?php echo $second_slide['dropdown_item_1']; ?></option>
+                                    <option value="Access"><?php echo $second_slide['dropdown_item_2']; ?></option>
+                                    <option value="Quality"><?php echo $second_slide['dropdown_item_3']; ?></option>
+                                    <option value="Equity"><?php echo $second_slide['dropdown_item_4']; ?></option>
+                                    <option value="Consistency"><?php echo $second_slide['dropdown_item_5']; ?></option>
+                                    <option value="Other"><?php echo $second_slide['dropdown_item_6']; ?></option>
                                 </select>
                                 <!-- <input type="text" placeholder="Choose your topic" name="topic"> -->
                             </div>
                         </div>
                     </div>
+
+                    <?php $third_slide = get_field('third_slide',get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="two_question_wrap">
                             <div class="single_question">
-                                <p class="question">Share as much as you are comfortable</p>
-                                <textarea name="story" id="story" cols="30" rows="10" placeholder="Tell your story…"></textarea>
-                                <p class="word_counter"><span id="display_story_count">0</span> / <span id="word_story_left">200 words</span></p>
+                                <p class="question"><?php echo $third_slide['headline_1']; ?></p>
+                                <textarea name="story" id="story" cols="30" rows="10" placeholder="<?php echo $third_slide['textarea_1']; ?>"></textarea>
+                                <p class="word_counter"><span id="display_story_count">0</span> / <span id="word_story_left">200 <?php echo $third_slide['word_counter']; ?></span></p>
                                 
 
                             </div>
                             <div class="single_question last">
-                                <p class="question">Title your story</p>
-                                <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="Name your story…"></textarea>
-                                <p class="word_counter"><span id="display_storytile_count">0</span> / <span id="word_storytile_left">10 words<span></p>
+                                <p class="question"><?php echo $third_slide['headline_2']; ?></p>
+                                <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="<?php echo $third_slide['textarea_2']; ?>"></textarea>
+                                <p class="word_counter"><span id="display_storytile_count">0</span> / <span id="word_storytile_left">10 <?php echo $third_slide['word_counter']; ?><span></p>
                             </div>
                         </div>
                         
                     </div>
+
+                    <?php $fourth_slide = get_field('fourth_slide',get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="two_columns">
                             <div class="single_column">
-                                <p class="question">Have a photo to pair with your story? You may upload it now. (optional)</p>
+                                <p class="question"><?php echo $fourth_slide['headline_1'] ?></p>
                                 <div class="image-upload-wrap">
                                     <input class="file-upload-input" name="photo" id="photo" type='file' accept="image/*" />
                                     <input type="hidden" id="base64_img" name="base64_img" value="">
                                     <div class="drag-text">
-                                    <h3>Click here to add a photo (supported file types: JPG, PNG)</h3>
+                                    <h3><?php echo $fourth_slide['image_upload_title'] ?></h3>
                                     </div>
                                 </div>
                                 <div class="file-upload-content">
                                     <img class="file-upload-image" src="#" alt="your image" />
                                     <div class="image-title-wrap">
-                                    <button type="button" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+                                    <button type="button" class="remove-image"><?php echo $fourth_slide['remove_image'] ?><span class="image-title"><?php echo $fourth_slide['image_title'] ?></span></button>
                                     </div>
                                 </div>
                             </div>
                             <div class="single_column">
                                 <div class="single_question">
-                                    <p class="question">Tag your story (optional)</p>
+                                    <p class="question"><?php echo $fourth_slide['headline_2'] ?></p>
                                     <input type="text" id="tags" name="tags">
                                 </div>
                                 
@@ -461,21 +468,22 @@ $person_link = array_reverse($person_link);
                         
                     </div>
 
+                    <?php $fifth_slide = get_field('fifth_slide',get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
-                        <p class="question">Please enter your name, email, and zip code. This information allows us to contact you if we have questions about your story.</p>
+                        <p class="question"><?php echo $fifth_slide['headline']; ?></p>
                         <div class="single_question last">
                             <div class="form_holder">
-                                <input name="fname" type="text" placeholder="First name" class="half">
-                                <input name="lname" type="text" placeholder="Last name" class="half">
-                                <input name="email" type="email" placeholder="Email Address">
-                                <input name="phonenumber" type="text" placeholder="Phone (optional)" class="half">
-                                <input name="zipcode" type="text" placeholder="Zip Code" class="half">
+                                <input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>" class="half">
+                                <input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>" class="half">
+                                <input name="email" type="email" placeholder="<?php echo $fifth_slide['email_address']; ?>">
+                                <input name="phonenumber" type="text" placeholder="<?php echo $fifth_slide['phone']; ?>" class="half">
+                                <input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>" class="half">
                             </div>
                         </div>
                     </div>
                     <?php $tell_story_form_fields = get_field('tell_story_form_fields',get_pll_option_page()); ?>
                     <div class="third_section_content sinlge_box">
-                        <p class="question">By submitting your story and/or photo you acknowledge that you’ve read our privacy policy and are ok with being contacted further from our coalition partners. Thank you!</p>
+                        <p class="question"><?php echo $tell_story_form_fields['privacy_headline']; ?></p>
                         <div class="single_question last">
                             <div class="privacy_box">
                                 <p>
@@ -488,30 +496,31 @@ $person_link = array_reverse($person_link);
                                         <label class="container">
                                             <input type="checkbox" name="checkbox1" value="disclaimer">
                                             <span class="checkmark"></span>
-                                            I have read the disclaimer in its entirety.
+                                            <?php echo $tell_story_form_fields['checkbox1']; ?>
                                         </label>
                                     </div>
                                     <div class="single_box_wrap">
                                         <label class="container">
                                             <input type="checkbox" name="checkbox" value="agree">
                                             <span class="checkmark"></span>
-                                            I agree to receive email updates from Right to Care, a We the Village campaign. I understand I may unsubscribe at any time.
+                                            <?php echo $tell_story_form_fields['checkbox2']; ?>
                                         </label>
                                     </div>
                                 </div>
                                 <button class="button dark submit_button" id="home_submit_button">
-                                    SUBMIT
+                                <?php echo $tell_story_form_fields['submit_button']; ?>
                                 </button>
                             </div>
                             
                         </div>
                     </div>
+                    <?php $thank_you_slide = get_field('thank_you_slide',get_pll_option_page()) ?>
                     <div class="third_section_content thankyou_message">
                     
                         <div class="left">
-                            <p>All Done!</p>
+                            <p><?php echo $thank_you_slide['thank_you_headline'] ?></p>
                             <div class="message">
-                                Thank you for sharing your story
+                                <?php echo $thank_you_slide['thank_you_description'] ?>
                             </div>
                         </div>
                         <div class="right">
