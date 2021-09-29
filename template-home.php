@@ -420,13 +420,14 @@ $person_link = array_reverse($person_link);
                             <div class="single_question">
                                 <p class="question">Share as much as you are comfortable</p>
                                 <textarea name="story" id="story" cols="30" rows="10" placeholder="Tell your story…"></textarea>
-                                <!-- <span>0 / 200 words</span> -->
+                                <p class="word_counter"><span id="display_story_count">0</span> / <span id="word_story_left">200 words</span></p>
+                                
 
                             </div>
                             <div class="single_question last">
                                 <p class="question">Title your story</p>
                                 <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="Name your story…"></textarea>
-                                <!-- <span>0 / 10 words</span> -->
+                                <p class="word_counter"><span id="display_storytile_count">0</span> / <span id="word_storytile_left">10 words<span></p>
                             </div>
                         </div>
                         

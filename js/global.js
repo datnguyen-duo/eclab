@@ -11,6 +11,44 @@
       // autoplay: true,
     });
 
+    $("#story").on('keyup', function() {
+      var words = 0;
+  
+      if ((this.value.match(/\S+/g)) != null) {
+        words = this.value.match(/\S+/g).length;
+      }
+  
+      if (words > 200) {
+        // Split the string on first 200 words and rejoin on spaces
+        var trimmed = $(this).val().split(/\s+/, 200).join(" ");
+        // Add a space at the end to make sure more typing creates new words
+        $(this).val(trimmed + " ");
+      }
+      else {
+        $('#display_story_count').text(words);
+        // $('#word_story_left').text(200-words);
+      }
+    });
+
+    $("#storytile").on('keyup', function() {
+      var words = 0;
+  
+      if ((this.value.match(/\S+/g)) != null) {
+        words = this.value.match(/\S+/g).length;
+      }
+  
+      if (words > 10) {
+        // Split the string on first 200 words and rejoin on spaces
+        var trimmed = $(this).val().split(/\s+/, 10).join(" ");
+        // Add a space at the end to make sure more typing creates new words
+        $(this).val(trimmed + " ");
+      }
+      else {
+        $('#display_storytile_count').text(words);
+        // $('#word_storytile_left').text(10-words);
+      }
+    });
+
     $("#tn-form input").on("change", function () {
       if ($("input[name=radios]:checked", "#tn-form").val() == "challenges") {
         $(".select_input").addClass("visible");
