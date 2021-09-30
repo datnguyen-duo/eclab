@@ -205,9 +205,14 @@ function t311_submissions() {
     	 	$img_url = upload_user_file($_FILES['file']);
     	}
     	$add_tags = $_POST['tags'];
+    	$add_tags = explode(',', $add_tags);
+    	$add_tags = array_map("tn_array_map", $add_tags);
+    	$add_tags = implode(',', $add_tags);
 
 		$post_data = array(
 			"person" => array(
+				'family_name' => $_POST['lname'],
+				'given_name' => $_POST['fname'],
 				'email_addresses' => array(
 					array('address' => $_POST['email'])
 				),
@@ -317,6 +322,10 @@ function upload_user_file( $file ) {
 	}
 
 	return $wordpress_upload_dir['url'] . '/' . basename( $new_file_path );
+}
+
+function tn_array_map($arr) {
+  	return('#' . $arr);
 }
 
 function add_cors_http_header(){

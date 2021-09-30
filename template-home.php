@@ -35,6 +35,18 @@ $person_link = array_reverse($person_link);
     .inputTags-field {
         padding-left: 30px!important;
     }
+    div.error {
+        width: 100%;
+        color: red;
+        margin-bottom: 5px;
+    }
+    input.error {
+        margin-bottom: 10px!important;
+    }
+    button#home_submit_button[disabled] {
+        opacity: 0.5;
+        cursor: no-drop;
+    }
 </style>
 <div class="home_wrap">
 
@@ -362,7 +374,7 @@ $person_link = array_reverse($person_link);
                         <div class="single_question last">
                             <p class="question"><?php echo $first_slide['headline_2']; ?></p>
                             <div class="input_wrap">
-                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode">
+                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode1">
                             </div>
                         </div>
                     </div>
@@ -473,11 +485,11 @@ $person_link = array_reverse($person_link);
                         <p class="question"><?php echo $fifth_slide['headline']; ?></p>
                         <div class="single_question last">
                             <div class="form_holder">
-                                <input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>" class="half">
-                                <input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>" class="half">
+                                <div class="half"><input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>"></div>
+                                <div class="half"><input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>"></div>
                                 <input name="email" type="email" placeholder="<?php echo $fifth_slide['email_address']; ?>">
-                                <input name="phonenumber" type="text" placeholder="<?php echo $fifth_slide['phone']; ?>" class="half">
-                                <input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>" class="half">
+                                <div class="half"><input name="phonenumber" type="text" placeholder="<?php echo $fifth_slide['phone']; ?>"></div>
+                                <div class="half"><input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>"></div>
                             </div>
                         </div>
                     </div>
@@ -507,7 +519,7 @@ $person_link = array_reverse($person_link);
                                         </label>
                                     </div>
                                 </div>
-                                <button class="button dark submit_button" id="home_submit_button">
+                                <button class="button dark submit_button" id="home_submit_button" disabled>
                                 <?php echo $tell_story_form_fields['submit_button']; ?>
                                 </button>
                             </div>
@@ -881,6 +893,10 @@ jQuery(document).ready(function ($) {
     $('#home_submit_button').click(function(event) {
         if ($("#tn-form").valid()) {
             var file_data = $('#photo')[0].files[0];
+            var checkbox_val = $('input[name="checkbox1"]').val();
+            if ($('input[name="checkbox"]').is(':checked')) {
+                checkbox_val = $('input[name="checkbox"]').val();
+            }
             var form_data = new FormData();
             form_data.append('action', 't311_submissions');           
             form_data.append('file',  $('#photo')[0].files[0]);
@@ -889,7 +905,7 @@ jQuery(document).ready(function ($) {
             form_data.append('email', $('input[name="email"]').val() );
             form_data.append('story', $('textarea[name="story"]').val() );
             form_data.append('storytile', $('textarea[name="storytile"]').val() );
-            form_data.append('checkbox', $('input[name="checkbox"]').val() );
+            form_data.append('checkbox', checkbox_val );
             form_data.append('topic', $('input[name="topic"]').val() );
             form_data.append('phonenumber', $('input[name="phonenumber"]').val() );
             form_data.append('radio', $('input[name="radio"]').val() );
@@ -920,6 +936,7 @@ jQuery(document).ready(function ($) {
 
     if ($("#tn-form").length > 0) {
         $("#tn-form").validate({
+            errorElement: "div",
             rules: {
                 email: {
                     required: true,
@@ -929,7 +946,9 @@ jQuery(document).ready(function ($) {
                 lname: "required",
                 story: "required",
                 storytile: "required",
-                checkbox: "required",
+                checkbox1: "required",
+                zipcode: "required",
+                zipcode1: "required"
             },
             messages: {
                 email: "This field is required",
@@ -937,18 +956,26 @@ jQuery(document).ready(function ($) {
                 lname: "This field is required",
                 story: "This field is required",
                 storytile: "This field is required",
-                checkbox: "This field is required",
+                checkbox1: "This field is required",
+                zipcode: "This field is required",
+                zipcode1: "This field is required"
             },
         });
     }
+
+    $('input[name="checkbox1"]').click(function() {
+        if ($(this).is(':checked')) {
+            $("#home_submit_button").removeAttr("disabled");
+        } else {
+            $("#home_submit_button").attr("disabled", true);
+        }
+    })
 
     $('.inputTags-list').prepend('<i id="tn-icon-hagtag">#</i>');
     $('.inputTags-autocomplete-item').each(function() {
         $(this).attr('data-val', $(this).text().slice(1));
     })
-    $('.inputTags-field').keyup(function() {
-        console.log($(this).val());
-    })
+
     $(document).on("click","span.filter-tag",function(e){
         let tag_filter = $(this).attr('filter'); console.log(tag_filter)
         $(".single_news_popup").fadeOut();

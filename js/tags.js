@@ -138,7 +138,7 @@
           self.AUTOCOMPLETE_ITEM_CLASS =
             self.DEFAULT_CLASS + "-autocomplete-item";
           self.AUTOCOMPLETE_ITEM_CONTENT =
-            '<li class="' + self.AUTOCOMPLETE_ITEM_CLASS + '">%s</li>';
+            '<li class="' + self.AUTOCOMPLETE_ITEM_CLASS + '"><span>#</span><span class="tn-hagtag-item">%s</span></li>';
 
           /* Variables */
           self.options = options;
@@ -489,7 +489,7 @@
                       return false;
                     }
 
-                    self.$input.addClass("is-autocomplete").val($item.text());
+                    self.$input.addClass("is-autocomplete").val($item.find('.tn-hagtag-item').text());
                     self._autocomplete()._hide();
 
                     var e = $.Event("keyup");
@@ -816,10 +816,10 @@
       unselected: function () {
         $("span", "#events").text("unselected");
       },
-      change: function (elem) {
+      change: function (elem) {        
         $(".results")
           .empty()
-          .html("<strong>Your Tags:</strong> " + elem.tags.join(" - "));
+          .html("<strong>Your Tags:</strong> " + elem.tags.map(function(this_value) {return '#' + this_value;}).join(' - '));
       },
     });
   }
