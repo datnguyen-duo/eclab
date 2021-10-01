@@ -158,6 +158,8 @@
       clearTimeout(timeoutId);
     });
 
+    $('.single_story_holder[data-url="test"]').remove();
+
     // $(".submit_button").on("click", function (event) {
     //   event.preventDefault();
     //   $(".form_swiper").slick("slickNext");
