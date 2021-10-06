@@ -211,9 +211,11 @@ function t311_submissions()
             $img_url = upload_user_file($_FILES['file']);
         }
         $add_tags = $_POST['tags'];
-        $add_tags = explode(',', $add_tags);
-        $add_tags = array_map("tn_array_map", $add_tags);
-        $add_tags = implode(',', $add_tags);
+        if ($_POST['tags'] != '') {
+            $add_tags = explode(',', $add_tags);
+            $add_tags = array_map("tn_array_map", $add_tags);
+            $add_tags = implode(',', $add_tags);
+        }
 
         $post_data = array(
             "person" => array(
@@ -235,6 +237,11 @@ function t311_submissions()
                     'base64_img' => $img_url,
                     'radio' => $_POST['radio'],
                     'tag' => $add_tags
+                )
+            ),
+            "triggers" => array(
+                'autoresponse' => array(
+                    'enabled' => true
                 )
             )
         );
@@ -304,6 +311,7 @@ function signup_email_an()
 		    "postal_addresses" : [ { "postal_code" : "'.$zipcode.'" }],
 		    "email_addresses" : [ { "address" : "'.$email.'" }]
 		   },
+           "triggers":{"autoresponse":{"enabled":true}},
 		  "add_tags": [
 		    "volunteer",
 		    "member"
