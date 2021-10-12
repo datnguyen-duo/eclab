@@ -293,7 +293,7 @@ $person_link = array_reverse($person_link);
                     <h2><?php echo $img_with_desc_section['title']; ?></h2>
                 <?php endif; ?>
                 <form id="tn-form" class="form_swiper">
-                    <div class="third_section_content sinlge_box">
+                    <!-- <div class="third_section_content sinlge_box">
                     
                         <div class="left">
                             <?php if( $img_with_desc_section['description'] ): ?>
@@ -338,32 +338,39 @@ $person_link = array_reverse($person_link);
                                 
                             <?php endif; ?>
                         </div>
-                    </div>
+                    </div> -->
 
+                    <!-- FIRST SLIDE -->
                     <?php $first_slide = get_field('first_slide',get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="single_question">
+                            <p class="question"><?php echo $first_slide['headline_2']; ?></p>
+                            <div class="input_wrap">
+                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode1">
+                            </div>
+                        </div>
+                        <div class="single_question last">
                             <p class="question"><?php echo $first_slide['headline_1']; ?></p>
                             <div class="checkbox_wrap">
-                                <div class="single_checkbox">
+                                <div class="single_checkbox checkbox_with_question" data-questions="What do you need most from early education and care for your child(ren)? <br> What has been your greatest challenge in finding and getting care for your child(ren)?">
                                     <input type="radio" id="check_1" name="radio" checked="" value="I’m a family member and/or caregiver">
                                     <label for="check_1">
                                     <?php echo $first_slide['perspective_1']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox">
+                                <div class="single_checkbox checkbox_with_question" data-questions="What has been the most rewarding and/or challenging about your choice to become an early educator? <br> Tell us about an experience working with a child or family that you’ll never forget.">
                                     <input type="radio" id="check_2" name="radio" value="I’m an early childhood educator">
                                     <label for="check_2">
                                     <?php echo $first_slide['perspective_2']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox">
+                                <div class="single_checkbox checkbox_with_question" data-questions="What has been the most rewarding and/or challenging about your choice to become a provider? <br> What do you most need or want to do your work well? Tell us about an experience with a family, child or employee that you’ll never forget.">
                                     <input type="radio" id="check_3" name="radio" value="I’m a provider">
                                     <label for="check_3">
                                     <?php echo $first_slide['perspective_3']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox">
+                                <div class="single_checkbox checkbox_with_question" data-questions="Tell us about a child, caregiver or experience that is illustrative of your experience with early childhood care and education.">
                                     <input type="radio" id="check_4" name="radio" value="I’m a supporter">
                                     <label for="check_4">
                                     <?php echo $first_slide['perspective_4']; ?>
@@ -371,14 +378,31 @@ $person_link = array_reverse($person_link);
                                 </div>
                             </div>
                         </div>
-                        <div class="single_question last">
-                            <p class="question"><?php echo $first_slide['headline_2']; ?></p>
-                            <div class="input_wrap">
-                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode1">
+                    </div>
+
+                    <!-- SECOND SLIDE -->
+                    <?php $third_slide = get_field('third_slide',get_pll_option_page()) ?>
+                    <div class="third_section_content sinlge_box">
+                        <p class="question"><?php echo $third_slide['headline_1']; ?></p>
+                        <div class="checkbox_questions">
+                            What do you need most from early education and care for your child(ren)? <br> What has been your greatest challenge in finding and getting care for your child(ren)?
+                        </div>
+                        <div class="two_question_wrap">
+                            <div class="single_question">
+                                <textarea name="story" id="story" cols="30" rows="10" placeholder="<?php echo $third_slide['textarea_1']; ?>" required></textarea>
+                                <p class="word_counter"><span id="display_story_count">0</span> / <span id="word_story_left">200 <?php echo $third_slide['word_counter']; ?></span></p>
+                            </div>
+                            <div class="single_question last">
+                                <p class="question"><?php echo $third_slide['headline_2']; ?></p>
+                                <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="<?php echo $third_slide['textarea_2']; ?>" required></textarea>
+                                <p class="word_counter"><span id="display_storytile_count">0</span> / <span id="word_storytile_left">10 <?php echo $third_slide['word_counter']; ?><span></p>
                             </div>
                         </div>
+                        
                     </div>
-                    <?php $second_slide = get_field('second_slide',get_pll_option_page()) ?>
+
+                    <!-- THIRD SLIDE -->
+                    <!-- <?php //$second_slide = get_field('second_slide',get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="single_question">
                             <p class="question"><?php echo $second_slide['headline_1']; ?></p>
@@ -386,70 +410,52 @@ $person_link = array_reverse($person_link);
                                 <div class="single_checkbox">
                                     <input type="radio" id="check1" name="radios" checked="" value="challenges">
                                     <label for="check1">
-                                    <?php echo $second_slide['experience_1']; ?>
+                                    <?php //echo $second_slide['experience_1']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check2" name="radios" value="successes">
                                     <label for="check2">
-                                    <?php echo $second_slide['experience_2']; ?>
+                                    <?php //echo $second_slide['experience_2']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check3" name="radios" value="thank">
                                     <label for="check3">
-                                    <?php echo $second_slide['experience_3']; ?>
+                                    <?php //echo $second_slide['experience_3']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check4" name="radios" value="share">
                                     <label for="check4">
-                                    <?php echo $second_slide['experience_4']; ?>
+                                    <?php //echo $second_slide['experience_4']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox">
                                     <input type="radio" id="check5" name="radios" value="other">
                                     <label for="check5">
-                                    <?php echo $second_slide['experience_5']; ?>
+                                    <?php //echo $second_slide['experience_5']; ?>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="single_question last select_input visible">
-                            <p class="question"><?php echo $second_slide['headline_2']; ?></p>
+                            <p class="question"><?php //echo $second_slide['headline_2']; ?></p>
                             <div class="input_wrap select-wrapper">
                                 <select name="" class="specify_select">
-                                    <option value="Affordability"><?php echo $second_slide['dropdown_item_1']; ?></option>
-                                    <option value="Access"><?php echo $second_slide['dropdown_item_2']; ?></option>
-                                    <option value="Quality"><?php echo $second_slide['dropdown_item_3']; ?></option>
-                                    <option value="Equity"><?php echo $second_slide['dropdown_item_4']; ?></option>
-                                    <option value="Consistency"><?php echo $second_slide['dropdown_item_5']; ?></option>
-                                    <option value="Other"><?php echo $second_slide['dropdown_item_6']; ?></option>
+                                    <option value="Affordability"><?php //echo $second_slide['dropdown_item_1']; ?></option>
+                                    <option value="Access"><?php //echo $second_slide['dropdown_item_2']; ?></option>
+                                    <option value="Quality"><?php //echo $second_slide['dropdown_item_3']; ?></option>
+                                    <option value="Equity"><?php //echo $second_slide['dropdown_item_4']; ?></option>
+                                    <option value="Consistency"><?php //echo $second_slide['dropdown_item_5']; ?></option>
+                                    <option value="Other"><?php //echo $second_slide['dropdown_item_6']; ?></option>
                                 </select>
                                 <!-- <input type="text" placeholder="Choose your topic" name="topic"> -->
-                            </div>
+                            <!-- </div>
                         </div>
-                    </div>
-
-                    <?php $third_slide = get_field('third_slide',get_pll_option_page()) ?>
-                    <div class="third_section_content sinlge_box">
-                        <div class="two_question_wrap">
-                            <div class="single_question">
-                                <p class="question"><?php echo $third_slide['headline_1']; ?></p>
-                                <textarea name="story" id="story" cols="30" rows="10" placeholder="<?php echo $third_slide['textarea_1']; ?>"></textarea>
-                                <p class="word_counter"><span id="display_story_count">0</span> / <span id="word_story_left">200 <?php echo $third_slide['word_counter']; ?></span></p>
-                                
-
-                            </div>
-                            <div class="single_question last">
-                                <p class="question"><?php echo $third_slide['headline_2']; ?></p>
-                                <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="<?php echo $third_slide['textarea_2']; ?>"></textarea>
-                                <p class="word_counter"><span id="display_storytile_count">0</span> / <span id="word_storytile_left">10 <?php echo $third_slide['word_counter']; ?><span></p>
-                            </div>
-                        </div>
-                        
-                    </div>
-
+                    </div> -->
+                    
+                    <!-- FOURTH SLIDE -->
                     <?php $fourth_slide = get_field('fourth_slide',get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="two_columns">

@@ -147,10 +147,15 @@
     //     //     }
     //     // ]
     // });
-
+    
     $(".single_box .header").on("click", function (event) {
       $(this).toggleClass("active");
       $(this).parent().find(".description").slideToggle();
+    });
+
+    $(".checkbox_with_question").on("click", function (event) {
+      var currentQuestion = $(this).data("questions");
+      $('.checkbox_questions').html(currentQuestion);
     });
 
     $(".next_slide").on("click", function (event) {
@@ -165,20 +170,22 @@
     //   $(".form_swiper").slick("slickNext");
     // });
 
-    $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
-      if (currentSlide == 0 || currentSlide == 7) {
-        $(".slick-arrow").removeClass("active");
-      } else {
-        $(".slick-arrow").addClass("active");
-      }
+    $(".slick-arrow").addClass("active");
 
-      if (currentSlide == 6) {
+    $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
+      // if (currentSlide == 6) {
+      //   $(".slick-arrow").removeClass("active");
+      // } else {
+      //   $(".slick-arrow").addClass("active");
+      // }
+      
+      if (currentSlide == 4) {
         $(".slick-arrow.right").addClass("last");
       } else {
         $(".slick-arrow.right").removeClass("last");
       }
 
-      if (currentSlide == 6) {
+      if (currentSlide == 4) {
         $(".slick-arrow.right").addClass("last");
       } else {
         $(".slick-arrow.right").removeClass("last");

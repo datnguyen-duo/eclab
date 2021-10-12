@@ -629,7 +629,7 @@
         display: none;
       }
 
-      &:nth-of-type(7) {
+      &:nth-of-type(5) {
         button {
           margin-right: 0;
         }
@@ -986,15 +986,32 @@
         transition: all 0.2s ease;
       }
 
+      .checkbox_questions{
+        color: #d5714f;
+        font-size: 23px;
+        .font2();
+        margin-bottom: 35px;
+        width: 100%;
+        line-height: 1.4em;
+
+        @media @750 {
+          font-size: 20px;
+          margin-bottom: 20px;
+        }
+      }
+
       .two_question_wrap {
         display: flex;
         width: 100%;
+        align-items: flex-end;
 
         @media @750 {
           flex-wrap: wrap;
         }
 
         .single_question {
+          margin: 0px;
+
           @media @750 {
             width: 100%;
             margin-bottom: 30px;
