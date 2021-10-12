@@ -60,7 +60,8 @@ $google_analytics_script = get_field('google_analytics_script', 'option');
         }
         .signup_popup .signup_popup_content .signup_popup_content_wrap {
             max-width: 1440px;
-            width: 90%;
+            /*width: 90%;*/
+            min-height: 320px;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -88,6 +89,7 @@ $google_analytics_script = get_field('google_analytics_script', 'option');
             justify-content: center;
             background-color: #fcf3dc;
             padding-block: 30px;
+            margin: 10px 20px;
         }
         .signup_popup .signup_popup_content .signup_popup_content_wrap .left .message {
             font-family: "korolev";
@@ -99,11 +101,12 @@ $google_analytics_script = get_field('google_analytics_script', 'option');
             text-align: center;
             text-transform: uppercase;
             max-width: 350px;
-            margin: auto;
-            margin-top: 0;
-            margin-bottom: 0;
+            margin: 15px 25px;
         }
         @media only screen and (max-width: 1020px) {
+            .signup_popup .signup_popup_content .signup_popup_content_wrap {
+                width: 100%;
+            }
             .signup_popup .signup_popup_content .signup_popup_content_wrap .left {
                 width: 100%;
                 margin-bottom: 30px;

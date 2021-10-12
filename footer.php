@@ -132,6 +132,7 @@
                     },
                     dataType: "json",
                     success: function (response) {
+                        
                         $("#email_popup").fadeOut();
                         $("#signup_popup").fadeIn();
                         $("input[name='popup_fname']").val('');
@@ -170,8 +171,9 @@
                     },
                     dataType: "json",
                     success: function (response) {
-                        $("#signup_popup").fadeIn();
-                        $("body").addClass("no_scroll");
+                        $("#community_signup").find(".thank_you_message").css("display","flex");
+                        // $("#signup_popup").fadeIn();
+                        // $("body").addClass("no_scroll");
                         $("input#first_name").val('');
                         $("input#last_name").val(''); 
                         $("input#email").val(''); 

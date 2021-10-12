@@ -934,7 +934,6 @@ jQuery(document).ready(function ($) {
         }
     })
 
-<<<<<<< HEAD
     if ($("#tn-form").length > 0) {
         $("#tn-form").validate({
             errorElement: "div",
@@ -963,31 +962,6 @@ jQuery(document).ready(function ($) {
             },
         });
     }
-=======
-    // if ($("#tn-form").length > 0) {
-    //     $("#tn-form").validate({
-    //         rules: {
-    //             email: {
-    //                 required: true,
-    //                 email: true
-    //             },
-    //             fname: "required",
-    //             lname: "required",
-    //             story: "required",
-    //             storytile: "required",
-    //             checkbox: "required",
-    //         },
-    //         messages: {
-    //             email: "This field is required",
-    //             fname: "This field is required",
-    //             lname: "This field is required",
-    //             story: "This field is required",
-    //             storytile: "This field is required",
-    //             checkbox: "This field is required",
-    //         },
-    //     });
-    // }
->>>>>>> 091be08bab486c546e400a6c762b765a6aae38d0
 
     $('input[name="checkbox1"]').click(function() {
         if ($(this).is(':checked')) {
