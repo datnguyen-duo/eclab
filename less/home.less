@@ -586,6 +586,12 @@
   .third_section {
     background-color: @color2;
 
+    .error{
+      .font2();
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
     .slick-dots {
       position: absolute;
       top: -10px;
@@ -624,6 +630,7 @@
 
     .slick-dots li {
       z-index: 1;
+      pointer-events: none;
 
       &:last-child {
         display: none;
@@ -1049,6 +1056,11 @@
               font-size: 18px;
               padding: 10px;
             }
+
+            &.error{
+              margin-top: 0;
+              margin-bottom: 0!important;
+            }
           }
           .word_counter {
             display: block;
@@ -1128,6 +1140,11 @@
               .font2();
               font-size: 20px;
               line-height: 1.2;
+
+              &.error{
+                margin-top: 0;
+                margin-bottom: 0!important;
+              }
             }
 
             input[type="radio"]:checked + label {
@@ -1149,6 +1166,11 @@
           .font2();
           padding: 15px;
           box-sizing: border-box;
+
+          &.error{
+            margin-top: 0;
+            margin-bottom: 0!important;
+          }
 
           &::placeholder {
             font-size: 21px;

@@ -390,6 +390,7 @@ $person_link = array_reverse($person_link);
                         <div class="two_question_wrap">
                             <div class="single_question">
                                 <textarea name="story" id="story" cols="30" rows="10" placeholder="<?php echo $third_slide['textarea_1']; ?>" required></textarea>
+                                <span style="display:none;" class="required_field">required</span>
                                 <p class="word_counter"><span id="display_story_count">0</span> / <span id="word_story_left">200 <?php echo $third_slide['word_counter']; ?></span></p>
                             </div>
                             <div class="single_question last">
@@ -491,11 +492,11 @@ $person_link = array_reverse($person_link);
                         <p class="question"><?php echo $fifth_slide['headline']; ?></p>
                         <div class="single_question last">
                             <div class="form_holder">
-                                <div class="half"><input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>"></div>
-                                <div class="half"><input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>"></div>
-                                <input name="email" type="email" placeholder="<?php echo $fifth_slide['email_address']; ?>">
+                                <div class="half"><input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>" required></div>
+                                <div class="half"><input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>" required></div>
+                                <input name="email" type="email" placeholder="<?php echo $fifth_slide['email_address']; ?>" required>
                                 <div class="half"><input name="phonenumber" type="text" placeholder="<?php echo $fifth_slide['phone']; ?>"></div>
-                                <div class="half"><input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>"></div>
+                                <div class="half"><input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>" required></div>
                             </div>
                         </div>
                     </div>
@@ -519,7 +520,7 @@ $person_link = array_reverse($person_link);
                                     </div>
                                     <div class="single_box_wrap">
                                         <label class="container">
-                                            <input type="checkbox" name="checkbox" value="agree">
+                                            <input type="checkbox" name="checkbox" value="agree" checked>
                                             <span class="checkmark"></span>
                                             <?php echo $tell_story_form_fields['checkbox2']; ?>
                                         </label>
@@ -954,7 +955,7 @@ jQuery(document).ready(function ($) {
                 storytile: "required",
                 checkbox1: "required",
                 zipcode: "required",
-                zipcode1: "required"
+                // zipcode1: "required"
             },
             messages: {
                 email: "This field is required",
@@ -968,6 +969,40 @@ jQuery(document).ready(function ($) {
             },
         });
     }
+
+    
+
+    $(".form_swiper").on("beforeChange", function (event, slick, currentSlide) {
+      $('.slick-arrow.right').css('pointer-events', 'all');
+    });
+
+    
+
+    $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
+        $("#tn-form").valid();
+
+        $(".slick-current [required]:visible").each(function () {
+            if($(this).val().trim().length < 1){
+             $('.slick-arrow.right').css('pointer-events', 'none');
+            //  $('.slick-current').find('.required_field').fadeIn();
+            return; 
+            } else{
+                $('.slick-arrow.right').css('pointer-events', 'all')
+                // $('.slick-current').find('.required_field').fadeOut();
+            }
+        }) 
+
+        $(".slick-current [required]:visible").on('change keyup paste', function() {
+            $(".slick-current [required]:visible").each(function () {
+                if($(this).val().trim().length < 1){
+                    $('.slick-arrow.right').css('pointer-events', 'none')
+                return; 
+                } else{
+                    $('.slick-arrow.right').css('pointer-events', 'all')
+                }
+            })
+        });
+    })
 
     $('input[name="checkbox1"]').click(function() {
         if ($(this).is(':checked')) {

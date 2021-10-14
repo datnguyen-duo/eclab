@@ -172,7 +172,20 @@
 
     $(".slick-arrow").addClass("active");
 
+    $('.slick-current [required]:visible').keypress(function() {
+      $(".slick-current [required]:visible").each(function () {
+        
+          console.log("Pkasdfas");
+
+
+      })
+    });
+
+
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
+      
+      
+
       // if (currentSlide == 6) {
       //   $(".slick-arrow").removeClass("active");
       // } else {
