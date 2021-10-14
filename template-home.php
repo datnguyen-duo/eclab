@@ -480,6 +480,15 @@ $person_link = array_reverse($person_link);
                                 <div class="single_question">
                                     <p class="question"><?php echo $fourth_slide['headline_2'] ?></p>
                                     <input type="text" id="tags" name="tags">
+                                    <div class="tag_error">You have reached maximum tags</div>
+                                    <ul>
+                                        <li class="add-button" data-id="queerfamilies">#queerfamilies</li>
+                                        <li class="add-button" data-id="teacherstyle">#teacherstyle</li>
+                                        <li class="add-button" data-id="strongsinglemom">#strongsinglemom</li>
+                                        <li class="add-button" data-id="specialneedsfamilies">#specialneedsfamilies</li>
+                                        <li class="add-button" data-id="latinxparenting">#latinxparenting</li>
+                                        <li class="add-button" data-id="blackparenthood">#blackparenthood</li>
+                                    </ul>
                                 </div>
                                 
                             </div>
@@ -517,6 +526,7 @@ $person_link = array_reverse($person_link);
                                             <span class="checkmark"></span>
                                             <?php echo $tell_story_form_fields['checkbox1']; ?>
                                         </label>
+                                        <div class="checkbox_error">This field is required</div>
                                     </div>
                                     <div class="single_box_wrap">
                                         <label class="container">
@@ -968,13 +978,9 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    
-
     $(".form_swiper").on("beforeChange", function (event, slick, currentSlide) {
       $('.slick-arrow.right').css('pointer-events', 'all');
     });
-
-    
 
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
         $("#tn-form").valid();
@@ -1006,8 +1012,10 @@ jQuery(document).ready(function ($) {
     $('input[name="checkbox1"]').click(function() {
         if ($(this).is(':checked')) {
             $("#home_submit_button").removeAttr("disabled");
+            $(".checkbox_error").fadeOut();
         } else {
             $("#home_submit_button").attr("disabled", true);
+            $(".checkbox_error").fadeIn();
         }
     })
 

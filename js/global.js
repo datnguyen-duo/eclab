@@ -56,6 +56,7 @@
       }
     });
 
+    //tags start
     $("#tn-form input").on("change", function () {
       if ($("input[name=radios]:checked", "#tn-form").val() == "challenges") {
         $(".select_input").addClass("visible");
@@ -63,9 +64,53 @@
         $(".select_input").removeClass("visible");
       }
     });
+    
+    $('#tags').tagThis({
+      interactive: true,
+      noDuplicates: true,
+      removeWithBackspace: false,
+      maxTags: 10,
+      defaultText: 'Type to tag',
+    })
+
+    $("#tags--tag").on('change keyup paste', function() {
+      if($('#tag-this--tags .tag').length > 9){
+        $('.tag_error').fadeIn();
+        // $(this).attr("disabled", true);
+      } else{
+        $('.tag_error').fadeOut();
+        // $(this).removeAttr("disabled");
+      }
+    });
+
+    $('#tn-form input, #tn-form').on('keypress', function(e) {
+        return e.which !== 13;
+    });
+
+    $('.add-button').on('click', function(){
+    console.log('clicked')
+      //Tag-This lets you pass your own ID and/or text to be attached to a tag you want to create!
+      //Your code may look slightly different than this, but here's away to construct an object with an ID that Tag-This will accept.
+      var tagData = {
+          text : $(this).text(),
+          id : $(this).data('id')
+      }
+
+      //We have our object- let's pass it to Tag-This's 'addTag' method
+      $('#tags').addTag($(this).text());
+      // $(this).remove()
+
+    });
+
+    //tags end
+
+    $('.single_story_holder[data-url="test"]').remove();
+    $('.single_story_holder[data-url="qwe"]').remove();
 
     $(".form_swiper").slick({
       dots: true,
+      swipe: false,
+      touchMove: false,
       speed: 300,
       infinite: false,
       draggable: false,
@@ -159,24 +204,6 @@
       $(".form_swiper").slick("slickNext");
       clearTimeout(timeoutId);
     });
-
-    $('.single_story_holder[data-url="test"]').remove();
-    $('.single_story_holder[data-url="qwe"]').remove();
-
-    // $(".submit_button").on("click", function (event) {
-    //   event.preventDefault();
-    //   $(".form_swiper").slick("slickNext");
-    // });
-
-    $('.single_story_holder[data-url="test"]').remove();
-
-    // $(".submit_button").on("click", function (event) {
-    //   event.preventDefault();
-    //   $(".form_swiper").slick("slickNext");
-    // });
-
-    // $(".slick-arrow").addClass("active");
-
 
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
 

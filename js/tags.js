@@ -766,10 +766,10 @@
 
     $.fn.inputTags.defaults = {
       tags: [],
-      keys: [188],
+      keys: [32],
       minLength: 2,
       maxLength: 30,
-      max: 10,
+      max: 20,
       init: false,
       create: false,
       update: false,
