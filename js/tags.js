@@ -766,10 +766,10 @@
 
     $.fn.inputTags.defaults = {
       tags: [],
-      keys: [32],
+      keys: [188],
       minLength: 2,
       maxLength: 30,
-      max: 20,
+      max: 10,
       init: false,
       create: false,
       update: false,
@@ -787,7 +787,7 @@
         empty: "Attention, you cannot add an empty tag.",
         minLength: "Attention, your tag must have at least 2 characters.",
         maxLength: "Attention, your tag must not exceed 30 characters.",
-        max: "Attention, the number of tags must not exceed 20.",
+        max: "Attention, the number of tags must not exceed 10.",
         exists: "Attention, this tag already exists !",
         autocomplete_only: "Attention, you must select a value from the list.",
         timeout: 8000,

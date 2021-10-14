@@ -293,7 +293,7 @@ $person_link = array_reverse($person_link);
                     <h2><?php echo $img_with_desc_section['title']; ?></h2>
                 <?php endif; ?>
                 <form id="tn-form" class="form_swiper">
-                    <!-- <div class="third_section_content sinlge_box">
+                    <div class="third_section_content sinlge_box">
                     
                         <div class="left">
                             <?php if( $img_with_desc_section['description'] ): ?>
@@ -338,7 +338,7 @@ $person_link = array_reverse($person_link);
                                 
                             <?php endif; ?>
                         </div>
-                    </div> -->
+                    </div>
 
                     <!-- FIRST SLIDE -->
                     <?php $first_slide = get_field('first_slide',get_pll_option_page()) ?>
@@ -463,7 +463,7 @@ $person_link = array_reverse($person_link);
                             <div class="single_column">
                                 <p class="question"><?php echo $fourth_slide['headline_1'] ?></p>
                                 <div class="image-upload-wrap">
-                                    <input class="file-upload-input" name="photo" id="photo" type='file' accept="image/*" />
+                                    <input class="file-upload-input" name="photo" id="photo" type='file' accept="image/*"/>
                                     <input type="hidden" id="base64_img" name="base64_img" value="">
                                     <div class="drag-text">
                                     <h3><?php echo $fourth_slide['image_upload_title'] ?></h3>
@@ -513,7 +513,7 @@ $person_link = array_reverse($person_link);
                                 <div class="custom_checkobxes">
                                     <div class="single_box_wrap">
                                         <label class="container">
-                                            <input type="checkbox" name="checkbox1" value="disclaimer">
+                                            <input type="checkbox" name="checkbox1" value="disclaimer" required>
                                             <span class="checkmark"></span>
                                             <?php echo $tell_story_form_fields['checkbox1']; ?>
                                         </label>
@@ -955,7 +955,6 @@ jQuery(document).ready(function ($) {
                 storytile: "required",
                 checkbox1: "required",
                 zipcode: "required",
-                // zipcode1: "required"
             },
             messages: {
                 email: "This field is required",
@@ -965,7 +964,6 @@ jQuery(document).ready(function ($) {
                 storytile: "This field is required",
                 checkbox1: "This field is required",
                 zipcode: "This field is required",
-                zipcode1: "This field is required"
             },
         });
     }
@@ -984,6 +982,7 @@ jQuery(document).ready(function ($) {
         $(".slick-current [required]:visible").each(function () {
             if($(this).val().trim().length < 1){
              $('.slick-arrow.right').css('pointer-events', 'none');
+             console.log($(this));
             //  $('.slick-current').find('.required_field').fadeIn();
             return; 
             } else{

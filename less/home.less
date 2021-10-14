@@ -632,11 +632,15 @@
       z-index: 1;
       pointer-events: none;
 
+      &:first-child {
+        display: none;
+      }
+
       &:last-child {
         display: none;
       }
 
-      &:nth-of-type(5) {
+      &:nth-of-type(6) {
         button {
           margin-right: 0;
         }
@@ -653,7 +657,11 @@
       background-color: @color2;
       border: 1px solid #000;
       text-indent: -9999px;
-      margin-right: 70px;
+      margin-right: 115px;
+
+      @media @1300 {
+        margin-right: 110px;
+      }
 
       @media @1100 {
         margin-right: 50px;

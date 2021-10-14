@@ -168,28 +168,25 @@
     //   $(".form_swiper").slick("slickNext");
     // });
 
-    $(".slick-arrow").addClass("active");
+    $('.single_story_holder[data-url="test"]').remove();
 
-    $(".slick-current [required]:visible").keypress(function () {
-      $(".slick-current [required]:visible").each(function () {
-        console.log("Pkasdfas");
-      });
-    });
+    // $(".submit_button").on("click", function (event) {
+    //   event.preventDefault();
+    //   $(".form_swiper").slick("slickNext");
+    // });
+
+    // $(".slick-arrow").addClass("active");
+
 
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
-      // if (currentSlide == 6) {
-      //   $(".slick-arrow").removeClass("active");
-      // } else {
-      //   $(".slick-arrow").addClass("active");
-      // }
 
-      if (currentSlide == 4) {
-        $(".slick-arrow.right").addClass("last");
+      if (currentSlide == 0) {
+        $(".slick-arrow").removeClass("active");
       } else {
-        $(".slick-arrow.right").removeClass("last");
+        $(".slick-arrow").addClass("active");
       }
-
-      if (currentSlide == 4) {
+      
+      if (currentSlide == 5) {
         $(".slick-arrow.right").addClass("last");
       } else {
         $(".slick-arrow.right").removeClass("last");
