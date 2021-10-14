@@ -1,13 +1,12 @@
 (function ($) {
   $(document).ready(function () {
-    
     var vh = window.innerHeight * 0.01; // Then we set the value in the --vh custom property to the root of the document
 
-    document.documentElement.style.setProperty('--vh', "".concat(vh, "px"));
-    window.addEventListener('resize', function () {
+    document.documentElement.style.setProperty("--vh", "".concat(vh, "px"));
+    window.addEventListener("resize", function () {
       // We execute the same script as before
       var vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', "".concat(vh, "px"));
+      document.documentElement.style.setProperty("--vh", "".concat(vh, "px"));
     });
 
     $(".slider").slick({
@@ -21,40 +20,38 @@
       // autoplay: true,
     });
 
-    $("#story").on('keyup', function() {
+    $("#story").on("keyup", function () {
       var words = 0;
-  
-      if ((this.value.match(/\S+/g)) != null) {
+
+      if (this.value.match(/\S+/g) != null) {
         words = this.value.match(/\S+/g).length;
       }
-  
+
       if (words > 200) {
         // Split the string on first 200 words and rejoin on spaces
         var trimmed = $(this).val().split(/\s+/, 200).join(" ");
         // Add a space at the end to make sure more typing creates new words
         $(this).val(trimmed + " ");
-      }
-      else {
-        $('#display_story_count').text(words);
+      } else {
+        $("#display_story_count").text(words);
         // $('#word_story_left').text(200-words);
       }
     });
 
-    $("#storytile").on('keyup', function() {
+    $("#storytile").on("keyup", function () {
       var words = 0;
-  
-      if ((this.value.match(/\S+/g)) != null) {
+
+      if (this.value.match(/\S+/g) != null) {
         words = this.value.match(/\S+/g).length;
       }
-  
+
       if (words > 10) {
         // Split the string on first 200 words and rejoin on spaces
         var trimmed = $(this).val().split(/\s+/, 10).join(" ");
         // Add a space at the end to make sure more typing creates new words
         $(this).val(trimmed + " ");
-      }
-      else {
-        $('#display_storytile_count').text(words);
+      } else {
+        $("#display_storytile_count").text(words);
         // $('#word_storytile_left').text(10-words);
       }
     });
@@ -147,7 +144,7 @@
     //     //     }
     //     // ]
     // });
-    
+
     $(".single_box .header").on("click", function (event) {
       $(this).toggleClass("active");
       $(this).parent().find(".description").slideToggle();
@@ -155,7 +152,7 @@
 
     $(".checkbox_with_question").on("click", function (event) {
       var currentQuestion = $(this).data("questions");
-      $('.checkbox_questions').html(currentQuestion);
+      $(".checkbox_questions").html(currentQuestion);
     });
 
     $(".next_slide").on("click", function (event) {
@@ -164,6 +161,7 @@
     });
 
     $('.single_story_holder[data-url="test"]').remove();
+    $('.single_story_holder[data-url="qwe"]').remove();
 
     // $(".submit_button").on("click", function (event) {
     //   event.preventDefault();
@@ -172,26 +170,19 @@
 
     $(".slick-arrow").addClass("active");
 
-    $('.slick-current [required]:visible').keypress(function() {
+    $(".slick-current [required]:visible").keypress(function () {
       $(".slick-current [required]:visible").each(function () {
-        
-          console.log("Pkasdfas");
-
-
-      })
+        console.log("Pkasdfas");
+      });
     });
 
-
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
-      
-      
-
       // if (currentSlide == 6) {
       //   $(".slick-arrow").removeClass("active");
       // } else {
       //   $(".slick-arrow").addClass("active");
       // }
-      
+
       if (currentSlide == 4) {
         $(".slick-arrow.right").addClass("last");
       } else {
