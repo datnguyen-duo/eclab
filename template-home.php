@@ -346,31 +346,31 @@ $person_link = array_reverse($person_link);
                         <div class="single_question">
                             <p class="question"><?php echo $first_slide['headline_2']; ?></p>
                             <div class="input_wrap">
-                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode1">
+                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode1" <?php echo ($first_slide['required_display_name']) ? 'required' : null; ?>>
                             </div>
                         </div>
                         <div class="single_question last">
                             <p class="question"><?php echo $first_slide['headline_1']; ?></p>
                             <div class="checkbox_wrap">
-                                <div class="single_checkbox checkbox_with_question" data-questions="What do you need most from early education and care for your child(ren)? <br> What has been your greatest challenge in finding and getting care for your child(ren)?">
+                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_1'] ?>">
                                     <input type="radio" id="check_1" name="radio" checked="" value="I’m a family member and/or caregiver">
                                     <label for="check_1">
                                     <?php echo $first_slide['perspective_1']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox checkbox_with_question" data-questions="What has been the most rewarding and/or challenging about your choice to become an early educator? <br> Tell us about an experience working with a child or family that you’ll never forget.">
+                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_2'] ?>">
                                     <input type="radio" id="check_2" name="radio" value="I’m an early childhood educator">
                                     <label for="check_2">
                                     <?php echo $first_slide['perspective_2']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox checkbox_with_question" data-questions="What has been the most rewarding and/or challenging about your choice to become a provider? <br> What do you most need or want to do your work well? Tell us about an experience with a family, child or employee that you’ll never forget.">
+                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_3'] ?>">
                                     <input type="radio" id="check_3" name="radio" value="I’m a provider">
                                     <label for="check_3">
                                     <?php echo $first_slide['perspective_3']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox checkbox_with_question" data-questions="Tell us about a child, caregiver or experience that is illustrative of your experience with early childhood care and education.">
+                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_4'] ?>">
                                     <input type="radio" id="check_4" name="radio" value="I’m a supporter">
                                     <label for="check_4">
                                     <?php echo $first_slide['perspective_4']; ?>
@@ -389,13 +389,13 @@ $person_link = array_reverse($person_link);
                         </div>
                         <div class="two_question_wrap">
                             <div class="single_question">
-                                <textarea name="story" id="story" cols="30" rows="10" placeholder="<?php echo $third_slide['textarea_1']; ?>" required></textarea>
+                                <textarea name="story" id="story" cols="30" rows="10" placeholder="<?php echo $third_slide['textarea_1']; ?>" <?php echo ($third_slide['required_textarea_1']) ? 'required' : null; ?>></textarea>
                                 <span style="display:none;" class="required_field">required</span>
                                 <p class="word_counter"><span id="display_story_count">0</span> / <span id="word_story_left">200 <?php echo $third_slide['word_counter']; ?></span></p>
                             </div>
                             <div class="single_question last">
                                 <p class="question"><?php echo $third_slide['headline_2']; ?></p>
-                                <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="<?php echo $third_slide['textarea_2']; ?>" required></textarea>
+                                <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="<?php echo $third_slide['textarea_2']; ?>" <?php echo ($third_slide['required_textarea_2']) ? 'required' : null; ?>></textarea>
                                 <p class="word_counter"><span id="display_storytile_count">0</span> / <span id="word_storytile_left">10 <?php echo $third_slide['word_counter']; ?><span></p>
                             </div>
                         </div>
@@ -482,12 +482,9 @@ $person_link = array_reverse($person_link);
                                     <input type="text" id="tags" name="tags">
                                     <div class="tag_error">You have reached maximum tags</div>
                                     <ul>
-                                        <li class="add-button" data-id="queerfamilies">#queerfamilies</li>
-                                        <li class="add-button" data-id="teacherstyle">#teacherstyle</li>
-                                        <li class="add-button" data-id="strongsinglemom">#strongsinglemom</li>
-                                        <li class="add-button" data-id="specialneedsfamilies">#specialneedsfamilies</li>
-                                        <li class="add-button" data-id="latinxparenting">#latinxparenting</li>
-                                        <li class="add-button" data-id="blackparenthood">#blackparenthood</li>
+                                        <?php foreach( $fourth_slide['predefined_tags'] as $singleTag ): ?>
+                                            <li class="add-button" data-id="<?php echo str_replace("#", "", $singleTag); ?>"><?php echo $singleTag; ?></li>
+                                        <?php endforeach; ?>
                                     </ul>
                                 </div>
                                 
@@ -501,11 +498,11 @@ $person_link = array_reverse($person_link);
                         <p class="question"><?php echo $fifth_slide['headline']; ?></p>
                         <div class="single_question last">
                             <div class="form_holder">
-                                <div class="half"><input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>" required></div>
-                                <div class="half"><input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>" required></div>
-                                <input name="email" type="email" placeholder="<?php echo $fifth_slide['email_address']; ?>" required>
-                                <div class="half"><input name="phonenumber" type="text" placeholder="<?php echo $fifth_slide['phone']; ?>"></div>
-                                <div class="half"><input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>" required></div>
+                                <div class="half"><input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>" <?php echo ($fifth_slide['required_first_name']) ? 'required' : null; ?>></div>
+                                <div class="half"><input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>" <?php echo ($fifth_slide['required_last_name']) ? 'required' : null; ?>></div>
+                                <input name="email" type="email" placeholder="<?php echo $fifth_slide['email_address']; ?>" <?php echo ($fifth_slide['required_email_address']) ? 'required' : null; ?>>
+                                <div class="half"><input name="phonenumber" type="text" placeholder="<?php echo $fifth_slide['phone']; ?>" <?php echo ($fifth_slide['required_phone']) ? 'required' : null; ?>></div>
+                                <div class="half"><input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>" <?php echo ($fifth_slide['required_zip_code']) ? 'required' : null; ?>></div>
                             </div>
                         </div>
                     </div>
