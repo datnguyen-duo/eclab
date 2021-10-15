@@ -483,7 +483,7 @@ $person_link = array_reverse($person_link);
                                     <div class="tag_error">You have reached maximum tags</div>
                                     <ul>
                                         <?php foreach( $fourth_slide['predefined_tags'] as $singleTag ): ?>
-                                            <li class="add-button" data-id="<?php echo str_replace("#", "", $singleTag); ?>"><?php echo $singleTag; ?></li>
+                                            <li class="add-button" data-id="<?php echo str_replace("#", "", $singleTag['single_tag']); ?>"><?php echo $singleTag['single_tag']; ?></li>
                                         <?php endforeach; ?>
                                     </ul>
                                 </div>
