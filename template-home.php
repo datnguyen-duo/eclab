@@ -56,11 +56,11 @@ $person_link = array_reverse($person_link);
             <div class="hero_description">
                 <div class="hero_description_content">
                     <?php if( $hero_section['title'] ): ?>
-                        <h1><? echo $hero_section['title']; ?></h1>
+                        <h1><?php echo $hero_section['title']; ?></h1>
                     <?php endif; ?>
 
                     <?php if( $hero_section['description'] ): ?>
-                        <p><? echo $hero_section['description']; ?></p>
+                        <p><?php echo $hero_section['description']; ?></p>
                     <?php endif; ?>
 
                     <?php 
