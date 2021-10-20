@@ -380,9 +380,25 @@ window.addEventListener("load", function () {
     ease: Quint.easeOut,
   });
 
-  const trigger = document.querySelectorAll(".single_story_holder.families");
+  const trigger = document.querySelectorAll(
+    ".home .single_story_holder.families"
+  );
 
   gsap.to(trigger, 1.5, {
+    opacity: 1,
+    stagger: 0.1,
+    ease: Quint.easeOut,
+    scrollTrigger: {
+      trigger: ".second_section",
+      start: "top 70%",
+    },
+  });
+
+  const mocTrigger = document.querySelectorAll(
+    ".page-template-template-community .single_story_holder"
+  );
+
+  gsap.to(mocTrigger, 1.5, {
     opacity: 1,
     stagger: 0.1,
     ease: Quint.easeOut,

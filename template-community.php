@@ -165,10 +165,10 @@ $person_link = array_reverse($person_link);
                                         <img class="story_image" src="'.($custom_fields->base64_img? $custom_fields->base64_img: get_template_directory_uri()."/images/single_story.jpg").'" alt="">
                                     </div>
                                     <div class="post_info">
-                                        <h3 class="story_title">
+                                        <h3 class="story_title static">
                                             '.$custom_fields->storytile.'
                                         </h3>
-                                        <p class="story_author">
+                                        <p class="story_author static">
                                             By '.$custom_fields->fname.' '.$custom_fields->lname.' 
                                         </p>
                                         <div class="separator"></div>
