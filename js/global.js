@@ -1,37 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
   gsap.registerPlugin(ScrollTrigger);
-  document.getElementById("page").classList.remove("loading");
-  gsap.from(".home_wrap .home_hero .image_holder", {
-    y: 40,
-    opacity: 0,
-    ease: Quint.easeOut,
-  });
-
-  const textTriggers = gsap.utils.toArray(
-    ".page_container h1, .page_container h2, .page_container h3:not(.static), .page_container h4, .page_container h5, .page_container p:not(.static), .page_container ul"
-  );
-  textTriggers.forEach((text) => {
-    gsap.from(text, {
-      y: 20,
-      opacity: 0,
-      scrollTrigger: {
-        trigger: text,
-        start: "top 85%",
-      },
-    });
-  });
-
-  const graphicTriggers = gsap.utils.toArray(".st__img");
-  graphicTriggers.forEach((img) => {
-    gsap.from(img, {
-      y: 20,
-      opacity: 0,
-      scrollTrigger: {
-        trigger: img,
-        start: "top 80%",
-      },
-    });
-  });
 });
 
 (function ($) {
@@ -404,6 +372,14 @@ document.addEventListener("DOMContentLoaded", function () {
 })(jQuery);
 
 window.addEventListener("load", function () {
+  document.getElementById("page").classList.remove("loading");
+
+  gsap.from(".home_wrap .home_hero .image_holder", {
+    y: 40,
+    opacity: 0,
+    ease: Quint.easeOut,
+  });
+
   const trigger = document.querySelectorAll(".single_story_holder.families");
 
   gsap.to(trigger, 1.5, {
@@ -414,5 +390,31 @@ window.addEventListener("load", function () {
       trigger: ".second_section",
       start: "top 70%",
     },
+  });
+
+  const textTriggers = gsap.utils.toArray(
+    ".page_container h1, .page_container h2, .page_container h3:not(.static), .page_container h4, .page_container h5, .page_container p:not(.static), .page_container ul"
+  );
+  textTriggers.forEach((text) => {
+    gsap.from(text, {
+      y: 20,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: text,
+        start: "top 85%",
+      },
+    });
+  });
+
+  const graphicTriggers = gsap.utils.toArray(".st__img");
+  graphicTriggers.forEach((img) => {
+    gsap.from(img, {
+      y: 20,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: img,
+        start: "top 80%",
+      },
+    });
   });
 });
