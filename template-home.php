@@ -289,6 +289,7 @@ $person_link = array_reverse($person_link);
     if( $img_with_desc_section['title'] || $img_with_desc_section['description'] || $img_with_desc_section['button'] || $img_with_desc_section['image'] ): ?>
         <div class="third_section" id="tell_story">
             <div class="content_holder">
+                <div class="arrow_hidden"></div>
                 <?php if( $img_with_desc_section['title'] ): ?>
                     <h2><?php echo $img_with_desc_section['title']; ?></h2>
                 <?php endif; ?>
@@ -353,25 +354,25 @@ $person_link = array_reverse($person_link);
                             <p class="question"><?php echo $first_slide['headline_1']; ?></p>
                             <div class="checkbox_wrap">
                                 <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_1'] ?>">
-                                    <input type="radio" id="check_1" name="radio" checked="" value="I’m a family member and/or caregiver">
+                                    <input type="radio" id="check_1" name="radio" value="I’m a family member and/or caregiver" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
                                     <label for="check_1">
                                     <?php echo $first_slide['perspective_1']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_2'] ?>">
-                                    <input type="radio" id="check_2" name="radio" value="I’m an early childhood educator">
+                                    <input type="radio" id="check_2" name="radio" value="I’m an early childhood educator" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
                                     <label for="check_2">
                                     <?php echo $first_slide['perspective_2']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_3'] ?>">
-                                    <input type="radio" id="check_3" name="radio" value="I’m a provider">
+                                    <input type="radio" id="check_3" name="radio" value="I’m a provider" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
                                     <label for="check_3">
                                     <?php echo $first_slide['perspective_3']; ?>
                                     </label>
                                 </div>
                                 <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_4'] ?>">
-                                    <input type="radio" id="check_4" name="radio" value="I’m a supporter">
+                                    <input type="radio" id="check_4" name="radio" value="I’m a supporter" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
                                     <label for="check_4">
                                     <?php echo $first_slide['perspective_4']; ?>
                                     </label>
@@ -534,7 +535,8 @@ $person_link = array_reverse($person_link);
                                     </div>
                                 </div>
                                 <button class="button dark submit_button" id="home_submit_button" disabled>
-                                <?php echo $tell_story_form_fields['submit_button']; ?>
+                                    <div class="hidden_button"></div>
+                                    <?php echo $tell_story_form_fields['submit_button']; ?>
                                 </button>
                             </div>
                             
@@ -956,12 +958,22 @@ jQuery(document).ready(function ($) {
                     required: true,
                     email: true
                 },
+                <?php if($fifth_slide['required_first_name']): ?>
                 fname: "required",
+                <?php endif; ?>
+                <?php if($fifth_slide['required_last_name']): ?>
                 lname: "required",
+                <?php endif; ?>
+                <?php if($third_slide['required_textarea_1']): ?>
                 story: "required",
+                <?php endif; ?>
+                <?php if($third_slide['required_textarea_2']): ?>
                 storytile: "required",
+                <?php endif; ?>
                 checkbox1: "required",
+                <?php if($fifth_slide['required_zip_code']): ?>
                 zipcode: "required",
+                <?php endif; ?>
             },
             messages: {
                 email: "This field is required",
@@ -977,19 +989,30 @@ jQuery(document).ready(function ($) {
 
     $(".form_swiper").on("beforeChange", function (event, slick, currentSlide) {
       $('.slick-arrow.right').css('pointer-events', 'all');
+      $('.arrow_hidden').removeClass('active');
+    });
+
+    $('.arrow_hidden').on('click', function(){
+        $("#tn-form").valid();
+        $('.error').not('input, textarea').removeClass('visible');
     });
 
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
-        $("#tn-form").valid();
+        $('.error').not('input, textarea').addClass('visible');
 
         $(".slick-current [required]:visible").each(function () {
-            if($(this).val().trim().length < 1){
+            if($(this).val().trim().length < 1 || $('input[name="radio"]:checked').length == 0){
              $('.slick-arrow.right').css('pointer-events', 'none');
-             console.log($(this));
+             $('.arrow_hidden').addClass('active');
+             $('.error').not('input, textarea').addClass('visible');
+
             //  $('.slick-current').find('.required_field').fadeIn();
-            return; 
+            return false; 
             } else{
+                return false;
                 $('.slick-arrow.right').css('pointer-events', 'all')
+                $('.arrow_hidden').removeClass('active');
+                $('.error').not('input, textarea').removeClass('visible');
                 // $('.slick-current').find('.required_field').fadeOut();
             }
         }) 
@@ -998,21 +1021,31 @@ jQuery(document).ready(function ($) {
             $(".slick-current [required]:visible").each(function () {
                 if($(this).val().trim().length < 1){
                     $('.slick-arrow.right').css('pointer-events', 'none')
-                return; 
+                    $('.arrow_hidden').addClass('active');
+                    $(this).find('.error').not('input, textarea').addClass('visible');
+                return false; 
                 } else{
+                    $('.arrow_hidden').removeClass('active');
                     $('.slick-arrow.right').css('pointer-events', 'all')
+                    $(this).find('.error').not('input, textarea').removeClass('visible');
                 }
             })
         });
+    })
+
+    $('.hidden_button').click(function() {
+        $(".checkbox_error").fadeIn();
     })
 
     $('input[name="checkbox1"]').click(function() {
         if ($(this).is(':checked')) {
             $("#home_submit_button").removeAttr("disabled");
             $(".checkbox_error").fadeOut();
+            $('.hidden_button').fadeOut();
         } else {
             $("#home_submit_button").attr("disabled", true);
             $(".checkbox_error").fadeIn();
+            $('.hidden_button').fadeIn();
         }
     })
 

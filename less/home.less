@@ -585,9 +585,18 @@
 
   .third_section {
     background-color: @color2;
+
+    .content_holder{
+      position: relative;
+    }
+
     @media @750 {
       padding-bottom: 2em;
     }
+    .checkbox_error{
+      display: none;
+    }
+
     .error,
     .checkbox_error,
     .tag_error {
@@ -723,6 +732,50 @@
       }
     }
 
+    .error{
+      &.visible{
+        opacity: 0;
+      }
+    }
+
+    #home_submit_button{
+      position: relative;
+
+      .hidden_button{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+      }
+    }
+
+    .arrow_hidden{
+      position: absolute;
+      bottom: 50px;
+      z-index: 4;
+      cursor: pointer;
+      width: 60px;
+      height: 20px;
+      display: none;
+      left: 16.6%;
+      background-color: transparent;
+
+      &.active{
+        display: block;
+      }
+
+      @media @1020 {
+        left: auto;
+        right: 40px;
+      }
+
+      @media @750{
+        bottom: 20px;
+      }
+    }
+
     .slick-arrow {
       // display: none!important;
       position: absolute;
@@ -753,6 +806,10 @@
 
       &.right {
         left: 10%;
+
+        @media @1100 {
+          left: 13%;
+        }
 
         @media @1020 {
           left: auto;
@@ -1123,6 +1180,20 @@
             width: 200px;
             margin-right: 15px;
             min-height: 100px;
+            position: relative;
+
+            .error{
+              position: absolute;
+              bottom: -40px;
+
+              @media @750 {
+                top: -40px;
+                bottom: auto;
+                width: auto;
+                display: inline;
+                right: 0;
+              }
+            }
 
             @media @750 {
               width: 100%;
@@ -1140,7 +1211,7 @@
               left: -9999%;
             }
 
-            input[type="radio"] + label {
+            label[for="check_1"], label[for="check_2"], label[for="check_3"], label[for="check_4"] {
               display: inline-block;
               box-sizing: border-box;
               height: 100%;
@@ -1164,7 +1235,7 @@
               }
             }
 
-            input[type="radio"]:checked + label {
+            input[type="radio"]:checked + label, input[type="radio"]:checked + .error + label {
               color: #000;
               background-color: #e589b9;
             }
