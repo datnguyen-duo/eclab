@@ -25,7 +25,7 @@ foreach ($submissions->_embedded->{"osdi:submissions"} as $key => $value) {
 $person_link = array_reverse($person_link);
 
  ?>
-<div class="community_wrap">
+<div class="community_wrap page_container">
 
     <?php 
     $popup_section = get_field('popup_section');

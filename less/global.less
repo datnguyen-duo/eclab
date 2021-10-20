@@ -12,14 +12,12 @@
 
 @import "fonts";
 
-
 .transition(@el: all, @speed: 400ms, @tf: ease, @delay: 0ms) {
   -webkit-transition: @el @speed @tf @delay;
   -moz-transition: @el @speed @tf @delay;
   -o-transition: @el @speed @tf @delay;
   transition: @el @speed @tf @delay;
 }
-
 
 h1,
 h2,
@@ -46,6 +44,21 @@ body {
 
   &.no_scroll {
     overflow: hidden;
+  }
+}
+
+#page {
+  &.loading {
+    &::before {
+      content: "";
+      position: fixed;
+      z-index: 99999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+    }
   }
 }
 
@@ -151,6 +164,7 @@ button {
     width: 25%;
     margin-bottom: 20px;
     cursor: pointer;
+    opacity: 0;
 
     @media @1100 {
       width: 33.3333%;
@@ -281,13 +295,13 @@ button {
     }
   }
 
-  .single_story_holder[data-url="test"]{
-    display: none!important;
+  .single_story_holder[data-url="test"] {
+    display: none !important;
   }
 
-  .slick-list{
-    .single_story_holder{
-      .single_story_wrap{
+  .slick-list {
+    .single_story_holder {
+      .single_story_wrap {
         height: 62vh;
       }
     }

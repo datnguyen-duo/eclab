@@ -117,6 +117,8 @@ function eclab_scripts()
     // wp_enqueue_script( 'home', get_template_directory_uri() . '/js/home.js', array(), _S_VERSION, true );
 
     wp_enqueue_script('gsap', get_template_directory_uri() . '/js/gsap.min.js', true);
+    wp_enqueue_script('scrolltrigger', get_template_directory_uri() . '/js/ScrollTrigger.min.js', true);
+
     if (!is_front_page()) {
         wp_enqueue_script('action-network-api', get_template_directory_uri() . '/js/action-network-api.js', array(), _S_VERSION, true);
     }

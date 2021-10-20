@@ -1,3 +1,39 @@
+document.addEventListener("DOMContentLoaded", function () {
+  gsap.registerPlugin(ScrollTrigger);
+  document.getElementById("page").classList.remove("loading");
+  gsap.from(".home_wrap .home_hero .image_holder", {
+    y: 40,
+    opacity: 0,
+    ease: Quint.easeOut,
+  });
+
+  const textTriggers = gsap.utils.toArray(
+    ".page_container h1, .page_container h2, .page_container h3:not(.static), .page_container h4, .page_container h5, .page_container p:not(.static), .page_container ul"
+  );
+  textTriggers.forEach((text) => {
+    gsap.from(text, {
+      y: 20,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: text,
+        start: "top 85%",
+      },
+    });
+  });
+
+  const graphicTriggers = gsap.utils.toArray(".st__img");
+  graphicTriggers.forEach((img) => {
+    gsap.from(img, {
+      y: 20,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: img,
+        start: "top 80%",
+      },
+    });
+  });
+});
+
 (function ($) {
   $(document).ready(function () {
     var vh = window.innerHeight * 0.01; // Then we set the value in the --vh custom property to the root of the document
@@ -64,42 +100,41 @@
         $(".select_input").removeClass("visible");
       }
     });
-    
-    $('#tags').tagThis({
+
+    $("#tags").tagThis({
       interactive: true,
       noDuplicates: true,
       removeWithBackspace: false,
       maxTags: 10,
-      defaultText: 'Type to tag',
-    })
+      defaultText: "Type to tag",
+    });
 
-    $("#tags--tag").on('change keyup paste', function() {
-      if($('#tag-this--tags .tag').length > 9){
-        $('.tag_error').fadeIn();
+    $("#tags--tag").on("change keyup paste", function () {
+      if ($("#tag-this--tags .tag").length > 9) {
+        $(".tag_error").fadeIn();
         // $(this).attr("disabled", true);
-      } else{
-        $('.tag_error').fadeOut();
+      } else {
+        $(".tag_error").fadeOut();
         // $(this).removeAttr("disabled");
       }
     });
 
-    $('#tn-form input, #tn-form').on('keypress', function(e) {
-        return e.which !== 13;
+    $("#tn-form input, #tn-form").on("keypress", function (e) {
+      return e.which !== 13;
     });
 
-    $('.add-button').on('click', function(){
-    console.log('clicked')
+    $(".add-button").on("click", function () {
+      console.log("clicked");
       //Tag-This lets you pass your own ID and/or text to be attached to a tag you want to create!
       //Your code may look slightly different than this, but here's away to construct an object with an ID that Tag-This will accept.
       var tagData = {
-          text : $(this).text(),
-          id : $(this).data('id')
-      }
+        text: $(this).text(),
+        id: $(this).data("id"),
+      };
 
       //We have our object- let's pass it to Tag-This's 'addTag' method
-      $('#tags').addTag($(this).text());
+      $("#tags").addTag($(this).text());
       // $(this).remove()
-
     });
 
     //tags end
@@ -206,13 +241,12 @@
     });
 
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
-
       if (currentSlide == 0) {
         $(".slick-arrow").removeClass("active");
       } else {
         $(".slick-arrow").addClass("active");
       }
-      
+
       if (currentSlide == 5) {
         $(".slick-arrow.right").addClass("last");
       } else {
@@ -368,3 +402,17 @@
   });
   $(window).on("scroll", function (event) {});
 })(jQuery);
+
+window.addEventListener("load", function () {
+  const trigger = document.querySelectorAll(".single_story_holder.families");
+
+  gsap.to(trigger, 1.5, {
+    opacity: 1,
+    stagger: 0.1,
+    ease: Quint.easeOut,
+    scrollTrigger: {
+      trigger: ".second_section",
+      start: "top 70%",
+    },
+  });
+});

@@ -48,7 +48,7 @@ $person_link = array_reverse($person_link);
         cursor: no-drop;
     }
 </style>
-<div class="home_wrap">
+<div class="home_wrap page_container">
 
     <?php $hero_section = get_field('hero_section'); ?>
     <div class="home_hero">
@@ -98,7 +98,7 @@ $person_link = array_reverse($person_link);
                 <div class="slides">
                     <?php foreach( $banner_slides as $slide ): ?>
                         <div class="slide">
-                            <p><?php echo $slide['text']; ?></p>
+                            <p class="static"><?php echo $slide['text']; ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -251,10 +251,10 @@ $person_link = array_reverse($person_link);
                                             <img class="story_image" src="'.($custom_fields->base64_img? $custom_fields->base64_img: get_template_directory_uri()."/images/single_story.jpg").'" alt="">
                                         </div>
                                         <div class="post_info">
-                                            <h3 class="story_title">
+                                            <h3 class="story_title static">
                                                 '.$custom_fields->storytile.'
                                             </h3>
-                                            <p class="story_author">
+                                            <p class="story_author static">
                                                 By '.$custom_fields->fname.' '.$custom_fields->lname.' 
                                             </p>
                                             <div class="separator"></div>
@@ -314,7 +314,7 @@ $person_link = array_reverse($person_link);
                         </div>
                         <div class="right">
                             <?php if( $img_with_desc_section['image'] ): ?>
-                                <div class="image_holder">
+                                <div class="image_holder st__img">
                                     <img src="<?php echo $img_with_desc_section['image']['url']; ?>" alt="<?php echo $img_with_desc_section['image']['alt']; ?>">
                                 </div>
                             <?php endif; ?>
@@ -588,7 +588,7 @@ $person_link = array_reverse($person_link);
                     <?php if( $files_section['graphics'] ): ?>
                         <div class="graphics_holder">
                             <?php foreach( $files_section['graphics'] as $graphic ): ?>
-                                <a href="<?php echo $graphic['image']['url']; ?>" target="_blank" class="single_graphic">
+                                <a href="<?php echo $graphic['image']['url']; ?>" target="_blank" class="single_graphic st__img">
                                     <div class="image_holder">
                                         <img src="<?php echo $graphic['image']['url']; ?>" alt="<?php echo $graphic['image']['alt']; ?>">
                                     </div>

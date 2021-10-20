@@ -118,7 +118,7 @@ $google_analytics_script = get_field('google_analytics_script', 'option');
 
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<div id="page" class="site">
+<div id="page" class="site loading">
     
     <header>
         <div class="header_content">
