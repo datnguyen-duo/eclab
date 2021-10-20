@@ -17,7 +17,7 @@ $google_analytics_script = get_field('google_analytics_script', 'option');
         <?php echo $google_analytics_script; ?>
     <?php endif; ?>
     <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <link rel="stylesheet" href="https://use.typekit.net/qyl4nbu.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />

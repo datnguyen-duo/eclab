@@ -47,13 +47,14 @@
   width: max-content !important;
   margin: 0px;
   font-family: "neusa-next-std";
-  font-size: 13px;
+  font-size: 21px;
   border: 1px solid transparent;
   background: transparent;
   color: #000;
   margin-right: 5px;
   margin-bottom: 5px;
   outline-color: white;
+  opacity: 0.5;
 }
 
 .tag-this div {

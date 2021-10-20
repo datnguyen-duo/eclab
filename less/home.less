@@ -585,15 +585,19 @@
 
   .third_section {
     background-color: @color2;
-
-    .error, .checkbox_error, .tag_error{
+    @media @750 {
+      padding-bottom: 2em;
+    }
+    .error,
+    .checkbox_error,
+    .tag_error {
       .font2();
       margin-top: 10px;
       margin-bottom: 10px;
       color: red;
     }
 
-    .tag_error{
+    .tag_error {
       display: none;
     }
 
@@ -1006,7 +1010,7 @@
         transition: all 0.2s ease;
       }
 
-      .checkbox_questions{
+      .checkbox_questions {
         color: #d5714f;
         font-size: 23px;
         .font2();
@@ -1070,9 +1074,9 @@
               padding: 10px;
             }
 
-            &.error{
+            &.error {
               margin-top: 0;
-              margin-bottom: 0!important;
+              margin-bottom: 0 !important;
             }
           }
           .word_counter {
@@ -1154,9 +1158,9 @@
               font-size: 20px;
               line-height: 1.2;
 
-              &.error{
+              &.error {
                 margin-top: 0;
-                margin-bottom: 0!important;
+                margin-bottom: 0 !important;
               }
             }
 
@@ -1180,9 +1184,9 @@
           padding: 15px;
           box-sizing: border-box;
 
-          &.error{
+          &.error {
             margin-top: 0;
-            margin-bottom: 0!important;
+            margin-bottom: 0 !important;
           }
 
           &::placeholder {
@@ -1268,21 +1272,21 @@
               margin-top: 30px;
             }
           }
-          
+
           .inputTags-error {
             color: red;
             margin-bottom: 10px;
             .font2();
           }
 
-          .tag-this{
+          .tag-this {
             border: none;
             width: 100%;
             box-sizing: border-box;
 
-            .tag{
+            .tag {
               display: flex;
-              font-size: 15px;
+              font-size: 21px;
               color: #fff;
               padding: 7px 15px;
               background-color: #d5714f;
@@ -1294,9 +1298,9 @@
               font-style: normal;
               font-weight: 400;
 
-              button{
+              button {
                 font-weight: bold;
-                color: #FFF;
+                color: #fff;
                 text-decoration: none;
                 font-size: 15px;
                 background: none;
@@ -1308,7 +1312,7 @@
             }
           }
 
-          .add-button{
+          .add-button {
             display: inline-block;
             font-size: 18px;
             color: #d5714f;
