@@ -47,21 +47,6 @@ body {
   }
 }
 
-#page {
-  &.loading {
-    &::before {
-      content: "";
-      position: fixed;
-      z-index: 99999;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #fff;
-    }
-  }
-}
-
 .about_wrap,
 .home_wrap,
 .community_wrap,
@@ -164,7 +149,6 @@ button {
     width: 25%;
     margin-bottom: 20px;
     cursor: pointer;
-    opacity: 0;
 
     @media @1100 {
       width: 33.3333%;
@@ -295,16 +279,8 @@ button {
     }
   }
 
-  .single_story_holder[data-url="test"] {
-    display: none !important;
-  }
-
-  .slick-list {
-    .single_story_holder {
-      .single_story_wrap {
-        height: 62vh;
-      }
-    }
+  .single_story_holder[data-url="test"]{
+    display: none!important;
   }
 }
 

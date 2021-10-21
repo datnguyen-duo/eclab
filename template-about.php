@@ -2,7 +2,7 @@
 /* Template Name: About */
 get_header(); ?>
 
-<div class="about_wrap page_container">
+<div class="about_wrap">
 	<?php 
 	$desc_section = get_field('description_section'); 
 	if( $desc_section['title'] || $desc_section['description'] ): ?>
@@ -90,7 +90,7 @@ get_header(); ?>
 				<div class="fifth_section_content">
 					<?php foreach( $resources_section['resources'] as $resoruce ): ?>
 						<a href="<?php echo $resoruce['url']; ?>" target="_blank" class="single_box">
-							<h3 class="static"><span><?php echo $resoruce['text']; ?></span></h3>
+							<h3><span><?php echo $resoruce['text']; ?></span></h3>
 						</a>
 					<?php endforeach; ?>
 				</div>

@@ -1,9 +1,34 @@
 <?php
 /* Template Name: Home */
-get_header(); 
+get_header();
 
 error_reporting(1);
 $api_key = "78e7e43ff662bc958e6b869a9ea44307";
+
+$args = array(
+    'meta_query' => array(
+        array(
+            'key' => 'approve',
+            'value' => "approved"
+        )
+    ),
+    'post_type' => 'an_stories',
+    'posts_per_page' => -1,
+    'orderby' => 'date',
+    'order'   => 'DESC',
+);
+$posts = get_posts($args);
+if (!empty($posts)) {
+    $person_link = array();
+    for ($i=0; $i<count($posts); $i++) {
+        $single_link = get_post_meta($posts[$i]->ID, 'person_link', true);
+        if (!in_array($single_link, $person_link)) {
+            array_push($person_link, $single_link);
+        }
+    }
+}
+
+/*
 $form_id = "0256972e-f4ad-4a1f-985a-e8944d2f85ae";
 
 $ch = curl_init();
@@ -22,7 +47,7 @@ foreach ($submissions->_embedded->{"osdi:submissions"} as $key => $value) {
         array_push($person_link, $value->_links->{"osdi:person"}->href);
     }
 }
-$person_link = array_reverse($person_link);
+$person_link = array_reverse($person_link);*/
 ?>
 <style type="text/css">
     #tn-icon-hagtag {
@@ -48,57 +73,57 @@ $person_link = array_reverse($person_link);
         cursor: no-drop;
     }
 </style>
-<div class="home_wrap page_container">
+<div class="home_wrap">
 
     <?php $hero_section = get_field('hero_section'); ?>
     <div class="home_hero">
         <div class="home_hero_content">
             <div class="hero_description">
                 <div class="hero_description_content">
-                    <?php if( $hero_section['title'] ): ?>
-                        <h1><?php echo $hero_section['title']; ?></h1>
+                    <?php if ($hero_section['title']) : ?>
+                        <h1><? echo $hero_section['title']; ?></h1>
                     <?php endif; ?>
 
-                    <?php if( $hero_section['description'] ): ?>
-                        <p><?php echo $hero_section['description']; ?></p>
+                    <?php if ($hero_section['description']) : ?>
+                        <p><? echo $hero_section['description']; ?></p>
                     <?php endif; ?>
 
-                    <?php 
+                    <?php
                     $link = $hero_section['button'];
-                    if( $link ): 
+                    if ($link) :
                         $link_url = $link['url'];
                         $link_title = $link['title'];
                         $link_target = $link['target'] ? $link['target'] : '_self';
                         ?>
-                        <a class="button light join_us" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>">
-                            <?php echo esc_html( $link_title ); ?>
+                        <a class="button light join_us" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                            <?php echo esc_html($link_title); ?>
                         </a>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="image_holder">
-                <?php if( $hero_section['image_text'] ): ?>
+                <?php if ($hero_section['image_text']) : ?>
                     <div class="circle">
                         <p><?php echo $hero_section['image_text']; ?></p>
                     </div>
                 <?php endif; ?>
                 
-                <?php if( $hero_section['image'] ): ?>
+                <?php if ($hero_section['image']) : ?>
                     <img src="<?php echo $hero_section['image']['url']; ?>" alt="<?php echo $hero_section['image']['alt']; ?>">
                 <?php endif; ?>
             </div>
         </div>
     </div>
 
-    <?php 
-    $banner_slides = get_field('banner_slides'); 
-    if( $banner_slides ): ?>
+    <?php
+    $banner_slides = get_field('banner_slides');
+    if ($banner_slides) : ?>
         <div class="eclab_banner">
             <div class="banner">
                 <div class="slides">
-                    <?php foreach( $banner_slides as $slide ): ?>
+                    <?php foreach ($banner_slides as $slide) : ?>
                         <div class="slide">
-                            <p class="static"><?php echo $slide['text']; ?></p>
+                            <p><?php echo $slide['text']; ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -106,23 +131,23 @@ $person_link = array_reverse($person_link);
         </div>
     <?php endif; ?>
 
-    <?php 
-    $slider_section = get_field('slider_section'); 
-    if( $slider_section['title'] || $slider_section['button'] || $slider_section['slider'] ): ?>
+    <?php
+    $slider_section = get_field('slider_section');
+    if ($slider_section['title'] || $slider_section['button'] || $slider_section['slider']) : ?>
         <div class="first_section">
             <div class="content_holder">
                 <div class="first_section_content">
                     <div class="left">
                         <div class="left_content">
-                        <?php if( $slider_section['slider'] ): ?>
+                        <?php if ($slider_section['slider']) : ?>
                             <div class="slider">
-                                <?php foreach( $slider_section['slider'] as $slide ): ?>
+                                <?php foreach ($slider_section['slider'] as $slide) : ?>
                                     <div class="single_slide">
-                                        <?php if( $slide['title'] ): ?>
+                                        <?php if ($slide['title']) : ?>
                                             <h2><?php echo $slide['title']; ?></h2>
                                         <?php endif; ?>
 
-                                        <?php if( $slide['description'] ): ?>
+                                        <?php if ($slide['description']) : ?>
                                             <p><?php echo $slide['description']; ?></p>
                                         <?php endif; ?>
                                     </div>
@@ -134,20 +159,20 @@ $person_link = array_reverse($person_link);
                     </div>
                     <div class="right">
                         <div class="right_content">
-                            <?php if( $slider_section['title'] ): ?>
+                            <?php if ($slider_section['title']) : ?>
                                 <h3><?php echo $slider_section['title']; ?></h3>
                             <?php endif; ?>
 
-                            <?php 
+                            <?php
                             $link = $slider_section['button'];
-                            if( $link ): 
+                            if ($link) :
                                 $link_url = $link['url'];
                                 $link_title = $link['title'];
                                 $link_target = $link['target'] ? $link['target'] : '_self';
                                 ?>
                                 <div class="button_holder">
-                                    <a class="button light join_us" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>">
-                                        <?php echo esc_html( $link_title ); ?>
+                                    <a class="button light join_us" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                                        <?php echo esc_html($link_title); ?>
                                     </a>
                                 </div>
                                 
@@ -159,11 +184,12 @@ $person_link = array_reverse($person_link);
         </div>
     <?php endif; ?>
     
-    <?php $press_section_title = get_field('press_section_title'); $press_button = get_field('press_button'); ?>
+    <?php $press_section_title = get_field('press_section_title');
+    $press_button = get_field('press_button'); ?>
     <div class="second_section">
         <div class="content_holder">
             <div class="second_section_content">
-                <?php if( $press_section_title ): ?>
+                <?php if ($press_section_title) : ?>
                     <h2><?php echo $press_section_title; ?></h2>
                 <?php endif; ?>
                 
@@ -188,7 +214,7 @@ $person_link = array_reverse($person_link);
                     </ul>
                 </div>
                 <div class="stories_wrap">
-                    <?php 
+                    <?php
                     $count_family=0;
                     $count_edu=0;
                     $count_pro=0;
@@ -212,7 +238,7 @@ $person_link = array_reverse($person_link);
                         
                         $tags = $custom_fields->tag;
                         $tags_name ="";
-                        if($tags){
+                        if ($tags) {
                             $tags = explode(",", $tags);
                             foreach ($tags as $key => $value) {
                                 $tags_name .="<span class='filter-tag' filter='".$value."'>".$value."</span><br>";
@@ -242,37 +268,37 @@ $person_link = array_reverse($person_link);
                                 break;
                         }
                         
-                        if ( ($category == 'families' && $count_family <= 4) || ($category == 'educators' && $count_edu <= 4) ||
-                        ($category == 'providers' && $count_pro <= 4) || ($category == 'supporters' && $count_sup <= 4) ) { 
-                        echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" tag="'.$custom_fields->tag.'" style="display: '.$display.';" data-url="'. $sotryUrl .'">
+                        if (($category == 'families' && $count_family <= 4) || ($category == 'educators' && $count_edu <= 4) ||
+                        ($category == 'providers' && $count_pro <= 4) || ($category == 'supporters' && $count_sup <= 4)) {
+                            echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" tag="'.$custom_fields->tag.'" style="display: '.$display.';" data-url="'. $sotryUrl .'">
                                 <div class="single_story_wrap ">
                                     <div class="single_story">
                                         <div class="image_holder">
                                             <img class="story_image" src="'.($custom_fields->base64_img? $custom_fields->base64_img: get_template_directory_uri()."/images/single_story.jpg").'" alt="">
                                         </div>
                                         <div class="post_info">
-                                            <h3 class="story_title static">
+                                            <h3 class="story_title">
                                                 '.$custom_fields->storytile.'
                                             </h3>
-                                            <p class="story_author static">
+                                            <p class="story_author">
                                                 By '.$custom_fields->fname.' '.$custom_fields->lname.' 
                                             </p>
                                             <div class="separator"></div>
                                             <div class="category">
                                                 '.ucfirst($category).'
                                             </div>
-                                            <div class="story_content" hidden>'.$custom_fields->story.'</div>
+                                            <div class="story_content" hidden>'.str_replace("\'", "'", $custom_fields->story).'</div>
                                             <div class="story_tags" hidden>'.$tags_name.'</div>
                                         </div>
                                     </div>
                                 </div>
                             </a>';
-                        curl_close($ch);
+                            curl_close($ch);
                         }
                     }
                     ?>
                 </div>
-                <?php if( $press_button ): ?>
+                <?php if ($press_button) : ?>
                     <div class="button_holder">
                         <a href="<?php echo $press_button['url']; ?>" target="<?php echo $press_button['target']; ?>" class="button light">
                             <?php echo $press_button['title']; ?>
@@ -284,95 +310,94 @@ $person_link = array_reverse($person_link);
         </div>
     </div>
 
-    <?php 
-    $img_with_desc_section = get_field('image_with_description_section'); 
-    if( $img_with_desc_section['title'] || $img_with_desc_section['description'] || $img_with_desc_section['button'] || $img_with_desc_section['image'] ): ?>
+    <?php
+    $img_with_desc_section = get_field('image_with_description_section');
+    if ($img_with_desc_section['title'] || $img_with_desc_section['description'] || $img_with_desc_section['button'] || $img_with_desc_section['image']) : ?>
         <div class="third_section" id="tell_story">
             <div class="content_holder">
-                <div class="arrow_hidden"></div>
-                <?php if( $img_with_desc_section['title'] ): ?>
+                <?php if ($img_with_desc_section['title']) : ?>
                     <h2><?php echo $img_with_desc_section['title']; ?></h2>
                 <?php endif; ?>
                 <form id="tn-form" class="form_swiper">
-                    <div class="third_section_content sinlge_box">
+                    <!-- <div class="third_section_content sinlge_box">
                     
                         <div class="left">
-                            <?php if( $img_with_desc_section['description'] ): ?>
+                            <?php if ($img_with_desc_section['description']) : ?>
                                 <p><?php echo $img_with_desc_section['description']; ?></p>
                             <?php endif; ?>
 
-                            <?php 
+                            <?php
                             $link = $img_with_desc_section['button'];
-                            if( $link ): 
+                            if ($link) :
                                 $link_url = $link['url'];
                                 $link_title = $link['title'];
                                 $link_target = $link['target'] ? $link['target'] : '_self';
                                 ?>
-                                <a class="button dark next_slide desktop" target="<?php echo esc_attr( $link_target ); ?>">
-                                    <?php echo esc_html( $link_title ); ?>
+                                <a class="button dark next_slide desktop" target="<?php echo esc_attr($link_target); ?>">
+                                    <?php echo esc_html($link_title); ?>
                                 </a>
                             <?php endif; ?>
                         </div>
                         <div class="right">
-                            <?php if( $img_with_desc_section['image'] ): ?>
-                                <div class="image_holder st__img">
+                            <?php if ($img_with_desc_section['image']) : ?>
+                                <div class="image_holder">
                                     <img src="<?php echo $img_with_desc_section['image']['url']; ?>" alt="<?php echo $img_with_desc_section['image']['alt']; ?>">
                                 </div>
                             <?php endif; ?>
                             
-                            <?php if( $img_with_desc_section['image_text'] ): ?>
+                            <?php if ($img_with_desc_section['image_text']) : ?>
                                 <div class="sticker"><?php echo $img_with_desc_section['image_text']; ?></div>
                             <?php endif; ?>
 
-                            <?php 
+                            <?php
                             $link = $img_with_desc_section['button'];
-                            if( $link ): 
+                            if ($link) :
                                 $link_url = $link['url'];
                                 $link_title = $link['title'];
                                 $link_target = $link['target'] ? $link['target'] : '_self';
                                 ?>
                                 <div class="button_holder">
-                                <a class="button dark next_slide mobile" target="<?php echo esc_attr( $link_target ); ?>">
-                                    <?php echo esc_html( $link_title ); ?>
+                                <a class="button dark next_slide mobile" target="<?php echo esc_attr($link_target); ?>">
+                                    <?php echo esc_html($link_title); ?>
                                 </a>
                                 </div>
                                 
                             <?php endif; ?>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- FIRST SLIDE -->
-                    <?php $first_slide = get_field('first_slide',get_pll_option_page()) ?>
+                    <?php $first_slide = get_field('first_slide', get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="single_question">
                             <p class="question"><?php echo $first_slide['headline_2']; ?></p>
                             <div class="input_wrap">
-                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode1" <?php echo ($first_slide['required_display_name']) ? 'required' : null; ?>>
+                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode1">
                             </div>
                         </div>
                         <div class="single_question last">
                             <p class="question"><?php echo $first_slide['headline_1']; ?></p>
                             <div class="checkbox_wrap">
-                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_1'] ?>">
-                                    <input type="radio" id="check_1" name="radio" value="I’m a family member and/or caregiver" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
+                                <div class="single_checkbox checkbox_with_question" data-questions="What do you need most from early education and care for your child(ren)? <br> What has been your greatest challenge in finding and getting care for your child(ren)?">
+                                    <input type="radio" id="check_1" checked name="radio" value="I’m a family member and/or caregiver">
                                     <label for="check_1">
                                     <?php echo $first_slide['perspective_1']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_2'] ?>">
-                                    <input type="radio" id="check_2" name="radio" value="I’m an early childhood educator" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
+                                <div class="single_checkbox checkbox_with_question" data-questions="What has been the most rewarding and/or challenging about your choice to become an early educator? <br> Tell us about an experience working with a child or family that you’ll never forget.">
+                                    <input type="radio" id="check_2" name="radio" value="I’m an early childhood educator">
                                     <label for="check_2">
                                     <?php echo $first_slide['perspective_2']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_3'] ?>">
-                                    <input type="radio" id="check_3" name="radio" value="I’m a provider" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
+                                <div class="single_checkbox checkbox_with_question" data-questions="What has been the most rewarding and/or challenging about your choice to become a provider? <br> What do you most need or want to do your work well? Tell us about an experience with a family, child or employee that you’ll never forget.">
+                                    <input type="radio" id="check_3" name="radio" value="I’m a provider">
                                     <label for="check_3">
                                     <?php echo $first_slide['perspective_3']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_4'] ?>">
-                                    <input type="radio" id="check_4" name="radio" value="I’m a supporter" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
+                                <div class="single_checkbox checkbox_with_question" data-questions="Tell us about a child, caregiver or experience that is illustrative of your experience with early childhood care and education.">
+                                    <input type="radio" id="check_4" name="radio" value="I’m a supporter">
                                     <label for="check_4">
                                     <?php echo $first_slide['perspective_4']; ?>
                                     </label>
@@ -382,7 +407,7 @@ $person_link = array_reverse($person_link);
                     </div>
 
                     <!-- SECOND SLIDE -->
-                    <?php $third_slide = get_field('third_slide',get_pll_option_page()) ?>
+                    <?php $third_slide = get_field('third_slide', get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <p class="question"><?php echo $third_slide['headline_1']; ?></p>
                         <div class="checkbox_questions">
@@ -390,13 +415,13 @@ $person_link = array_reverse($person_link);
                         </div>
                         <div class="two_question_wrap">
                             <div class="single_question">
-                                <textarea name="story" id="story" cols="30" rows="10" placeholder="<?php echo $third_slide['textarea_1']; ?>" <?php echo ($third_slide['required_textarea_1']) ? 'required' : null; ?>></textarea>
+                                <textarea name="story" id="story" cols="30" rows="10" placeholder="<?php echo $third_slide['textarea_1']; ?>" required></textarea>
                                 <span style="display:none;" class="required_field">required</span>
                                 <p class="word_counter"><span id="display_story_count">0</span> / <span id="word_story_left">200 <?php echo $third_slide['word_counter']; ?></span></p>
                             </div>
                             <div class="single_question last">
                                 <p class="question"><?php echo $third_slide['headline_2']; ?></p>
-                                <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="<?php echo $third_slide['textarea_2']; ?>" <?php echo ($third_slide['required_textarea_2']) ? 'required' : null; ?>></textarea>
+                                <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="<?php echo $third_slide['textarea_2']; ?>" required></textarea>
                                 <p class="word_counter"><span id="display_storytile_count">0</span> / <span id="word_storytile_left">10 <?php echo $third_slide['word_counter']; ?><span></p>
                             </div>
                         </div>
@@ -458,13 +483,13 @@ $person_link = array_reverse($person_link);
                     </div> -->
                     
                     <!-- FOURTH SLIDE -->
-                    <?php $fourth_slide = get_field('fourth_slide',get_pll_option_page()) ?>
+                    <?php $fourth_slide = get_field('fourth_slide', get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="two_columns">
                             <div class="single_column">
                                 <p class="question"><?php echo $fourth_slide['headline_1'] ?></p>
                                 <div class="image-upload-wrap">
-                                    <input class="file-upload-input" name="photo" id="photo" type='file' accept="image/*"/>
+                                    <input class="file-upload-input" name="photo" id="photo" type='file' accept="image/*" />
                                     <input type="hidden" id="base64_img" name="base64_img" value="">
                                     <div class="drag-text">
                                     <h3><?php echo $fourth_slide['image_upload_title'] ?></h3>
@@ -481,12 +506,6 @@ $person_link = array_reverse($person_link);
                                 <div class="single_question">
                                     <p class="question"><?php echo $fourth_slide['headline_2'] ?></p>
                                     <input type="text" id="tags" name="tags">
-                                    <div class="tag_error">You have reached maximum tags</div>
-                                    <ul>
-                                        <?php foreach( $fourth_slide['predefined_tags'] as $singleTag ): ?>
-                                            <li class="add-button" data-id="<?php echo str_replace("#", "", $singleTag['single_tag']); ?>"><?php echo $singleTag['single_tag']; ?></li>
-                                        <?php endforeach; ?>
-                                    </ul>
                                 </div>
                                 
                             </div>
@@ -494,20 +513,20 @@ $person_link = array_reverse($person_link);
                         
                     </div>
 
-                    <?php $fifth_slide = get_field('fifth_slide',get_pll_option_page()) ?>
+                    <?php $fifth_slide = get_field('fifth_slide', get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <p class="question"><?php echo $fifth_slide['headline']; ?></p>
                         <div class="single_question last">
                             <div class="form_holder">
-                                <div class="half"><input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>" <?php echo ($fifth_slide['required_first_name']) ? 'required' : null; ?>></div>
-                                <div class="half"><input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>" <?php echo ($fifth_slide['required_last_name']) ? 'required' : null; ?>></div>
-                                <input name="email" type="email" placeholder="<?php echo $fifth_slide['email_address']; ?>" <?php echo ($fifth_slide['required_email_address']) ? 'required' : null; ?>>
-                                <div class="half"><input name="phonenumber" type="text" placeholder="<?php echo $fifth_slide['phone']; ?>" <?php echo ($fifth_slide['required_phone']) ? 'required' : null; ?>></div>
-                                <div class="half"><input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>" <?php echo ($fifth_slide['required_zip_code']) ? 'required' : null; ?>></div>
+                                <div class="half"><input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>" required></div>
+                                <div class="half"><input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>" required></div>
+                                <input name="email" type="email" placeholder="<?php echo $fifth_slide['email_address']; ?>" required>
+                                <div class="half"><input name="phonenumber" type="text" placeholder="<?php echo $fifth_slide['phone']; ?>"></div>
+                                <div class="half"><input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>" required></div>
                             </div>
                         </div>
                     </div>
-                    <?php $tell_story_form_fields = get_field('tell_story_form_fields',get_pll_option_page()); ?>
+                    <?php $tell_story_form_fields = get_field('tell_story_form_fields', get_pll_option_page()); ?>
                     <div class="third_section_content sinlge_box">
                         <p class="question"><?php echo $tell_story_form_fields['privacy_headline']; ?></p>
                         <div class="single_question last">
@@ -520,11 +539,10 @@ $person_link = array_reverse($person_link);
                                 <div class="custom_checkobxes">
                                     <div class="single_box_wrap">
                                         <label class="container">
-                                            <input type="checkbox" name="checkbox1" value="disclaimer" required>
+                                            <input type="checkbox" name="checkbox1" value="disclaimer">
                                             <span class="checkmark"></span>
                                             <?php echo $tell_story_form_fields['checkbox1']; ?>
                                         </label>
-                                        <div class="checkbox_error">This field is required</div>
                                     </div>
                                     <div class="single_box_wrap">
                                         <label class="container">
@@ -535,14 +553,13 @@ $person_link = array_reverse($person_link);
                                     </div>
                                 </div>
                                 <button class="button dark submit_button" id="home_submit_button" disabled>
-                                    <div class="hidden_button"></div>
-                                    <?php echo $tell_story_form_fields['submit_button']; ?>
+                                <?php echo $tell_story_form_fields['submit_button']; ?>
                                 </button>
                             </div>
                             
                         </div>
                     </div>
-                    <?php $thank_you_slide = get_field('thank_you_slide',get_pll_option_page()) ?>
+                    <?php $thank_you_slide = get_field('thank_you_slide', get_pll_option_page()) ?>
                     <div class="third_section_content thankyou_message">
                     
                         <div class="left">
@@ -552,13 +569,13 @@ $person_link = array_reverse($person_link);
                             </div>
                         </div>
                         <div class="right">
-                            <?php if( $img_with_desc_section['image'] ): ?>
+                            <?php if ($img_with_desc_section['image']) : ?>
                                 <div class="image_holder">
                                     <img src="<?php echo $img_with_desc_section['image']['url']; ?>" alt="<?php echo $img_with_desc_section['image']['alt']; ?>">
                                 </div>
                             <?php endif; ?>
                             
-                            <?php if( $img_with_desc_section['image_text'] ): ?>
+                            <?php if ($img_with_desc_section['image_text']) : ?>
                                 <div class="sticker"><?php echo $img_with_desc_section['image_text']; ?></div>
                             <?php endif; ?>
                         </div>
@@ -569,28 +586,28 @@ $person_link = array_reverse($person_link);
         </div>
     <?php endif; ?>
 
-    <?php 
-    $files_section = get_field('files_section'); 
-    if( $files_section['title'] || $files_section['description'] || $files_section['graphics_title'] || $files_section['graphics'] || $files_section['documents_title'] || $files_section['documents'] ): ?>
+    <?php
+    $files_section = get_field('files_section');
+    if ($files_section['title'] || $files_section['description'] || $files_section['graphics_title'] || $files_section['graphics'] || $files_section['documents_title'] || $files_section['documents']) : ?>
         <div class="fourth_section" id="fourth_section">
             <div class="content_holder" id="get-involved">
                 <div class="fourth_section_content">
-                    <?php if( $files_section['title'] ):?>
+                    <?php if ($files_section['title']) :?>
                         <h2><?php echo $files_section['title']; ?></h2>
                     <?php endif; ?>
 
-                    <?php if( $files_section['description'] ):?>
+                    <?php if ($files_section['description']) :?>
                         <p><?php echo $files_section['description']; ?></p>
                     <?php endif; ?>
 
-                    <?php if( $files_section['graphics_title'] ):?>
+                    <?php if ($files_section['graphics_title']) :?>
                         <h3><?php echo $files_section['graphics_title']; ?></h3>
                     <?php endif; ?>
                         
-                    <?php if( $files_section['graphics'] ): ?>
+                    <?php if ($files_section['graphics']) : ?>
                         <div class="graphics_holder">
-                            <?php foreach( $files_section['graphics'] as $graphic ): ?>
-                                <a href="<?php echo $graphic['image']['url']; ?>" target="_blank" class="single_graphic st__img">
+                            <?php foreach ($files_section['graphics'] as $graphic) : ?>
+                                <a href="<?php echo $graphic['image']['url']; ?>" target="_blank" class="single_graphic">
                                     <div class="image_holder">
                                         <img src="<?php echo $graphic['image']['url']; ?>" alt="<?php echo $graphic['image']['alt']; ?>">
                                     </div>
@@ -601,16 +618,16 @@ $person_link = array_reverse($person_link);
                         </div>
                     <?php endif; ?>
 
-                    <?php if( $files_section['documents_title'] ):?>
+                    <?php if ($files_section['documents_title']) :?>
                         <h3><?php echo $files_section['documents_title']; ?></h3>
                     <?php endif; ?>
 
-                    <?php if( $files_section['documents'] ): ?>
+                    <?php if ($files_section['documents']) : ?>
                         <div class="document_holder">
-                            <?php foreach( $files_section['documents'] as $documents ): ?>
+                            <?php foreach ($files_section['documents'] as $documents) : ?>
                                 <a href="<?php echo $documents['file']['url']; ?>" download class="single_document_wrap">
                                     <div class="single_document">
-                                        <?php if( $documents['title'] ): ?>
+                                        <?php if ($documents['title']) : ?>
                                             <h4><?php echo $documents['title']; ?></h4>
                                         <?php endif; ?>
                                     </div>
@@ -624,9 +641,9 @@ $person_link = array_reverse($person_link);
         </div>
     <?php endif; ?>
 
-    <?php 
-    $banner_section = get_field('banner_section'); 
-    if( $banner_section['title'] || $banner_section['button'] ): ?>
+    <?php
+    $banner_section = get_field('banner_section');
+    if ($banner_section['title'] || $banner_section['button']) : ?>
         <div class="call_to_action">
             <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape desktop">
             <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape second desktop">
@@ -634,37 +651,37 @@ $person_link = array_reverse($person_link);
             <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_left.svg" alt="" class="shape mobile">
             <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_right.svg" alt="" class="shape second mobile">
             <div class="call_to_action_content">
-                <?php if( $banner_section['title'] ): ?>
+                <?php if ($banner_section['title']) : ?>
                     <h2><?php echo $banner_section['title']; ?></h2>
                 <?php endif;?>
 
-                <?php 
+                <?php
                 $link = $banner_section['button'];
-                if( $link ): 
+                if ($link) :
                     $link_url = $link['url'];
                     $link_title = $link['title'];
                     $link_target = $link['target'] ? $link['target'] : '_self';
                     ?>
-                    <a class="button light join_us" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>">
-                        <?php echo esc_html( $link_title ); ?>
+                    <a class="button light join_us" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                        <?php echo esc_html($link_title); ?>
                     </a>
                 <?php endif; ?>
             </div>
         </div>
     <?php endif; ?>
-    <?php 
+    <?php
         $social_secton_headline = get_field('social_secton_headline');
         $social_secton_shortcode = get_field('social_secton_shortcode');
     ?>
 
-    <?php if( $social_secton_headline || $social_secton_shortcode ): ?>
+    <?php if ($social_secton_headline || $social_secton_shortcode) : ?>
         <div class="social_section">
             <div class="content_holder">
                 <div class="social_secton_content">
-                <?php if( $social_secton_headline ): ?>
+                <?php if ($social_secton_headline) : ?>
                     <h2><?php echo $social_secton_headline; ?></h2>
                 <?php endif;?>
-                <?php if( $social_secton_shortcode ): ?>
+                <?php if ($social_secton_shortcode) : ?>
                     <?php echo $social_secton_shortcode; ?>
                 <?php endif;?>
                     <!-- <div class="embedsocial-hashtag" data-ref="446a0090d8f1d6fbd3a40d3c1461d057d2d76a16" ></div><script>(function(d, s, id){var js; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "https://embedsocial.com/cdn/ht.js"; d.getElementsByTagName("head")[0].appendChild(js);}(document, "script", "EmbedSocialHashtagScript"));</script> -->
@@ -906,7 +923,13 @@ var admin_ajax_url = '<?php echo admin_url('admin-ajax.php'); ?>';
 </script>
 <script type="text/javascript">
 jQuery(document).ready(function ($) {
+    let radio_val="I’m a family member and/or caregiver";
+    $('input[name="radio"]').change(function(){
+        radio_val = $(this).val();
+    });
     $('#home_submit_button').click(function(event) {
+        console.log($('input[name="radio"]').val());
+        console.log(radio_val);
         if ($("#tn-form").valid()) {
             var file_data = $('#photo')[0].files[0];
             var checkbox_val = $('input[name="checkbox1"]').val();
@@ -924,7 +947,7 @@ jQuery(document).ready(function ($) {
             form_data.append('checkbox', checkbox_val );
             form_data.append('topic', $('input[name="topic"]').val() );
             form_data.append('phonenumber', $('input[name="phonenumber"]').val() );
-            form_data.append('radio', $('input[name="radio"]').val() );
+            form_data.append('radio', radio_val );
             form_data.append('radios', $('input[name="radios"]').val() );
             form_data.append('zipcode', $('input[name="zipcode"]').val() );
             form_data.append('tags', $('input[name="tags"]').val() );
@@ -958,22 +981,13 @@ jQuery(document).ready(function ($) {
                     required: true,
                     email: true
                 },
-                <?php if($fifth_slide['required_first_name']): ?>
                 fname: "required",
-                <?php endif; ?>
-                <?php if($fifth_slide['required_last_name']): ?>
                 lname: "required",
-                <?php endif; ?>
-                <?php if($third_slide['required_textarea_1']): ?>
                 story: "required",
-                <?php endif; ?>
-                <?php if($third_slide['required_textarea_2']): ?>
                 storytile: "required",
-                <?php endif; ?>
                 checkbox1: "required",
-                <?php if($fifth_slide['required_zip_code']): ?>
                 zipcode: "required",
-                <?php endif; ?>
+                // zipcode1: "required"
             },
             messages: {
                 email: "This field is required",
@@ -983,36 +997,29 @@ jQuery(document).ready(function ($) {
                 storytile: "This field is required",
                 checkbox1: "This field is required",
                 zipcode: "This field is required",
+                zipcode1: "This field is required"
             },
         });
     }
 
+    
+
     $(".form_swiper").on("beforeChange", function (event, slick, currentSlide) {
       $('.slick-arrow.right').css('pointer-events', 'all');
-      $('.arrow_hidden').removeClass('active');
     });
 
-    $('.arrow_hidden').on('click', function(){
-        $("#tn-form").valid();
-        $('.error').not('input, textarea').removeClass('visible');
-    });
+    
 
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
-        $('.error').not('input, textarea').addClass('visible');
+        $("#tn-form").valid();
 
         $(".slick-current [required]:visible").each(function () {
-            if($(this).val().trim().length < 1 || $('input[name="radio"]:checked').length == 0){
+            if($(this).val().trim().length < 1){
              $('.slick-arrow.right').css('pointer-events', 'none');
-             $('.arrow_hidden').addClass('active');
-             $('.error').not('input, textarea').addClass('visible');
-
             //  $('.slick-current').find('.required_field').fadeIn();
-            return false; 
+            return; 
             } else{
-                return false;
                 $('.slick-arrow.right').css('pointer-events', 'all')
-                $('.arrow_hidden').removeClass('active');
-                $('.error').not('input, textarea').removeClass('visible');
                 // $('.slick-current').find('.required_field').fadeOut();
             }
         }) 
@@ -1021,31 +1028,19 @@ jQuery(document).ready(function ($) {
             $(".slick-current [required]:visible").each(function () {
                 if($(this).val().trim().length < 1){
                     $('.slick-arrow.right').css('pointer-events', 'none')
-                    $('.arrow_hidden').addClass('active');
-                    $(this).find('.error').not('input, textarea').addClass('visible');
-                return false; 
+                return; 
                 } else{
-                    $('.arrow_hidden').removeClass('active');
                     $('.slick-arrow.right').css('pointer-events', 'all')
-                    $(this).find('.error').not('input, textarea').removeClass('visible');
                 }
             })
         });
     })
 
-    $('.hidden_button').click(function() {
-        $(".checkbox_error").fadeIn();
-    })
-
     $('input[name="checkbox1"]').click(function() {
         if ($(this).is(':checked')) {
             $("#home_submit_button").removeAttr("disabled");
-            $(".checkbox_error").fadeOut();
-            $('.hidden_button').fadeOut();
         } else {
             $("#home_submit_button").attr("disabled", true);
-            $(".checkbox_error").fadeIn();
-            $('.hidden_button').fadeIn();
         }
     })
 

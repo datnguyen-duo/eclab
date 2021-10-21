@@ -111,14 +111,10 @@ function eclab_scripts()
     wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', array(), null, true);
     // wp_enqueue_script('jquery-ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js', array(), null, true);
     wp_enqueue_script('cookie', get_template_directory_uri() . '/js/jquery.cookie.js', array(), _S_VERSION, true);
-    wp_enqueue_script('tagthis', get_template_directory_uri() . '/js/jquery.tagthis.js', array(), _S_VERSION, true);
-    
-    wp_enqueue_script('global', get_template_directory_uri() . '/js/global.js?v=1013', array(), _S_VERSION, true);
+    wp_enqueue_script('global', get_template_directory_uri() . '/js/global.js?v=1015', array(), _S_VERSION, true);
     // wp_enqueue_script( 'home', get_template_directory_uri() . '/js/home.js', array(), _S_VERSION, true );
-
+    wp_enqueue_script('tags', get_template_directory_uri() . '/js/tags.js?v=132', array(), _S_VERSION, true);
     wp_enqueue_script('gsap', get_template_directory_uri() . '/js/gsap.min.js', true);
-    wp_enqueue_script('scrolltrigger', get_template_directory_uri() . '/js/ScrollTrigger.min.js', true);
-
     if (!is_front_page()) {
         wp_enqueue_script('action-network-api', get_template_directory_uri() . '/js/action-network-api.js', array(), _S_VERSION, true);
     }
@@ -138,6 +134,18 @@ function eclab_scripts()
     ));
 }
 add_action('wp_enqueue_scripts', 'eclab_scripts');
+/**
+ * Admin pade script
+ */
+add_action('admin_enqueue_scripts', 'my_admin_scripts');
+function my_admin_scripts()
+{
+    if (isset($_GET['post_type']) && $_GET['post_type'] == 'an_stories') {
+        wp_register_script('story-status', get_template_directory_uri() . '/js/manage-story.js');
+        wp_enqueue_script('story-status');
+    }
+}
+
 
 //If acf plugin exists
 if (function_exists('acf_add_options_page')) {
@@ -223,24 +231,24 @@ function t311_submissions()
 
         $post_data = array(
             "person" => array(
-                'family_name' => $_POST['lname'],
-                'given_name' => $_POST['fname'],
+                'family_name' => sanitize_text_field($_POST['lname']),
+                'given_name' => sanitize_text_field($_POST['fname']),
                 'email_addresses' => array(
-                    array('address' => $_POST['email'])
+                    array('address' => sanitize_email($_POST['email']))
                 ),
                 "custom_fields" => array(
-                    'fname' => $_POST['fname'],
-                    'lname' => $_POST['lname'],
-                    'storytile' => $_POST['storytile'],
-                    'checkbox' => $_POST['checkbox'],
-                    'phonenumber' => $_POST['phonenumber'],
-                    'story' => $_POST['story'],
-                    'topic' => $_POST['topic'],
+                    'fname' => sanitize_text_field($_POST['fname']),
+                    'lname' => sanitize_text_field($_POST['lname']),
+                    'storytile' => sanitize_text_field($_POST['storytile']),
+                    'checkbox' => sanitize_text_field($_POST['checkbox']),
+                    'phonenumber' => sanitize_text_field($_POST['phonenumber']),
+                    'story' => sanitize_text_field($_POST['story']),
+                    'topic' => sanitize_text_field($_POST['topic']),
                     'radios' => $_POST['radios'],
-                    'zipcode' => $_POST['zipcode'],
+                    'zipcode' => sanitize_text_field($_POST['zipcode']),
                     'base64_img' => $img_url,
                     'radio' => $_POST['radio'],
-                    'tag' => $add_tags
+                    'tag' => sanitize_text_field($add_tags)
                 )
             ),
             "triggers" => array(
@@ -270,8 +278,29 @@ function t311_submissions()
 
         $server_output = curl_exec($ch);
         curl_close($ch);
-
-        print_r($server_output);
+        $server_output_arr = json_decode($server_output);
+        if (!empty($server_output_arr) && isset($server_output_arr->identifiers) && !empty($server_output_arr->identifiers)) {
+            print_r($server_output);
+            $current_user = wp_get_current_user();
+            // create post object
+            $story = array(
+                'post_title'  => $_POST['storytile'],
+                'post_status' => 'publish',
+                'post_author' => $current_user->ID,
+                'post_type'   => 'an_stories',
+                'post_date'   => date('Y-m-d H:i:s')
+            );
+            // insert the post into the database
+            $post_story_id = wp_insert_post($story);
+            $person_link =  $server_output_arr->_links->{"osdi:person"}->href;
+            add_post_meta($post_story_id, 'story_id', $server_output_arr->identifiers[0]);
+            add_post_meta($post_story_id, 'person_link', $person_link);
+            add_post_meta($post_story_id, 'an_person_id', $server_output_arr->{"action_network:person_id"});
+            add_post_meta($post_story_id, 'story_form_id', 'fe289885-c119-4ee7-a543-d3e92a0ce691');
+            add_post_meta($post_story_id, 'approve', 'not_approved');
+        }
+        // p
+        // print_r($server_output);
     }
     die();
 }
@@ -407,3 +436,71 @@ function add_cors_http_header()
     header("Access-Control-Allow-Origin: *");
 }
 add_action('init', 'add_cors_http_header');
+
+/*
+18/10
+ */
+/**
+ * Custom post type
+ */
+function an_story()
+{
+    register_post_type(
+        'an_stories',
+        array(
+            'labels'        => array(
+                'name'          => 'Stories',
+                'singular_name' => 'Story',
+                'add_new_item'  => 'New Story ',
+                'menu_name'     => 'AN Stories',
+                'all_items'     => 'All Stories',
+            ),
+            'public'        => true,
+            'has_archive'   => true,
+            'supports'      => array( 'title', 'editor', 'thumbnail', 'revisions'),
+            'hierarchical'  => true,
+            'capability_type' => 'post',
+            'capabilities' => array(
+              'edit_post'          => false,
+              'delete_post'        => false,
+              'create_posts' => false,
+              // 'edit_posts'         => false,
+            ),
+        )
+    );
+}
+add_action('init', 'an_story');
+add_action('wp_ajax_rtc_change_story_status', 'rtc_change_story_status_11');
+function rtc_change_story_status_11()
+{
+    $id = intval($_POST['story_id']);
+    $value = sanitize_text_field($_POST['value']);
+    if ($id && $value) {
+        update_post_meta($id, 'approve', $value);
+        wp_send_json_success("Done!");
+    } else {
+        wp_send_json_success("Fail!!");
+    }
+}
+
+add_filter('manage_an_stories_posts_columns', 'set_custom_edit_an_stories_columns');
+function set_custom_edit_an_stories_columns($columns)
+{
+    
+    $columns['approved'] = __('Approved', 'an_stories');
+    return $columns;
+}
+
+add_action('manage_an_stories_posts_custom_column', 'custom_an_stories_column', 10, 2);
+function custom_an_stories_column($column, $post_id)
+{
+    $story_status = get_post_meta($post_id, 'approve', true);
+    switch ($column) {
+        case 'approved':
+            echo '<select name="status" class="story-status" data-id="'.$post_id.'">
+                        <option value="approved"'.($story_status=="approved"?"selected":"").'>Approved</option>
+                        <option value="not_approved" '.($story_status=="not_approved"?"selected":"").' >Not Approved</option>
+                    </select>';
+            break;
+    }
+}

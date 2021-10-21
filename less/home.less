@@ -586,28 +586,10 @@
   .third_section {
     background-color: @color2;
 
-    .content_holder{
-      position: relative;
-    }
-
-    @media @750 {
-      padding-bottom: 2em;
-    }
-    .checkbox_error{
-      display: none;
-    }
-
-    .error,
-    .checkbox_error,
-    .tag_error {
+    .error{
       .font2();
       margin-top: 10px;
       margin-bottom: 10px;
-      color: red;
-    }
-
-    .tag_error {
-      display: none;
     }
 
     .slick-dots {
@@ -650,15 +632,11 @@
       z-index: 1;
       pointer-events: none;
 
-      &:first-child {
-        display: none;
-      }
-
       &:last-child {
         display: none;
       }
 
-      &:nth-of-type(6) {
+      &:nth-of-type(5) {
         button {
           margin-right: 0;
         }
@@ -675,11 +653,7 @@
       background-color: @color2;
       border: 1px solid #000;
       text-indent: -9999px;
-      margin-right: 115px;
-
-      @media @1300 {
-        margin-right: 110px;
-      }
+      margin-right: 70px;
 
       @media @1100 {
         margin-right: 50px;
@@ -732,50 +706,6 @@
       }
     }
 
-    .error{
-      &.visible{
-        opacity: 0;
-      }
-    }
-
-    #home_submit_button{
-      position: relative;
-
-      .hidden_button{
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: transparent;
-      }
-    }
-
-    .arrow_hidden{
-      position: absolute;
-      bottom: 50px;
-      z-index: 4;
-      cursor: pointer;
-      width: 60px;
-      height: 20px;
-      display: none;
-      left: 16.6%;
-      background-color: transparent;
-
-      &.active{
-        display: block;
-      }
-
-      @media @1020 {
-        left: auto;
-        right: 40px;
-      }
-
-      @media @750{
-        bottom: 20px;
-      }
-    }
-
     .slick-arrow {
       // display: none!important;
       position: absolute;
@@ -806,10 +736,6 @@
 
       &.right {
         left: 10%;
-
-        @media @1100 {
-          left: 13%;
-        }
 
         @media @1020 {
           left: auto;
@@ -1067,7 +993,7 @@
         transition: all 0.2s ease;
       }
 
-      .checkbox_questions {
+      .checkbox_questions{
         color: #d5714f;
         font-size: 23px;
         .font2();
@@ -1131,9 +1057,9 @@
               padding: 10px;
             }
 
-            &.error {
+            &.error{
               margin-top: 0;
-              margin-bottom: 0 !important;
+              margin-bottom: 0!important;
             }
           }
           .word_counter {
@@ -1180,20 +1106,6 @@
             width: 200px;
             margin-right: 15px;
             min-height: 100px;
-            position: relative;
-
-            .error{
-              position: absolute;
-              bottom: -40px;
-
-              @media @750 {
-                top: -40px;
-                bottom: auto;
-                width: auto;
-                display: inline;
-                right: 0;
-              }
-            }
 
             @media @750 {
               width: 100%;
@@ -1211,7 +1123,7 @@
               left: -9999%;
             }
 
-            label[for="check_1"], label[for="check_2"], label[for="check_3"], label[for="check_4"] {
+            input[type="radio"] + label {
               display: inline-block;
               box-sizing: border-box;
               height: 100%;
@@ -1229,13 +1141,13 @@
               font-size: 20px;
               line-height: 1.2;
 
-              &.error {
+              &.error{
                 margin-top: 0;
-                margin-bottom: 0 !important;
+                margin-bottom: 0!important;
               }
             }
 
-            input[type="radio"]:checked + label, input[type="radio"]:checked + .error + label {
+            input[type="radio"]:checked + label {
               color: #000;
               background-color: #e589b9;
             }
@@ -1255,9 +1167,9 @@
           padding: 15px;
           box-sizing: border-box;
 
-          &.error {
+          &.error{
             margin-top: 0;
-            margin-bottom: 0 !important;
+            margin-bottom: 0!important;
           }
 
           &::placeholder {
@@ -1347,51 +1259,6 @@
           .inputTags-error {
             color: red;
             margin-bottom: 10px;
-            .font2();
-          }
-
-          .tag-this {
-            border: none;
-            width: 100%;
-            box-sizing: border-box;
-
-            .tag {
-              display: flex;
-              font-size: 21px;
-              color: #fff;
-              padding: 7px 15px;
-              background-color: #d5714f;
-              margin-right: 10px;
-              cursor: pointer;
-              margin-bottom: 10px;
-              font-family: "neusa-next-std";
-              font-display: auto;
-              font-style: normal;
-              font-weight: 400;
-
-              button {
-                font-weight: bold;
-                color: #fff;
-                text-decoration: none;
-                font-size: 15px;
-                background: none;
-                line-height: 0em;
-                font-family: "neusa-next-std";
-                border: none;
-                cursor: pointer;
-              }
-            }
-          }
-
-          .add-button {
-            display: inline-block;
-            font-size: 18px;
-            color: #d5714f;
-            padding: 12px 30px;
-            background-color: #fff;
-            margin-right: 15px;
-            cursor: pointer;
-            margin-bottom: 15px;
             .font2();
           }
 

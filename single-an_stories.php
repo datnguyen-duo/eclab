@@ -7,7 +7,7 @@ $approved = get_post_meta($post_id, 'approve', true);
 $an_link = get_post_meta($post_id, 'person_link');
 $an_link = $an_link[0];
 $is_admin = current_user_can('manage_options');
-// print_r($an_link);// $api_key = get_option("an_apikey");
+print_r($an_link);// $api_key = get_option("an_apikey");
 $api_key = "78e7e43ff662bc958e6b869a9ea44307";
 ?>
 <main id="primary" class="site-main">

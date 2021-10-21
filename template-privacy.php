@@ -2,7 +2,7 @@
 /* Template Name: Privacy */
 get_header(); ?>
 
-<div class="privacy_wrap page_container">
+<div class="privacy_wrap">
 	<?php 
 	$desc_1 = get_field('description_1');
 	$desc_2 = get_field('description_2');
