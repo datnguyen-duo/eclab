@@ -16,12 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
     $(".slider").slick({
       dots: true,
       infinite: true,
-      speed: 300,
+      speed: 700,
       slidesToShow: 1,
-      adaptiveHeight: true,
-
-      // autoplaySpeed: 2000,
-      // autoplay: true,
+      autoplaySpeed: 3000,
+      autoplay: true,
     });
 
     $("#story").on("keyup", function () {
