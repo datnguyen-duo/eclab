@@ -90,16 +90,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     $(".add-button").on("click", function () {
-      console.log("clicked");
+      // console.log("clicked");
       //Tag-This lets you pass your own ID and/or text to be attached to a tag you want to create!
       //Your code may look slightly different than this, but here's away to construct an object with an ID that Tag-This will accept.
       var tagData = {
-        text: $(this).text(),
+        text: $(this).data("id"),
         id: $(this).data("id"),
       };
 
       //We have our object- let's pass it to Tag-This's 'addTag' method
-      $("#tags").addTag($(this).text());
+      $("#tags").addTag($(this).data("id"));
       // $(this).remove()
     });
 
