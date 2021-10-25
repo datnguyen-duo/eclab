@@ -190,6 +190,7 @@
                 alert('Please enter all field!');
             }
         });
+        
     });
 })(jQuery);
 </script>

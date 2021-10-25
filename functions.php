@@ -99,6 +99,17 @@ if (! function_exists('eclab_setup')) :
 endif;
 add_action('after_setup_theme', 'eclab_setup');
 
+/**
+ * Admin story script
+ */
+add_action('admin_enqueue_scripts', 'my_admin_scripts');
+function my_admin_scripts()
+{
+    if (isset($_GET['post_type']) && $_GET['post_type'] == 'an_stories') {
+        wp_register_script('story-status', get_template_directory_uri() . '/js/manage-story.js');
+        wp_enqueue_script('story-status');
+    }
+}
 
 /**
  * Enqueue scripts and styles.
@@ -111,12 +122,19 @@ function eclab_scripts()
     wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', array(), null, true);
     // wp_enqueue_script('jquery-ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js', array(), null, true);
     wp_enqueue_script('cookie', get_template_directory_uri() . '/js/jquery.cookie.js', array(), _S_VERSION, true);
-    wp_enqueue_script('global', get_template_directory_uri() . '/js/global.js?v=1015', array(), _S_VERSION, true);
+    wp_enqueue_script('tagthis', get_template_directory_uri() . '/js/jquery.tagthis.js', array(), _S_VERSION, true);
+    
+    wp_enqueue_script('global', get_template_directory_uri() . '/js/global.js?v=1013', array(), _S_VERSION, true);
     // wp_enqueue_script( 'home', get_template_directory_uri() . '/js/home.js', array(), _S_VERSION, true );
-    wp_enqueue_script('tags', get_template_directory_uri() . '/js/tags.js?v=132', array(), _S_VERSION, true);
+
     wp_enqueue_script('gsap', get_template_directory_uri() . '/js/gsap.min.js', true);
+    wp_enqueue_script('scrolltrigger', get_template_directory_uri() . '/js/ScrollTrigger.min.js', true);
+
     if (!is_front_page()) {
         wp_enqueue_script('action-network-api', get_template_directory_uri() . '/js/action-network-api.js', array(), _S_VERSION, true);
+    }
+    if (is_page_template("template-about.php")) {
+        wp_enqueue_script('about-page', get_template_directory_uri() . '/js/about-page.js', array(), _S_VERSION, true);
     }
 
     if (is_front_page()) {
@@ -134,18 +152,6 @@ function eclab_scripts()
     ));
 }
 add_action('wp_enqueue_scripts', 'eclab_scripts');
-/**
- * Admin pade script
- */
-add_action('admin_enqueue_scripts', 'my_admin_scripts');
-function my_admin_scripts()
-{
-    if (isset($_GET['post_type']) && $_GET['post_type'] == 'an_stories') {
-        wp_register_script('story-status', get_template_directory_uri() . '/js/manage-story.js');
-        wp_enqueue_script('story-status');
-    }
-}
-
 
 //If acf plugin exists
 if (function_exists('acf_add_options_page')) {
@@ -231,24 +237,24 @@ function t311_submissions()
 
         $post_data = array(
             "person" => array(
-                'family_name' => sanitize_text_field($_POST['lname']),
-                'given_name' => sanitize_text_field($_POST['fname']),
+                'family_name' => $_POST['lname'],
+                'given_name' => $_POST['fname'],
                 'email_addresses' => array(
-                    array('address' => sanitize_email($_POST['email']))
+                    array('address' => $_POST['email'])
                 ),
                 "custom_fields" => array(
-                    'fname' => sanitize_text_field($_POST['fname']),
-                    'lname' => sanitize_text_field($_POST['lname']),
-                    'storytile' => sanitize_text_field($_POST['storytile']),
-                    'checkbox' => sanitize_text_field($_POST['checkbox']),
-                    'phonenumber' => sanitize_text_field($_POST['phonenumber']),
-                    'story' => sanitize_text_field($_POST['story']),
-                    'topic' => sanitize_text_field($_POST['topic']),
+                    'fname' => $_POST['fname'],
+                    'lname' => $_POST['lname'],
+                    'storytile' => $_POST['storytile'],
+                    'checkbox' => $_POST['checkbox'],
+                    'phonenumber' => $_POST['phonenumber'],
+                    'story' => $_POST['story'],
+                    'topic' => $_POST['topic'],
                     'radios' => $_POST['radios'],
-                    'zipcode' => sanitize_text_field($_POST['zipcode']),
+                    'zipcode' => $_POST['zipcode'],
                     'base64_img' => $img_url,
                     'radio' => $_POST['radio'],
-                    'tag' => sanitize_text_field($add_tags)
+                    'tag' => $add_tags
                 )
             ),
             "triggers" => array(
@@ -278,29 +284,8 @@ function t311_submissions()
 
         $server_output = curl_exec($ch);
         curl_close($ch);
-        $server_output_arr = json_decode($server_output);
-        if (!empty($server_output_arr) && isset($server_output_arr->identifiers) && !empty($server_output_arr->identifiers)) {
-            print_r($server_output);
-            $current_user = wp_get_current_user();
-            // create post object
-            $story = array(
-                'post_title'  => $_POST['storytile'],
-                'post_status' => 'publish',
-                'post_author' => $current_user->ID,
-                'post_type'   => 'an_stories',
-                'post_date'   => date('Y-m-d H:i:s')
-            );
-            // insert the post into the database
-            $post_story_id = wp_insert_post($story);
-            $person_link =  $server_output_arr->_links->{"osdi:person"}->href;
-            add_post_meta($post_story_id, 'story_id', $server_output_arr->identifiers[0]);
-            add_post_meta($post_story_id, 'person_link', $person_link);
-            add_post_meta($post_story_id, 'an_person_id', $server_output_arr->{"action_network:person_id"});
-            add_post_meta($post_story_id, 'story_form_id', 'fe289885-c119-4ee7-a543-d3e92a0ce691');
-            add_post_meta($post_story_id, 'approve', 'not_approved');
-        }
-        // p
-        // print_r($server_output);
+
+        print_r($server_output);
     }
     die();
 }
@@ -329,7 +314,7 @@ function signup_email_an()
         (isset($_POST['zipcode']) &&!empty($_POST['zipcode']))) {
         $first_name = sanitize_text_field($_POST['fname']);
         $last_name = sanitize_text_field($_POST['lname']);
-        $email = sanitize_text_field($_POST['email']);
+        $email = sanitize_email($_POST['email']);
         $zipcode = sanitize_text_field($_POST['zipcode']);
         $api_key = "78e7e43ff662bc958e6b869a9ea44307";
         $api_request_url = "https://actionnetwork.org/api/v2/forms/ffba81ee-03e0-4c17-abf6-1dae7786c3fa/submissions/";
@@ -339,8 +324,8 @@ function signup_email_an()
             );
         $string = '{
 		  "person" : {
-		    "family_name" : "'.$first_name.'",
-		    "given_name" : "'.$last_name.'",
+		    "family_name" : "'.$last_name.'",
+		    "given_name" : "'.$first_name.'",
 		    "postal_addresses" : [ { "postal_code" : "'.$zipcode.'" }],
 		    "email_addresses" : [ { "address" : "'.$email.'" }]
 		   },
@@ -350,6 +335,57 @@ function signup_email_an()
 		    "member"
 		  ]
 		}';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_URL, $api_request_url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $string);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+        curl_close($ch);
+        wp_send_json_success($server_output);
+    } else {
+        wp_send_json_success('Nothing!!!!!!');
+    }
+}
+
+add_action('wp_ajax_childhoodFundingCoalition', 'childhoodFundingCoalition');
+add_action('wp_ajax_nopriv_childhoodFundingCoalition', 'childhoodFundingCoalition');
+function childhoodFundingCoalition()
+{
+    if ((isset($_POST['email'])&& !empty($_POST['email'])) &&
+            (isset($_POST['zipcode']) &&!empty($_POST['zipcode']) )) {
+        $first_name = sanitize_text_field($_POST['fname']);
+        $last_name = sanitize_text_field($_POST['lname']);
+        if (empty($first_name) && empty($last_name)) {
+            $first_name = "Anonymous";
+            $last_name = "Anonymous";
+        }
+        $email = sanitize_email($_POST['email']);
+        $zipcode = sanitize_text_field($_POST['zipcode']);
+        $api_key = "78e7e43ff662bc958e6b869a9ea44307";
+        $api_request_url = "https://actionnetwork.org/api/v2/forms/f31feaba-2d33-435c-a2cd-91c4f07638aa/submissions/";
+        $headers = array(
+               "Content-Type: application/json",
+               'OSDI-API-Token: '.$api_key
+            );
+        $string = '{
+              "person" : {
+                "family_name" : "'.$last_name.'",
+                "given_name" : "'.$first_name.'",
+                "postal_addresses" : [ { "postal_code" : "'.$zipcode.'" }],
+                "email_addresses" : [ { "address" : "'.$email.'" }]
+               },
+                   "triggers":{"autoresponse":{"enabled":true}},
+              "add_tags": [
+                "volunteer",
+                "member"
+              ]
+            }';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 100);
@@ -436,7 +472,6 @@ function add_cors_http_header()
     header("Access-Control-Allow-Origin: *");
 }
 add_action('init', 'add_cors_http_header');
-
 /*
 18/10
  */

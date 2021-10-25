@@ -27,10 +27,7 @@ if (!empty($posts)) {
         }
     }
 }
-
-/*
-$form_id = "0256972e-f4ad-4a1f-985a-e8944d2f85ae";
-
+/*$form_id = "0256972e-f4ad-4a1f-985a-e8944d2f85ae";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_TIMEOUT, 100);
@@ -73,7 +70,7 @@ $person_link = array_reverse($person_link);*/
         cursor: no-drop;
     }
 </style>
-<div class="home_wrap">
+<div class="home_wrap page_container">
 
     <?php $hero_section = get_field('hero_section'); ?>
     <div class="home_hero">
@@ -81,11 +78,11 @@ $person_link = array_reverse($person_link);*/
             <div class="hero_description">
                 <div class="hero_description_content">
                     <?php if ($hero_section['title']) : ?>
-                        <h1><? echo $hero_section['title']; ?></h1>
+                        <h1><?php echo $hero_section['title']; ?></h1>
                     <?php endif; ?>
 
                     <?php if ($hero_section['description']) : ?>
-                        <p><? echo $hero_section['description']; ?></p>
+                        <p><?php echo $hero_section['description']; ?></p>
                     <?php endif; ?>
 
                     <?php
@@ -123,7 +120,7 @@ $person_link = array_reverse($person_link);*/
                 <div class="slides">
                     <?php foreach ($banner_slides as $slide) : ?>
                         <div class="slide">
-                            <p><?php echo $slide['text']; ?></p>
+                            <p class="static"><?php echo $slide['text']; ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -277,17 +274,17 @@ $person_link = array_reverse($person_link);*/
                                             <img class="story_image" src="'.($custom_fields->base64_img? $custom_fields->base64_img: get_template_directory_uri()."/images/single_story.jpg").'" alt="">
                                         </div>
                                         <div class="post_info">
-                                            <h3 class="story_title">
+                                            <h3 class="story_title static">
                                                 '.$custom_fields->storytile.'
                                             </h3>
-                                            <p class="story_author">
+                                            <p class="story_author static">
                                                 By '.$custom_fields->fname.' '.$custom_fields->lname.' 
                                             </p>
                                             <div class="separator"></div>
                                             <div class="category">
                                                 '.ucfirst($category).'
                                             </div>
-                                            <div class="story_content" hidden>'.str_replace("\'", "'", $custom_fields->story).'</div>
+                                            <div class="story_content" hidden>'.str_replace("\'", "'", preg_replace("/(\\\\\\\\)+'/", "'", $custom_fields->story)).'</div>
                                             <div class="story_tags" hidden>'.$tags_name.'</div>
                                         </div>
                                     </div>
@@ -315,11 +312,12 @@ $person_link = array_reverse($person_link);*/
     if ($img_with_desc_section['title'] || $img_with_desc_section['description'] || $img_with_desc_section['button'] || $img_with_desc_section['image']) : ?>
         <div class="third_section" id="tell_story">
             <div class="content_holder">
+                <div class="arrow_hidden"></div>
                 <?php if ($img_with_desc_section['title']) : ?>
                     <h2><?php echo $img_with_desc_section['title']; ?></h2>
                 <?php endif; ?>
                 <form id="tn-form" class="form_swiper">
-                    <!-- <div class="third_section_content sinlge_box">
+                    <div class="third_section_content sinlge_box">
                     
                         <div class="left">
                             <?php if ($img_with_desc_section['description']) : ?>
@@ -340,7 +338,7 @@ $person_link = array_reverse($person_link);*/
                         </div>
                         <div class="right">
                             <?php if ($img_with_desc_section['image']) : ?>
-                                <div class="image_holder">
+                                <div class="image_holder st__img">
                                     <img src="<?php echo $img_with_desc_section['image']['url']; ?>" alt="<?php echo $img_with_desc_section['image']['alt']; ?>">
                                 </div>
                             <?php endif; ?>
@@ -364,7 +362,7 @@ $person_link = array_reverse($person_link);*/
                                 
                             <?php endif; ?>
                         </div>
-                    </div> -->
+                    </div>
 
                     <!-- FIRST SLIDE -->
                     <?php $first_slide = get_field('first_slide', get_pll_option_page()) ?>
@@ -372,32 +370,32 @@ $person_link = array_reverse($person_link);*/
                         <div class="single_question">
                             <p class="question"><?php echo $first_slide['headline_2']; ?></p>
                             <div class="input_wrap">
-                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode1">
+                                <input type="text" placeholder="<?php echo $first_slide['enter_your_zip_code']; ?>" name="zipcode1" <?php echo ($first_slide['required_display_name']) ? 'required' : null; ?>>
                             </div>
                         </div>
                         <div class="single_question last">
                             <p class="question"><?php echo $first_slide['headline_1']; ?></p>
                             <div class="checkbox_wrap">
-                                <div class="single_checkbox checkbox_with_question" data-questions="What do you need most from early education and care for your child(ren)? <br> What has been your greatest challenge in finding and getting care for your child(ren)?">
-                                    <input type="radio" id="check_1" checked name="radio" value="I’m a family member and/or caregiver">
+                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_1'] ?>">
+                                    <input type="radio" id="check_1" name="radio" value="I’m a family member and/or caregiver" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
                                     <label for="check_1">
                                     <?php echo $first_slide['perspective_1']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox checkbox_with_question" data-questions="What has been the most rewarding and/or challenging about your choice to become an early educator? <br> Tell us about an experience working with a child or family that you’ll never forget.">
-                                    <input type="radio" id="check_2" name="radio" value="I’m an early childhood educator">
+                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_2'] ?>">
+                                    <input type="radio" id="check_2" name="radio" value="I’m an early childhood educator" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
                                     <label for="check_2">
                                     <?php echo $first_slide['perspective_2']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox checkbox_with_question" data-questions="What has been the most rewarding and/or challenging about your choice to become a provider? <br> What do you most need or want to do your work well? Tell us about an experience with a family, child or employee that you’ll never forget.">
-                                    <input type="radio" id="check_3" name="radio" value="I’m a provider">
+                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_3'] ?>">
+                                    <input type="radio" id="check_3" name="radio" value="I’m a provider" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
                                     <label for="check_3">
                                     <?php echo $first_slide['perspective_3']; ?>
                                     </label>
                                 </div>
-                                <div class="single_checkbox checkbox_with_question" data-questions="Tell us about a child, caregiver or experience that is illustrative of your experience with early childhood care and education.">
-                                    <input type="radio" id="check_4" name="radio" value="I’m a supporter">
+                                <div class="single_checkbox checkbox_with_question" data-questions="<?php echo $first_slide['perspective_additional_description_4'] ?>">
+                                    <input type="radio" id="check_4" name="radio" value="I’m a supporter" <?php echo ($first_slide['perspectives_required']) ? 'required' : null; ?>>
                                     <label for="check_4">
                                     <?php echo $first_slide['perspective_4']; ?>
                                     </label>
@@ -415,13 +413,13 @@ $person_link = array_reverse($person_link);*/
                         </div>
                         <div class="two_question_wrap">
                             <div class="single_question">
-                                <textarea name="story" id="story" cols="30" rows="10" placeholder="<?php echo $third_slide['textarea_1']; ?>" required></textarea>
+                                <textarea name="story" id="story" cols="30" rows="10" placeholder="<?php echo $third_slide['textarea_1']; ?>" <?php echo ($third_slide['required_textarea_1']) ? 'required' : null; ?>></textarea>
                                 <span style="display:none;" class="required_field">required</span>
                                 <p class="word_counter"><span id="display_story_count">0</span> / <span id="word_story_left">200 <?php echo $third_slide['word_counter']; ?></span></p>
                             </div>
                             <div class="single_question last">
                                 <p class="question"><?php echo $third_slide['headline_2']; ?></p>
-                                <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="<?php echo $third_slide['textarea_2']; ?>" required></textarea>
+                                <textarea name="storytile" id="storytile" cols="30" rows="6" placeholder="<?php echo $third_slide['textarea_2']; ?>" <?php echo ($third_slide['required_textarea_2']) ? 'required' : null; ?>></textarea>
                                 <p class="word_counter"><span id="display_storytile_count">0</span> / <span id="word_storytile_left">10 <?php echo $third_slide['word_counter']; ?><span></p>
                             </div>
                         </div>
@@ -489,7 +487,7 @@ $person_link = array_reverse($person_link);*/
                             <div class="single_column">
                                 <p class="question"><?php echo $fourth_slide['headline_1'] ?></p>
                                 <div class="image-upload-wrap">
-                                    <input class="file-upload-input" name="photo" id="photo" type='file' accept="image/*" />
+                                    <input class="file-upload-input" name="photo" id="photo" type='file' accept="image/*"/>
                                     <input type="hidden" id="base64_img" name="base64_img" value="">
                                     <div class="drag-text">
                                     <h3><?php echo $fourth_slide['image_upload_title'] ?></h3>
@@ -506,6 +504,12 @@ $person_link = array_reverse($person_link);*/
                                 <div class="single_question">
                                     <p class="question"><?php echo $fourth_slide['headline_2'] ?></p>
                                     <input type="text" id="tags" name="tags">
+                                    <div class="tag_error">You have reached maximum tags</div>
+                                    <ul>
+                                        <?php foreach ($fourth_slide['predefined_tags'] as $singleTag) : ?>
+                                            <li class="add-button" data-id="<?php echo str_replace("#", "", $singleTag['single_tag']); ?>"><?php echo $singleTag['single_tag']; ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
                                 </div>
                                 
                             </div>
@@ -518,11 +522,11 @@ $person_link = array_reverse($person_link);*/
                         <p class="question"><?php echo $fifth_slide['headline']; ?></p>
                         <div class="single_question last">
                             <div class="form_holder">
-                                <div class="half"><input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>" required></div>
-                                <div class="half"><input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>" required></div>
-                                <input name="email" type="email" placeholder="<?php echo $fifth_slide['email_address']; ?>" required>
-                                <div class="half"><input name="phonenumber" type="text" placeholder="<?php echo $fifth_slide['phone']; ?>"></div>
-                                <div class="half"><input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>" required></div>
+                                <div class="half"><input name="fname" type="text" placeholder="<?php echo $fifth_slide['first_name']; ?>" <?php echo ($fifth_slide['required_first_name']) ? 'required' : null; ?>></div>
+                                <div class="half"><input name="lname" type="text" placeholder="<?php echo $fifth_slide['last_name']; ?>" <?php echo ($fifth_slide['required_last_name']) ? 'required' : null; ?>></div>
+                                <input name="email" type="email" placeholder="<?php echo $fifth_slide['email_address']; ?>" <?php echo ($fifth_slide['required_email_address']) ? 'required' : null; ?>>
+                                <div class="half"><input name="phonenumber" type="text" placeholder="<?php echo $fifth_slide['phone']; ?>" <?php echo ($fifth_slide['required_phone']) ? 'required' : null; ?>></div>
+                                <div class="half"><input name="zipcode" type="text" placeholder="<?php echo $fifth_slide['zip_code']; ?>" <?php echo ($fifth_slide['required_zip_code']) ? 'required' : null; ?>></div>
                             </div>
                         </div>
                     </div>
@@ -539,10 +543,11 @@ $person_link = array_reverse($person_link);*/
                                 <div class="custom_checkobxes">
                                     <div class="single_box_wrap">
                                         <label class="container">
-                                            <input type="checkbox" name="checkbox1" value="disclaimer">
+                                            <input type="checkbox" name="checkbox1" value="disclaimer" required>
                                             <span class="checkmark"></span>
                                             <?php echo $tell_story_form_fields['checkbox1']; ?>
                                         </label>
+                                        <div class="checkbox_error">This field is required</div>
                                     </div>
                                     <div class="single_box_wrap">
                                         <label class="container">
@@ -553,7 +558,8 @@ $person_link = array_reverse($person_link);*/
                                     </div>
                                 </div>
                                 <button class="button dark submit_button" id="home_submit_button" disabled>
-                                <?php echo $tell_story_form_fields['submit_button']; ?>
+                                    <div class="hidden_button"></div>
+                                    <?php echo $tell_story_form_fields['submit_button']; ?>
                                 </button>
                             </div>
                             
@@ -607,7 +613,7 @@ $person_link = array_reverse($person_link);*/
                     <?php if ($files_section['graphics']) : ?>
                         <div class="graphics_holder">
                             <?php foreach ($files_section['graphics'] as $graphic) : ?>
-                                <a href="<?php echo $graphic['image']['url']; ?>" target="_blank" class="single_graphic">
+                                <a href="<?php echo $graphic['image']['url']; ?>" target="_blank" class="single_graphic st__img">
                                     <div class="image_holder">
                                         <img src="<?php echo $graphic['image']['url']; ?>" alt="<?php echo $graphic['image']['alt']; ?>">
                                     </div>
@@ -923,13 +929,7 @@ var admin_ajax_url = '<?php echo admin_url('admin-ajax.php'); ?>';
 </script>
 <script type="text/javascript">
 jQuery(document).ready(function ($) {
-    let radio_val="I’m a family member and/or caregiver";
-    $('input[name="radio"]').change(function(){
-        radio_val = $(this).val();
-    });
     $('#home_submit_button').click(function(event) {
-        console.log($('input[name="radio"]').val());
-        console.log(radio_val);
         if ($("#tn-form").valid()) {
             var file_data = $('#photo')[0].files[0];
             var checkbox_val = $('input[name="checkbox1"]').val();
@@ -947,7 +947,7 @@ jQuery(document).ready(function ($) {
             form_data.append('checkbox', checkbox_val );
             form_data.append('topic', $('input[name="topic"]').val() );
             form_data.append('phonenumber', $('input[name="phonenumber"]').val() );
-            form_data.append('radio', radio_val );
+            form_data.append('radio', $('input[name="radio"]').val() );
             form_data.append('radios', $('input[name="radios"]').val() );
             form_data.append('zipcode', $('input[name="zipcode"]').val() );
             form_data.append('tags', $('input[name="tags"]').val() );
@@ -981,13 +981,22 @@ jQuery(document).ready(function ($) {
                     required: true,
                     email: true
                 },
+                <?php if ($fifth_slide['required_first_name']) : ?>
                 fname: "required",
+                <?php endif; ?>
+                <?php if ($fifth_slide['required_last_name']) : ?>
                 lname: "required",
+                <?php endif; ?>
+                <?php if ($third_slide['required_textarea_1']) : ?>
                 story: "required",
+                <?php endif; ?>
+                <?php if ($third_slide['required_textarea_2']) : ?>
                 storytile: "required",
+                <?php endif; ?>
                 checkbox1: "required",
+                <?php if ($fifth_slide['required_zip_code']) : ?>
                 zipcode: "required",
-                // zipcode1: "required"
+                <?php endif; ?>
             },
             messages: {
                 email: "This field is required",
@@ -997,29 +1006,36 @@ jQuery(document).ready(function ($) {
                 storytile: "This field is required",
                 checkbox1: "This field is required",
                 zipcode: "This field is required",
-                zipcode1: "This field is required"
             },
         });
     }
 
-    
-
     $(".form_swiper").on("beforeChange", function (event, slick, currentSlide) {
       $('.slick-arrow.right').css('pointer-events', 'all');
+      $('.arrow_hidden').removeClass('active');
     });
 
-    
+    $('.arrow_hidden').on('click', function(){
+        $("#tn-form").valid();
+        $('.error').not('input, textarea').removeClass('visible');
+    });
 
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
-        $("#tn-form").valid();
+        $('.error').not('input, textarea').addClass('visible');
 
         $(".slick-current [required]:visible").each(function () {
-            if($(this).val().trim().length < 1){
+            if($(this).val().trim().length < 1 || $('input[name="radio"]:checked').length == 0){
              $('.slick-arrow.right').css('pointer-events', 'none');
+             $('.arrow_hidden').addClass('active');
+             $('.error').not('input, textarea').addClass('visible');
+
             //  $('.slick-current').find('.required_field').fadeIn();
-            return; 
+            return false; 
             } else{
+                return false;
                 $('.slick-arrow.right').css('pointer-events', 'all')
+                $('.arrow_hidden').removeClass('active');
+                $('.error').not('input, textarea').removeClass('visible');
                 // $('.slick-current').find('.required_field').fadeOut();
             }
         }) 
@@ -1028,19 +1044,31 @@ jQuery(document).ready(function ($) {
             $(".slick-current [required]:visible").each(function () {
                 if($(this).val().trim().length < 1){
                     $('.slick-arrow.right').css('pointer-events', 'none')
-                return; 
+                    $('.arrow_hidden').addClass('active');
+                    $(this).find('.error').not('input, textarea').addClass('visible');
+                return false; 
                 } else{
+                    $('.arrow_hidden').removeClass('active');
                     $('.slick-arrow.right').css('pointer-events', 'all')
+                    $(this).find('.error').not('input, textarea').removeClass('visible');
                 }
             })
         });
     })
 
+    $('.hidden_button').click(function() {
+        $(".checkbox_error").fadeIn();
+    })
+
     $('input[name="checkbox1"]').click(function() {
         if ($(this).is(':checked')) {
             $("#home_submit_button").removeAttr("disabled");
+            $(".checkbox_error").fadeOut();
+            $('.hidden_button').fadeOut();
         } else {
             $("#home_submit_button").attr("disabled", true);
+            $(".checkbox_error").fadeIn();
+            $('.hidden_button').fadeIn();
         }
     })
 

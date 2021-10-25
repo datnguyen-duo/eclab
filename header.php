@@ -17,7 +17,7 @@ $google_analytics_script = get_field('google_analytics_script', 'option');
         <?php echo $google_analytics_script; ?>
     <?php endif; ?>
     <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <link rel="stylesheet" href="https://use.typekit.net/qyl4nbu.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
@@ -118,7 +118,7 @@ $google_analytics_script = get_field('google_analytics_script', 'option');
 
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<div id="page" class="site">
+<div id="page" class="site loading">
     
     <header>
         <div class="header_content">
@@ -198,6 +198,48 @@ $google_analytics_script = get_field('google_analytics_script', 'option');
             
         </div>
     </header>
+<?php
+if (isset($_POST['popup_submit']) && (isset($_POST['popup_fname'])&& !empty($_POST['popup_fname'])) &&
+    (isset($_POST['popup_lname'])&& !empty($_POST['popup_lname'])) &&
+    (isset($_POST['popup_email'])&& !empty($_POST['popup_email'])) &&
+    (isset($_POST['popup_zipcode']) &&!empty($_POST['popup_zipcode']))) {
+    $first_name = $_POST['popup_fname'];
+    $last_name = $_POST['popup_lname'];
+    $email = $_POST['popup_email'];
+    $zipcode = $_POST['popup_zipcode'];
+    $api_key = "78e7e43ff662bc958e6b869a9ea44307";
+    $api_request_url = "https://actionnetwork.org/api/v2/forms/ffba81ee-03e0-4c17-abf6-1dae7786c3fa/submissions/";
+    $headers = array(
+           "Content-Type: application/json",
+           'OSDI-API-Token: '.$api_key
+        );
+    $string = '{
+	  "person" : {
+	    "family_name" : "'.$first_name.'",
+	    "given_name" : "'.$last_name.'",
+	    "postal_addresses" : [ { "postal_code" : "'.$zipcode.'" }],
+	    "email_addresses" : [ { "address" : "'.$email.'" }]
+	   },
+	  "add_tags": [
+	    "volunteer",
+	    "member"
+	  ]
+	}';
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_URL, $api_request_url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $string);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $server_output = curl_exec($ch);
+    curl_close($ch);
+}
+
+?>
 
 <?php
     $popup_section = get_field('popup_section');

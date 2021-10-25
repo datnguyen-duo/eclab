@@ -4,6 +4,7 @@ get_header(); ?>
 <?php
 error_reporting(1);
 $api_key = "78e7e43ff662bc958e6b869a9ea44307";
+
 $args = array(
     'meta_query' => array(
         array(
@@ -26,8 +27,6 @@ if (!empty($posts)) {
         }
     }
 }
-
-
 /*
 $form_id = "0256972e-f4ad-4a1f-985a-e8944d2f85ae";
 
@@ -47,11 +46,10 @@ foreach ($submissions->_embedded->{"osdi:submissions"} as $key => $value) {
         array_push($person_link, $value->_links->{"osdi:person"}->href);
     }
 }
-$person_link = array_reverse($person_link);
-*/
-?>
+$person_link = array_reverse($person_link);*/
 
-<div class="community_wrap">
+?>
+<div class="community_wrap page_container">
 
     <?php
     $popup_section = get_field('popup_section');
@@ -194,17 +192,17 @@ $person_link = array_reverse($person_link);
                                         <img class="story_image" src="'.($custom_fields->base64_img? $custom_fields->base64_img: get_template_directory_uri()."/images/single_story.jpg").'" alt="">
                                     </div>
                                     <div class="post_info">
-                                        <h3 class="story_title">
+                                        <h3 class="story_title static">
                                             '.$custom_fields->storytile.'
                                         </h3>
-                                        <p class="story_author">
+                                        <p class="story_author static">
                                             By '.$custom_fields->fname.' '.$custom_fields->lname.' 
                                         </p>
                                         <div class="separator"></div>
                                         <div class="category">
                                             '.ucfirst($category).'
                                         </div>
-                                        <div class="story_content" hidden>'.str_replace("\'", "'", $custom_fields->story).'</div>
+                                        <div class="story_content" hidden>'.str_replace("\'", "'", preg_replace("/(\\\\\\\\)+'/", "'", $custom_fields->story)).'</div>
                                         <div class="story_tags" hidden>'.$tags_name.'</div>
                                     </div>
                                 </div>

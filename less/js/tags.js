@@ -787,7 +787,7 @@
         empty: "Attention, you cannot add an empty tag.",
         minLength: "Attention, your tag must have at least 2 characters.",
         maxLength: "Attention, your tag must not exceed 30 characters.",
-        max: "Attention, the number of tags must not exceed 10.",
+        max: "Attention, the number of tags must not exceed 20.",
         exists: "Attention, this tag already exists !",
         autocomplete_only: "Attention, you must select a value from the list.",
         timeout: 8000,

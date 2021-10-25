@@ -1,64 +1,64 @@
-document.addEventListener("DOMContentLoaded", function () {
-  gsap.registerPlugin(ScrollTrigger);
-});
-
 (function ($) {
   $(document).ready(function () {
+    
     var vh = window.innerHeight * 0.01; // Then we set the value in the --vh custom property to the root of the document
 
-    document.documentElement.style.setProperty("--vh", "".concat(vh, "px"));
-    window.addEventListener("resize", function () {
+    document.documentElement.style.setProperty('--vh', "".concat(vh, "px"));
+    window.addEventListener('resize', function () {
       // We execute the same script as before
       var vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty("--vh", "".concat(vh, "px"));
+      document.documentElement.style.setProperty('--vh', "".concat(vh, "px"));
     });
 
     $(".slider").slick({
       dots: true,
       infinite: true,
-      speed: 700,
+      speed: 300,
       slidesToShow: 1,
-      autoplaySpeed: 3000,
-      autoplay: true,
+      adaptiveHeight: true,
+
+      // autoplaySpeed: 2000,
+      // autoplay: true,
     });
 
-    $("#story").on("keyup", function () {
+    $("#story").on('keyup', function() {
       var words = 0;
-
-      if (this.value.match(/\S+/g) != null) {
+  
+      if ((this.value.match(/\S+/g)) != null) {
         words = this.value.match(/\S+/g).length;
       }
-
+  
       if (words > 200) {
         // Split the string on first 200 words and rejoin on spaces
         var trimmed = $(this).val().split(/\s+/, 200).join(" ");
         // Add a space at the end to make sure more typing creates new words
         $(this).val(trimmed + " ");
-      } else {
-        $("#display_story_count").text(words);
+      }
+      else {
+        $('#display_story_count').text(words);
         // $('#word_story_left').text(200-words);
       }
     });
 
-    $("#storytile").on("keyup", function () {
+    $("#storytile").on('keyup', function() {
       var words = 0;
-
-      if (this.value.match(/\S+/g) != null) {
+  
+      if ((this.value.match(/\S+/g)) != null) {
         words = this.value.match(/\S+/g).length;
       }
-
+  
       if (words > 10) {
         // Split the string on first 200 words and rejoin on spaces
         var trimmed = $(this).val().split(/\s+/, 10).join(" ");
         // Add a space at the end to make sure more typing creates new words
         $(this).val(trimmed + " ");
-      } else {
-        $("#display_storytile_count").text(words);
+      }
+      else {
+        $('#display_storytile_count').text(words);
         // $('#word_storytile_left').text(10-words);
       }
     });
 
-    //tags start
     $("#tn-form input").on("change", function () {
       if ($("input[name=radios]:checked", "#tn-form").val() == "challenges") {
         $(".select_input").addClass("visible");
@@ -67,51 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    $("#tags").tagThis({
-      interactive: true,
-      noDuplicates: true,
-      removeWithBackspace: false,
-      maxTags: 10,
-      defaultText: "Type to tag",
-    });
-
-    $("#tags--tag").on("change keyup paste", function () {
-      if ($("#tag-this--tags .tag").length > 9) {
-        $(".tag_error").fadeIn();
-        // $(this).attr("disabled", true);
-      } else {
-        $(".tag_error").fadeOut();
-        // $(this).removeAttr("disabled");
-      }
-    });
-
-    $("#tn-form input, #tn-form").on("keypress", function (e) {
-      return e.which !== 13;
-    });
-
-    $(".add-button").on("click", function () {
-      // console.log("clicked");
-      //Tag-This lets you pass your own ID and/or text to be attached to a tag you want to create!
-      //Your code may look slightly different than this, but here's away to construct an object with an ID that Tag-This will accept.
-      var tagData = {
-        text: $(this).data("id"),
-        id: $(this).data("id"),
-      };
-
-      //We have our object- let's pass it to Tag-This's 'addTag' method
-      $("#tags").addTag($(this).data("id"));
-      // $(this).remove()
-    });
-
-    //tags end
-
-    $('.single_story_holder[data-url="test"]').remove();
-    $('.single_story_holder[data-url="qwe"]').remove();
-
     $(".form_swiper").slick({
       dots: true,
-      swipe: false,
-      touchMove: false,
       speed: 300,
       infinite: false,
       draggable: false,
@@ -196,24 +153,32 @@ document.addEventListener("DOMContentLoaded", function () {
       $(this).parent().find(".description").slideToggle();
     });
 
-    $(".checkbox_with_question").on("click", function (event) {
-      var currentQuestion = $(this).data("questions");
-      $(".checkbox_questions").html(currentQuestion);
-    });
-
     $(".next_slide").on("click", function (event) {
       $(".form_swiper").slick("slickNext");
       clearTimeout(timeoutId);
     });
 
+    $('.single_story_holder[data-url="test"]').remove();
+
+    // $(".submit_button").on("click", function (event) {
+    //   event.preventDefault();
+    //   $(".form_swiper").slick("slickNext");
+    // });
+
     $(".form_swiper").on("afterChange", function (event, slick, currentSlide) {
-      if (currentSlide == 0) {
+      if (currentSlide == 0 || currentSlide == 7) {
         $(".slick-arrow").removeClass("active");
       } else {
         $(".slick-arrow").addClass("active");
       }
 
-      if (currentSlide == 5) {
+      if (currentSlide == 6) {
+        $(".slick-arrow.right").addClass("last");
+      } else {
+        $(".slick-arrow.right").removeClass("last");
+      }
+
+      if (currentSlide == 6) {
         $(".slick-arrow.right").addClass("last");
       } else {
         $(".slick-arrow.right").removeClass("last");
@@ -368,67 +333,3 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   $(window).on("scroll", function (event) {});
 })(jQuery);
-
-window.addEventListener("load", function () {
-  document.getElementById("page").classList.remove("loading");
-
-  gsap.from(".home_wrap .home_hero .image_holder", {
-    y: 40,
-    opacity: 0,
-    ease: Quint.easeOut,
-  });
-
-  const trigger = document.querySelectorAll(
-    ".home .single_story_holder.families"
-  );
-
-  gsap.to(trigger, 1.5, {
-    opacity: 1,
-    stagger: 0.1,
-    ease: Quint.easeOut,
-    scrollTrigger: {
-      trigger: ".second_section",
-      start: "top 70%",
-    },
-  });
-
-  const mocTrigger = document.querySelectorAll(
-    ".page-template-template-community .single_story_holder"
-  );
-
-  gsap.to(mocTrigger, 1.5, {
-    opacity: 1,
-    stagger: 0.1,
-    ease: Quint.easeOut,
-    scrollTrigger: {
-      trigger: ".second_section",
-      start: "top 70%",
-    },
-  });
-
-  const textTriggers = gsap.utils.toArray(
-    ".page_container h1, .page_container h2, .page_container h3:not(.static), .page_container h4, .page_container h5, .page_container p:not(.static), .page_container ul"
-  );
-  textTriggers.forEach((text) => {
-    gsap.from(text, {
-      y: 20,
-      opacity: 0,
-      scrollTrigger: {
-        trigger: text,
-        start: "top 85%",
-      },
-    });
-  });
-
-  const graphicTriggers = gsap.utils.toArray(".st__img");
-  graphicTriggers.forEach((img) => {
-    gsap.from(img, {
-      y: 20,
-      opacity: 0,
-      scrollTrigger: {
-        trigger: img,
-        start: "top 80%",
-      },
-    });
-  });
-});
