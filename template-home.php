@@ -1,11 +1,33 @@
 <?php
 /* Template Name: Home */
-get_header(); 
+get_header();
 
 error_reporting(1);
 $api_key = "78e7e43ff662bc958e6b869a9ea44307";
-$form_id = "0256972e-f4ad-4a1f-985a-e8944d2f85ae";
 
+$args = array(
+    'meta_query' => array(
+        array(
+            'key' => 'approve',
+            'value' => "approved"
+        )
+    ),
+    'post_type' => 'an_stories',
+    'posts_per_page' => -1,
+    'orderby' => 'date',
+    'order'   => 'DESC',
+);
+$posts = get_posts($args);
+if (!empty($posts)) {
+    $person_link = array();
+    for ($i=0; $i<count($posts); $i++) {
+        $single_link = get_post_meta($posts[$i]->ID, 'person_link', true);
+        if (!in_array($single_link, $person_link)) {
+            array_push($person_link, $single_link);
+        }
+    }
+}
+/*$form_id = "0256972e-f4ad-4a1f-985a-e8944d2f85ae";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_TIMEOUT, 100);
@@ -22,7 +44,7 @@ foreach ($submissions->_embedded->{"osdi:submissions"} as $key => $value) {
         array_push($person_link, $value->_links->{"osdi:person"}->href);
     }
 }
-$person_link = array_reverse($person_link);
+$person_link = array_reverse($person_link);*/
 ?>
 <style type="text/css">
     #tn-icon-hagtag {
@@ -55,48 +77,48 @@ $person_link = array_reverse($person_link);
         <div class="home_hero_content">
             <div class="hero_description">
                 <div class="hero_description_content">
-                    <?php if( $hero_section['title'] ): ?>
+                    <?php if ($hero_section['title']) : ?>
                         <h1><?php echo $hero_section['title']; ?></h1>
                     <?php endif; ?>
 
-                    <?php if( $hero_section['description'] ): ?>
+                    <?php if ($hero_section['description']) : ?>
                         <p><?php echo $hero_section['description']; ?></p>
                     <?php endif; ?>
 
-                    <?php 
+                    <?php
                     $link = $hero_section['button'];
-                    if( $link ): 
+                    if ($link) :
                         $link_url = $link['url'];
                         $link_title = $link['title'];
                         $link_target = $link['target'] ? $link['target'] : '_self';
                         ?>
-                        <a class="button light join_us" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>">
-                            <?php echo esc_html( $link_title ); ?>
+                        <a class="button light join_us" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                            <?php echo esc_html($link_title); ?>
                         </a>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="image_holder">
-                <?php if( $hero_section['image_text'] ): ?>
+                <?php if ($hero_section['image_text']) : ?>
                     <div class="circle">
                         <p><?php echo $hero_section['image_text']; ?></p>
                     </div>
                 <?php endif; ?>
                 
-                <?php if( $hero_section['image'] ): ?>
+                <?php if ($hero_section['image']) : ?>
                     <img src="<?php echo $hero_section['image']['url']; ?>" alt="<?php echo $hero_section['image']['alt']; ?>">
                 <?php endif; ?>
             </div>
         </div>
     </div>
 
-    <?php 
-    $banner_slides = get_field('banner_slides'); 
-    if( $banner_slides ): ?>
+    <?php
+    $banner_slides = get_field('banner_slides');
+    if ($banner_slides) : ?>
         <div class="eclab_banner">
             <div class="banner">
                 <div class="slides">
-                    <?php foreach( $banner_slides as $slide ): ?>
+                    <?php foreach ($banner_slides as $slide) : ?>
                         <div class="slide">
                             <p class="static"><?php echo $slide['text']; ?></p>
                         </div>
@@ -106,23 +128,23 @@ $person_link = array_reverse($person_link);
         </div>
     <?php endif; ?>
 
-    <?php 
-    $slider_section = get_field('slider_section'); 
-    if( $slider_section['title'] || $slider_section['button'] || $slider_section['slider'] ): ?>
+    <?php
+    $slider_section = get_field('slider_section');
+    if ($slider_section['title'] || $slider_section['button'] || $slider_section['slider']) : ?>
         <div class="first_section">
             <div class="content_holder">
                 <div class="first_section_content">
                     <div class="left">
                         <div class="left_content">
-                        <?php if( $slider_section['slider'] ): ?>
+                        <?php if ($slider_section['slider']) : ?>
                             <div class="slider">
-                                <?php foreach( $slider_section['slider'] as $slide ): ?>
+                                <?php foreach ($slider_section['slider'] as $slide) : ?>
                                     <div class="single_slide">
-                                        <?php if( $slide['title'] ): ?>
+                                        <?php if ($slide['title']) : ?>
                                             <h2><?php echo $slide['title']; ?></h2>
                                         <?php endif; ?>
 
-                                        <?php if( $slide['description'] ): ?>
+                                        <?php if ($slide['description']) : ?>
                                             <p><?php echo $slide['description']; ?></p>
                                         <?php endif; ?>
                                     </div>
@@ -134,20 +156,20 @@ $person_link = array_reverse($person_link);
                     </div>
                     <div class="right">
                         <div class="right_content">
-                            <?php if( $slider_section['title'] ): ?>
+                            <?php if ($slider_section['title']) : ?>
                                 <h3><?php echo $slider_section['title']; ?></h3>
                             <?php endif; ?>
 
-                            <?php 
+                            <?php
                             $link = $slider_section['button'];
-                            if( $link ): 
+                            if ($link) :
                                 $link_url = $link['url'];
                                 $link_title = $link['title'];
                                 $link_target = $link['target'] ? $link['target'] : '_self';
                                 ?>
                                 <div class="button_holder">
-                                    <a class="button light join_us" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>">
-                                        <?php echo esc_html( $link_title ); ?>
+                                    <a class="button light join_us" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                                        <?php echo esc_html($link_title); ?>
                                     </a>
                                 </div>
                                 
@@ -159,11 +181,12 @@ $person_link = array_reverse($person_link);
         </div>
     <?php endif; ?>
     
-    <?php $press_section_title = get_field('press_section_title'); $press_button = get_field('press_button'); ?>
+    <?php $press_section_title = get_field('press_section_title');
+    $press_button = get_field('press_button'); ?>
     <div class="second_section">
         <div class="content_holder">
             <div class="second_section_content">
-                <?php if( $press_section_title ): ?>
+                <?php if ($press_section_title) : ?>
                     <h2><?php echo $press_section_title; ?></h2>
                 <?php endif; ?>
                 
@@ -188,7 +211,7 @@ $person_link = array_reverse($person_link);
                     </ul>
                 </div>
                 <div class="stories_wrap">
-                    <?php 
+                    <?php
                     $count_family=0;
                     $count_edu=0;
                     $count_pro=0;
@@ -212,7 +235,7 @@ $person_link = array_reverse($person_link);
                         
                         $tags = $custom_fields->tag;
                         $tags_name ="";
-                        if($tags){
+                        if ($tags) {
                             $tags = explode(",", $tags);
                             foreach ($tags as $key => $value) {
                                 $tags_name .="<span class='filter-tag' filter='".$value."'>".$value."</span><br>";
@@ -242,9 +265,9 @@ $person_link = array_reverse($person_link);
                                 break;
                         }
                         
-                        if ( ($category == 'families' && $count_family <= 4) || ($category == 'educators' && $count_edu <= 4) ||
-                        ($category == 'providers' && $count_pro <= 4) || ($category == 'supporters' && $count_sup <= 4) ) { 
-                        echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" tag="'.$custom_fields->tag.'" style="display: '.$display.';" data-url="'. $sotryUrl .'">
+                        if (($category == 'families' && $count_family <= 4) || ($category == 'educators' && $count_edu <= 4) ||
+                        ($category == 'providers' && $count_pro <= 4) || ($category == 'supporters' && $count_sup <= 4)) {
+                            echo '<a class="single_story_holder '.$category.'" rel="'.$category.'" tag="'.$custom_fields->tag.'" style="display: '.$display.';" data-url="'. $sotryUrl .'">
                                 <div class="single_story_wrap ">
                                     <div class="single_story">
                                         <div class="image_holder">
@@ -261,18 +284,18 @@ $person_link = array_reverse($person_link);
                                             <div class="category">
                                                 '.ucfirst($category).'
                                             </div>
-                                            <div class="story_content" hidden>'.$custom_fields->story.'</div>
+                                            <div class="story_content" hidden>'.str_replace("\'", "'", preg_replace("/(\\\\\\\\)+'/", "'", $custom_fields->story)).'</div>
                                             <div class="story_tags" hidden>'.$tags_name.'</div>
                                         </div>
                                     </div>
                                 </div>
                             </a>';
-                        curl_close($ch);
+                            curl_close($ch);
                         }
                     }
                     ?>
                 </div>
-                <?php if( $press_button ): ?>
+                <?php if ($press_button) : ?>
                     <div class="button_holder">
                         <a href="<?php echo $press_button['url']; ?>" target="<?php echo $press_button['target']; ?>" class="button light">
                             <?php echo $press_button['title']; ?>
@@ -284,56 +307,56 @@ $person_link = array_reverse($person_link);
         </div>
     </div>
 
-    <?php 
-    $img_with_desc_section = get_field('image_with_description_section'); 
-    if( $img_with_desc_section['title'] || $img_with_desc_section['description'] || $img_with_desc_section['button'] || $img_with_desc_section['image'] ): ?>
+    <?php
+    $img_with_desc_section = get_field('image_with_description_section');
+    if ($img_with_desc_section['title'] || $img_with_desc_section['description'] || $img_with_desc_section['button'] || $img_with_desc_section['image']) : ?>
         <div class="third_section" id="tell_story">
             <div class="content_holder">
                 <div class="arrow_hidden"></div>
-                <?php if( $img_with_desc_section['title'] ): ?>
+                <?php if ($img_with_desc_section['title']) : ?>
                     <h2><?php echo $img_with_desc_section['title']; ?></h2>
                 <?php endif; ?>
                 <form id="tn-form" class="form_swiper">
                     <div class="third_section_content sinlge_box">
                     
                         <div class="left">
-                            <?php if( $img_with_desc_section['description'] ): ?>
+                            <?php if ($img_with_desc_section['description']) : ?>
                                 <p><?php echo $img_with_desc_section['description']; ?></p>
                             <?php endif; ?>
 
-                            <?php 
+                            <?php
                             $link = $img_with_desc_section['button'];
-                            if( $link ): 
+                            if ($link) :
                                 $link_url = $link['url'];
                                 $link_title = $link['title'];
                                 $link_target = $link['target'] ? $link['target'] : '_self';
                                 ?>
-                                <a class="button dark next_slide desktop" target="<?php echo esc_attr( $link_target ); ?>">
-                                    <?php echo esc_html( $link_title ); ?>
+                                <a class="button dark next_slide desktop" target="<?php echo esc_attr($link_target); ?>">
+                                    <?php echo esc_html($link_title); ?>
                                 </a>
                             <?php endif; ?>
                         </div>
                         <div class="right">
-                            <?php if( $img_with_desc_section['image'] ): ?>
+                            <?php if ($img_with_desc_section['image']) : ?>
                                 <div class="image_holder st__img">
                                     <img src="<?php echo $img_with_desc_section['image']['url']; ?>" alt="<?php echo $img_with_desc_section['image']['alt']; ?>">
                                 </div>
                             <?php endif; ?>
                             
-                            <?php if( $img_with_desc_section['image_text'] ): ?>
+                            <?php if ($img_with_desc_section['image_text']) : ?>
                                 <div class="sticker"><?php echo $img_with_desc_section['image_text']; ?></div>
                             <?php endif; ?>
 
-                            <?php 
+                            <?php
                             $link = $img_with_desc_section['button'];
-                            if( $link ): 
+                            if ($link) :
                                 $link_url = $link['url'];
                                 $link_title = $link['title'];
                                 $link_target = $link['target'] ? $link['target'] : '_self';
                                 ?>
                                 <div class="button_holder">
-                                <a class="button dark next_slide mobile" target="<?php echo esc_attr( $link_target ); ?>">
-                                    <?php echo esc_html( $link_title ); ?>
+                                <a class="button dark next_slide mobile" target="<?php echo esc_attr($link_target); ?>">
+                                    <?php echo esc_html($link_title); ?>
                                 </a>
                                 </div>
                                 
@@ -342,7 +365,7 @@ $person_link = array_reverse($person_link);
                     </div>
 
                     <!-- FIRST SLIDE -->
-                    <?php $first_slide = get_field('first_slide',get_pll_option_page()) ?>
+                    <?php $first_slide = get_field('first_slide', get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="single_question">
                             <p class="question"><?php echo $first_slide['headline_2']; ?></p>
@@ -382,7 +405,7 @@ $person_link = array_reverse($person_link);
                     </div>
 
                     <!-- SECOND SLIDE -->
-                    <?php $third_slide = get_field('third_slide',get_pll_option_page()) ?>
+                    <?php $third_slide = get_field('third_slide', get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <p class="question"><?php echo $third_slide['headline_1']; ?></p>
                         <div class="checkbox_questions">
@@ -458,7 +481,7 @@ $person_link = array_reverse($person_link);
                     </div> -->
                     
                     <!-- FOURTH SLIDE -->
-                    <?php $fourth_slide = get_field('fourth_slide',get_pll_option_page()) ?>
+                    <?php $fourth_slide = get_field('fourth_slide', get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <div class="two_columns">
                             <div class="single_column">
@@ -483,7 +506,7 @@ $person_link = array_reverse($person_link);
                                     <input type="text" id="tags" name="tags">
                                     <div class="tag_error">You have reached maximum tags</div>
                                     <ul>
-                                        <?php foreach( $fourth_slide['predefined_tags'] as $singleTag ): ?>
+                                        <?php foreach ($fourth_slide['predefined_tags'] as $singleTag) : ?>
                                             <li class="add-button" data-id="<?php echo str_replace("#", "", $singleTag['single_tag']); ?>"><?php echo $singleTag['single_tag']; ?></li>
                                         <?php endforeach; ?>
                                     </ul>
@@ -494,7 +517,7 @@ $person_link = array_reverse($person_link);
                         
                     </div>
 
-                    <?php $fifth_slide = get_field('fifth_slide',get_pll_option_page()) ?>
+                    <?php $fifth_slide = get_field('fifth_slide', get_pll_option_page()) ?>
                     <div class="third_section_content sinlge_box">
                         <p class="question"><?php echo $fifth_slide['headline']; ?></p>
                         <div class="single_question last">
@@ -507,7 +530,7 @@ $person_link = array_reverse($person_link);
                             </div>
                         </div>
                     </div>
-                    <?php $tell_story_form_fields = get_field('tell_story_form_fields',get_pll_option_page()); ?>
+                    <?php $tell_story_form_fields = get_field('tell_story_form_fields', get_pll_option_page()); ?>
                     <div class="third_section_content sinlge_box">
                         <p class="question"><?php echo $tell_story_form_fields['privacy_headline']; ?></p>
                         <div class="single_question last">
@@ -542,7 +565,7 @@ $person_link = array_reverse($person_link);
                             
                         </div>
                     </div>
-                    <?php $thank_you_slide = get_field('thank_you_slide',get_pll_option_page()) ?>
+                    <?php $thank_you_slide = get_field('thank_you_slide', get_pll_option_page()) ?>
                     <div class="third_section_content thankyou_message">
                     
                         <div class="left">
@@ -552,13 +575,13 @@ $person_link = array_reverse($person_link);
                             </div>
                         </div>
                         <div class="right">
-                            <?php if( $img_with_desc_section['image'] ): ?>
+                            <?php if ($img_with_desc_section['image']) : ?>
                                 <div class="image_holder">
                                     <img src="<?php echo $img_with_desc_section['image']['url']; ?>" alt="<?php echo $img_with_desc_section['image']['alt']; ?>">
                                 </div>
                             <?php endif; ?>
                             
-                            <?php if( $img_with_desc_section['image_text'] ): ?>
+                            <?php if ($img_with_desc_section['image_text']) : ?>
                                 <div class="sticker"><?php echo $img_with_desc_section['image_text']; ?></div>
                             <?php endif; ?>
                         </div>
@@ -569,27 +592,27 @@ $person_link = array_reverse($person_link);
         </div>
     <?php endif; ?>
 
-    <?php 
-    $files_section = get_field('files_section'); 
-    if( $files_section['title'] || $files_section['description'] || $files_section['graphics_title'] || $files_section['graphics'] || $files_section['documents_title'] || $files_section['documents'] ): ?>
+    <?php
+    $files_section = get_field('files_section');
+    if ($files_section['title'] || $files_section['description'] || $files_section['graphics_title'] || $files_section['graphics'] || $files_section['documents_title'] || $files_section['documents']) : ?>
         <div class="fourth_section" id="fourth_section">
             <div class="content_holder" id="get-involved">
                 <div class="fourth_section_content">
-                    <?php if( $files_section['title'] ):?>
+                    <?php if ($files_section['title']) :?>
                         <h2><?php echo $files_section['title']; ?></h2>
                     <?php endif; ?>
 
-                    <?php if( $files_section['description'] ):?>
+                    <?php if ($files_section['description']) :?>
                         <p><?php echo $files_section['description']; ?></p>
                     <?php endif; ?>
 
-                    <?php if( $files_section['graphics_title'] ):?>
+                    <?php if ($files_section['graphics_title']) :?>
                         <h3><?php echo $files_section['graphics_title']; ?></h3>
                     <?php endif; ?>
                         
-                    <?php if( $files_section['graphics'] ): ?>
+                    <?php if ($files_section['graphics']) : ?>
                         <div class="graphics_holder">
-                            <?php foreach( $files_section['graphics'] as $graphic ): ?>
+                            <?php foreach ($files_section['graphics'] as $graphic) : ?>
                                 <a href="<?php echo $graphic['image']['url']; ?>" target="_blank" class="single_graphic st__img">
                                     <div class="image_holder">
                                         <img src="<?php echo $graphic['image']['url']; ?>" alt="<?php echo $graphic['image']['alt']; ?>">
@@ -601,16 +624,16 @@ $person_link = array_reverse($person_link);
                         </div>
                     <?php endif; ?>
 
-                    <?php if( $files_section['documents_title'] ):?>
+                    <?php if ($files_section['documents_title']) :?>
                         <h3><?php echo $files_section['documents_title']; ?></h3>
                     <?php endif; ?>
 
-                    <?php if( $files_section['documents'] ): ?>
+                    <?php if ($files_section['documents']) : ?>
                         <div class="document_holder">
-                            <?php foreach( $files_section['documents'] as $documents ): ?>
+                            <?php foreach ($files_section['documents'] as $documents) : ?>
                                 <a href="<?php echo $documents['file']['url']; ?>" download class="single_document_wrap">
                                     <div class="single_document">
-                                        <?php if( $documents['title'] ): ?>
+                                        <?php if ($documents['title']) : ?>
                                             <h4><?php echo $documents['title']; ?></h4>
                                         <?php endif; ?>
                                     </div>
@@ -624,9 +647,9 @@ $person_link = array_reverse($person_link);
         </div>
     <?php endif; ?>
 
-    <?php 
-    $banner_section = get_field('banner_section'); 
-    if( $banner_section['title'] || $banner_section['button'] ): ?>
+    <?php
+    $banner_section = get_field('banner_section');
+    if ($banner_section['title'] || $banner_section['button']) : ?>
         <div class="call_to_action">
             <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape desktop">
             <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape second desktop">
@@ -634,37 +657,37 @@ $person_link = array_reverse($person_link);
             <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_left.svg" alt="" class="shape mobile">
             <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_right.svg" alt="" class="shape second mobile">
             <div class="call_to_action_content">
-                <?php if( $banner_section['title'] ): ?>
+                <?php if ($banner_section['title']) : ?>
                     <h2><?php echo $banner_section['title']; ?></h2>
                 <?php endif;?>
 
-                <?php 
+                <?php
                 $link = $banner_section['button'];
-                if( $link ): 
+                if ($link) :
                     $link_url = $link['url'];
                     $link_title = $link['title'];
                     $link_target = $link['target'] ? $link['target'] : '_self';
                     ?>
-                    <a class="button light join_us" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>">
-                        <?php echo esc_html( $link_title ); ?>
+                    <a class="button light join_us" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                        <?php echo esc_html($link_title); ?>
                     </a>
                 <?php endif; ?>
             </div>
         </div>
     <?php endif; ?>
-    <?php 
+    <?php
         $social_secton_headline = get_field('social_secton_headline');
         $social_secton_shortcode = get_field('social_secton_shortcode');
     ?>
 
-    <?php if( $social_secton_headline || $social_secton_shortcode ): ?>
+    <?php if ($social_secton_headline || $social_secton_shortcode) : ?>
         <div class="social_section">
             <div class="content_holder">
                 <div class="social_secton_content">
-                <?php if( $social_secton_headline ): ?>
+                <?php if ($social_secton_headline) : ?>
                     <h2><?php echo $social_secton_headline; ?></h2>
                 <?php endif;?>
-                <?php if( $social_secton_shortcode ): ?>
+                <?php if ($social_secton_shortcode) : ?>
                     <?php echo $social_secton_shortcode; ?>
                 <?php endif;?>
                     <!-- <div class="embedsocial-hashtag" data-ref="446a0090d8f1d6fbd3a40d3c1461d057d2d76a16" ></div><script>(function(d, s, id){var js; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "https://embedsocial.com/cdn/ht.js"; d.getElementsByTagName("head")[0].appendChild(js);}(document, "script", "EmbedSocialHashtagScript"));</script> -->
@@ -958,20 +981,20 @@ jQuery(document).ready(function ($) {
                     required: true,
                     email: true
                 },
-                <?php if($fifth_slide['required_first_name']): ?>
+                <?php if ($fifth_slide['required_first_name']) : ?>
                 fname: "required",
                 <?php endif; ?>
-                <?php if($fifth_slide['required_last_name']): ?>
+                <?php if ($fifth_slide['required_last_name']) : ?>
                 lname: "required",
                 <?php endif; ?>
-                <?php if($third_slide['required_textarea_1']): ?>
+                <?php if ($third_slide['required_textarea_1']) : ?>
                 story: "required",
                 <?php endif; ?>
-                <?php if($third_slide['required_textarea_2']): ?>
+                <?php if ($third_slide['required_textarea_2']) : ?>
                 storytile: "required",
                 <?php endif; ?>
                 checkbox1: "required",
-                <?php if($fifth_slide['required_zip_code']): ?>
+                <?php if ($fifth_slide['required_zip_code']) : ?>
                 zipcode: "required",
                 <?php endif; ?>
             },

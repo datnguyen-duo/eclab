@@ -3,7 +3,7 @@
     // console.log('test');
     var root = location.protocol + '//' + location.host;
     var admin_ajax = root + ajaxurl;
-    console.log(root+ajaxurl);
+    // console.log(root+ajaxurl);
     $(document).on('change','select.story-status',function(e){
       let value = $(this).val(),id = $(this).attr('data-id');
       // console.log(value+"+"+id);
@@ -24,6 +24,6 @@
           }
       });
       // console.log("change");
-    })
+    });
   });
 })(jQuery);

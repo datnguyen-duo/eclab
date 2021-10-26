@@ -1,9 +1,33 @@
 <?php
 /* Template Name: Community */
 get_header(); ?>
-<?php 
+<?php
 error_reporting(1);
 $api_key = "78e7e43ff662bc958e6b869a9ea44307";
+
+$args = array(
+    'meta_query' => array(
+        array(
+            'key' => 'approve',
+            'value' => "approved"
+        )
+    ),
+    'post_type' => 'an_stories',
+    'posts_per_page' => -1,
+    'orderby' => 'date',
+    'order'   => 'DESC',
+);
+$posts = get_posts($args);
+if (!empty($posts)) {
+    $person_link = array();
+    foreach ($posts as $key => $post) {
+        $single_link = get_post_meta($post->ID, 'person_link', true);
+        if (!in_array($single_link, $person_link)) {
+            array_push($person_link, $single_link);
+        }
+    }
+}
+/*
 $form_id = "0256972e-f4ad-4a1f-985a-e8944d2f85ae";
 
 $ch = curl_init();
@@ -22,14 +46,14 @@ foreach ($submissions->_embedded->{"osdi:submissions"} as $key => $value) {
         array_push($person_link, $value->_links->{"osdi:person"}->href);
     }
 }
-$person_link = array_reverse($person_link);
+$person_link = array_reverse($person_link);*/
 
- ?>
+?>
 <div class="community_wrap page_container">
 
-    <?php 
+    <?php
     $popup_section = get_field('popup_section');
-    if( $popup_section['title'] || $popup_section['description'] || $popup_section['link'] ): ?>
+    if ($popup_section['title'] || $popup_section['description'] || $popup_section['link']) : ?>
         <div class="tell_story_popup">
             <div class="tell_story_popup_content">
                 <div class="tell_story_popup_content_wrap">
@@ -38,26 +62,26 @@ $person_link = array_reverse($person_link);
                     </div>
                     <div class="left">
                         <div class="left_content">
-                            <?php if( $popup_section['title'] ): ?>
+                            <?php if ($popup_section['title']) : ?>
                                 <h3><?php echo $popup_section['title']; ?></h3>
                             <?php endif; ?>
                             
-                            <?php if( $popup_section['description'] ): ?>
+                            <?php if ($popup_section['description']) : ?>
                                 <p><?php echo $popup_section['description']; ?></p>
                             <?php endif; ?>
                         </div>
                     </div>
                     <div class="right">
-                        <?php 
+                        <?php
                         $link = $popup_section['button'];
-                        if( $link ): 
+                        if ($link) :
                             $link_url = $link['url'];
                             $link_title = $link['title'];
                             $link_target = $link['target'] ? $link['target'] : '_self';
                             ?>
                             <div class="button_holder">
-                                <a class="button dark" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>">
-                                    <?php echo esc_html( $link_title ); ?>
+                                <a class="button dark" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                                    <?php echo esc_html($link_title); ?>
                                 </a>
                             </div>
                         <?php endif; ?>
@@ -71,7 +95,7 @@ $person_link = array_reverse($person_link);
         <div class="content_holder">
             <?php
             $press_section_title = get_field('press_section_title');
-            if( $press_section_title ): ?>
+            if ($press_section_title) : ?>
                 <h2><?php echo $press_section_title; ?></h2>
             <?php endif; ?>
             
@@ -95,7 +119,7 @@ $person_link = array_reverse($person_link);
                 </ul>
             </div>
             <div class="stories_wrap">
-                <?php 
+                <?php
                 $count_family = 0;
                 $count_edu=0;
                 $count_pro=0;
@@ -116,7 +140,7 @@ $person_link = array_reverse($person_link);
                     $sotryUrl = str_replace('.', '', $sotryUrl);
                     $sotryUrl = str_replace('’', '', $sotryUrl);
                     $tags_name ="";
-                    if($tags){
+                    if ($tags) {
                         $tags = explode(",", $tags);
                         foreach ($tags as $key => $value) {
                             $tags_name .="<span class='filter-tag' filter='".$value."'>".$value."</span><br>";
@@ -125,8 +149,9 @@ $person_link = array_reverse($person_link);
                     // echo "<div hidden='tag-hidden'>".$tags."</div>";
                     switch ($custom_fields->radio) {
                         case 'I’m a family member and/or caregiver':
-                            $category = 'families'; $count_family++;
-                            if ($count_family <=4 ) {
+                            $category = 'families';
+                            $count_family++;
+                            if ($count_family <=4) {
                                 $show_attr = 'show4';
                             } else {
                                 $show_attr = '';
@@ -135,23 +160,25 @@ $person_link = array_reverse($person_link);
                         case 'I’m an early childhood educator':
                             $category = 'educators';
                             $count_edu++;
-                            if ($count_edu <=4 ) {
+                            if ($count_edu <=4) {
                                 $show_attr = 'show4';
                             } else {
                                 $show_attr = '';
                             }
                             break;
                         case 'I’m a provider':
-                            $category = 'providers'; $count_pro++;
-                            if ($count_pro <=4 ) {
+                            $category = 'providers';
+                            $count_pro++;
+                            if ($count_pro <=4) {
                                 $show_attr = 'show4';
                             } else {
                                 $show_attr = '';
                             }
                             break;
                         case 'I’m a supporter':
-                            $category = 'supporters'; $count_sup++;
-                            if ($count_sup <=4 ) {
+                            $category = 'supporters';
+                            $count_sup++;
+                            if ($count_sup <=4) {
                                 $show_attr = 'show4';
                             } else {
                                 $show_attr = '';
@@ -175,17 +202,16 @@ $person_link = array_reverse($person_link);
                                         <div class="category">
                                             '.ucfirst($category).'
                                         </div>
-                                        <div class="story_content" hidden>'.$custom_fields->story.'</div>
+                                        <div class="story_content" hidden>'.str_replace("\'", "'", preg_replace("/(\\\\\\\\)+'/", "'", $custom_fields->story)).'</div>
                                         <div class="story_tags" hidden>'.$tags_name.'</div>
                                     </div>
                                 </div>
                             </div>
                         </a>';
                     curl_close($ch);
-                    
                 }
 
-                 ?>
+                ?>
             </div>
             
         </div>

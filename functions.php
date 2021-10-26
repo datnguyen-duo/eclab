@@ -99,6 +99,17 @@ if (! function_exists('eclab_setup')) :
 endif;
 add_action('after_setup_theme', 'eclab_setup');
 
+/**
+ * Admin story script
+ */
+add_action('admin_enqueue_scripts', 'my_admin_scripts');
+function my_admin_scripts()
+{
+    if (isset($_GET['post_type']) && $_GET['post_type'] == 'an_stories') {
+        wp_register_script('story-status', get_template_directory_uri() . '/js/manage-story.js');
+        wp_enqueue_script('story-status');
+    }
+}
 
 /**
  * Enqueue scripts and styles.
@@ -274,7 +285,26 @@ function t311_submissions()
         $server_output = curl_exec($ch);
         curl_close($ch);
 
-        print_r($server_output);
+        $server_output_arr = json_decode($server_output);
+        if (!empty($server_output_arr) && isset($server_output_arr->identifiers) && !empty($server_output_arr->identifiers)) {
+            print_r($server_output);
+            $current_user = wp_get_current_user();
+            // create post object
+            $story = array(
+                'post_title'  => $_POST['storytile'],
+                'post_status' => 'publish',
+                'post_author' => $current_user->ID,
+                'post_type'   => 'an_stories',
+                'post_date'   => date('Y-m-d H:i:s')
+            );
+            // insert the post into the database
+            $post_story_id = wp_insert_post($story);
+            $person_link =  $server_output_arr->_links->{"osdi:person"}->href;
+            add_post_meta($post_story_id, 'story_id', $server_output_arr->identifiers[0]);
+            add_post_meta($post_story_id, 'person_link', $person_link);
+            
+            add_post_meta($post_story_id, 'approve', 'not_approved');
+        }
     }
     die();
 }
@@ -303,7 +333,7 @@ function signup_email_an()
         (isset($_POST['zipcode']) &&!empty($_POST['zipcode']))) {
         $first_name = sanitize_text_field($_POST['fname']);
         $last_name = sanitize_text_field($_POST['lname']);
-        $email = sanitize_text_field($_POST['email']);
+        $email = sanitize_email($_POST['email']);
         $zipcode = sanitize_text_field($_POST['zipcode']);
         $api_key = "78e7e43ff662bc958e6b869a9ea44307";
         $api_request_url = "https://actionnetwork.org/api/v2/forms/ffba81ee-03e0-4c17-abf6-1dae7786c3fa/submissions/";
@@ -313,8 +343,8 @@ function signup_email_an()
             );
         $string = '{
 		  "person" : {
-		    "family_name" : "'.$first_name.'",
-		    "given_name" : "'.$last_name.'",
+		    "family_name" : "'.$last_name.'",
+		    "given_name" : "'.$first_name.'",
 		    "postal_addresses" : [ { "postal_code" : "'.$zipcode.'" }],
 		    "email_addresses" : [ { "address" : "'.$email.'" }]
 		   },
@@ -354,7 +384,7 @@ function childhoodFundingCoalition()
             $first_name = "Anonymous";
             $last_name = "Anonymous";
         }
-        $email = sanitize_text_field($_POST['email']);
+        $email = sanitize_email($_POST['email']);
         $zipcode = sanitize_text_field($_POST['zipcode']);
         $api_key = "78e7e43ff662bc958e6b869a9ea44307";
         $api_request_url = "https://actionnetwork.org/api/v2/forms/f31feaba-2d33-435c-a2cd-91c4f07638aa/submissions/";
@@ -364,8 +394,8 @@ function childhoodFundingCoalition()
             );
         $string = '{
               "person" : {
-                "family_name" : "'.$first_name.'",
-                "given_name" : "'.$last_name.'",
+                "family_name" : "'.$last_name.'",
+                "given_name" : "'.$first_name.'",
                 "postal_addresses" : [ { "postal_code" : "'.$zipcode.'" }],
                 "email_addresses" : [ { "address" : "'.$email.'" }]
                },
@@ -461,3 +491,178 @@ function add_cors_http_header()
     header("Access-Control-Allow-Origin: *");
 }
 add_action('init', 'add_cors_http_header');
+/*
+18/10
+ */
+/**
+ * Custom post type
+ */
+function an_story()
+{
+    register_post_type(
+        'an_stories',
+        array(
+            'labels'        => array(
+                'name'          => 'Stories',
+                'singular_name' => 'Story',
+                'add_new_item'  => 'New Story ',
+                'menu_name'     => 'AN Stories',
+                'all_items'     => 'All Stories',
+            ),
+            'public'        => true,
+            'has_archive'   => true,
+            'supports'      => array( 'title', 'editor', 'thumbnail', 'revisions'),
+            'hierarchical'  => true,
+            'capability_type' => 'post',
+            'capabilities' => array(
+              'edit_post'          => false,
+              'delete_post'        => false,
+              'create_posts' => false,
+            ),
+        )
+    );
+}
+add_action('init', 'an_story');
+add_action('wp_ajax_rtc_change_story_status', 'rtc_change_story_status_11');
+function rtc_change_story_status_11()
+{
+    $id = intval($_POST['story_id']);
+    $value = sanitize_text_field($_POST['value']);
+    if ($id && $value) {
+        update_post_meta($id, 'approve', $value);
+        wp_send_json_success("Done!");
+    } else {
+        wp_send_json_success("Fail!!");
+    }
+}
+
+add_filter('manage_an_stories_posts_columns', 'set_custom_edit_an_stories_columns');
+function set_custom_edit_an_stories_columns($columns)
+{
+    
+    $columns['approved'] = __('Approved', 'an_stories');
+    return $columns;
+}
+
+add_action('manage_an_stories_posts_custom_column', 'custom_an_stories_column', 10, 2);
+function custom_an_stories_column($column, $post_id)
+{
+    $story_status = get_post_meta($post_id, 'approve', true);
+    switch ($column) {
+        case 'approved':
+            echo '<select name="status" class="story-status" data-id="'.$post_id.'">
+                        <option value="approved"'.($story_status=="approved"?"selected":"").'>Approved</option>
+                        <option value="not_approved" '.($story_status=="not_approved"?"selected":"").' >Not Approved</option>
+                    </select>';
+            break;
+    }
+}
+
+/**
+ * Check story
+ */
+add_action('wp', 'rtc_post_listing_page');
+function rtc_post_listing_page()
+{
+    global $current_screen;
+    if (is_admin() && "edit-an_stories"===$current_screen->id) {
+        $current_user = wp_get_current_user();
+        $rtc_stories = get_posts([
+          'post_type' => 'an_stories',
+          'post_status' => 'publish',
+          'numberposts' => -1
+          // 'order'    => 'ASC'
+        ]);
+        $story_ids = array();
+
+        // foreach ($rtc_stories as $story) {
+        //     $story_ids[] = get_post_meta($story->ID, 'story_id', true);
+        // }
+        for ($i=0; $i<count($rtc_stories); $i++) {
+            $story_ids[] = get_post_meta($rtc_stories[$i]->ID, 'story_id', true);
+        }
+        $person_link = array();
+        $api_key = "78e7e43ff662bc958e6b869a9ea44307";
+        $form_id = "0256972e-f4ad-4a1f-985a-e8944d2f85ae";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('OSDI-API-Token: '.$api_key));
+        // $api_request_url = "https://actionnetwork.org/api/v2/forms/f31feaba-2d33-435c-a2cd-91c4f07638aa/submissions";
+        $api_request_url = "https://actionnetwork.org/api/v2/forms/{$form_id}/submissions/";
+        curl_setopt($ch, CURLOPT_URL, $api_request_url);
+
+        $submissions = json_decode(curl_exec($ch));
+        $total_page = $submissions->total_pages;
+        if ($total_page > 1) {
+            for ($i=1; $i<=$total_page; $i++) {
+                $url = "https://actionnetwork.org/api/v2/forms/{$form_id}/submissions/?per_page=25&page=".$i;
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('OSDI-API-Token: '.$api_key));
+                curl_setopt($ch, CURLOPT_URL, $url);
+                $each_url = json_decode(curl_exec($ch));
+                foreach ($each_url->_embedded->{"osdi:submissions"} as $key => $value) {
+                    $single_link = $value->_links->{"osdi:person"}->href;
+                    if (!in_array($single_link, $person_link)) {
+                        array_push($person_link, $value->_links->{"osdi:person"}->href);
+                    }
+                }
+            }
+        } else {
+            foreach ($submissions->_embedded->{"osdi:submissions"} as $key => $value) {
+                $single_link = $value->_links->{"osdi:person"}->href;
+                if (!in_array($single_link, $person_link)) {
+                    array_push($person_link, $value->_links->{"osdi:person"}->href);
+                }
+            }
+        }
+
+        $person_link = array_reverse($person_link);
+
+        foreach ($person_link as $key => $l) {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('OSDI-API-Token: '.$api_key));
+            $api_request_url = $l;
+            //$api_request_url .= "?".http_build_query($api_request_parameters);
+            curl_setopt($ch, CURLOPT_URL, $api_request_url);
+            $response = curl_exec($ch);
+            $person_data = json_decode($response);
+            $single_id = $person_data->identifiers[0];
+            $custom_fields = $person_data->custom_fields;
+            $person_link =  $person_data->_links->self->href;
+            if (!in_array($single_id, $story_ids)) {
+                // create post object
+                $check_post = get_posts(array(
+                    'numberposts'   => 1,
+                    'post_type'     => 'an_stories',
+                    'meta_key'      => 'person_link',
+                    'meta_value'    => $person_link
+                ));
+                if (empty($check_post)) {
+                    $single_story = array(
+                        'post_title'  => $custom_fields->storytile,
+                        'post_status' => 'publish',
+                        'post_author' => $current_user->ID,
+                        'post_type'   => 'an_stories',
+                        'post_date'   => date('Y-m-d H:i:s')
+                    );
+                    $post_story_id = wp_insert_post($single_story);
+                    
+                    add_post_meta($post_story_id, 'story_id', $single_id);
+                    add_post_meta($post_story_id, 'person_link', $person_link);
+                    
+                    add_post_meta($post_story_id, 'approve', 'not_approved');
+                } else {
+                    $check_post = $check_post[0];
+                    $post_id = $check_post->ID;
+                    update_post_meta($post_id, 'story_id', $single_id);
+                    update_post_meta($post_id, 'approve', 'not_approved');
+                }
+            }
+        }
+    }
+}

@@ -4,8 +4,8 @@ get_header();
 <?php
 $post_id = get_the_ID();
 $approved = get_post_meta($post_id, 'approve', true);
-$an_link = get_post_meta($post_id, 'person_link');
-$an_link = $an_link[0];
+$an_link = get_post_meta($post_id, 'person_link', true);
+// $an_link = $an_link[0];
 $is_admin = current_user_can('manage_options');
 // print_r($an_link);// $api_key = get_option("an_apikey");
 $api_key = "78e7e43ff662bc958e6b869a9ea44307";
@@ -90,7 +90,7 @@ $api_key = "78e7e43ff662bc958e6b869a9ea44307";
 
                  <div class="news_content">
                      <div class="left">
-                         <p> <?=$custom_fields->story?></p>
+                         <p> <?=str_replace("\'", "'", preg_replace("/(\\\\\\\\)+'/", "'", $custom_fields->story))?></p>
                      </div>
                      <div class="right">
                          <p>Story from</p>
@@ -186,7 +186,7 @@ $api_key = "78e7e43ff662bc958e6b869a9ea44307";
 
                      <div class="news_content">
                          <div class="left">
-                             <p> <?=$custom_fields->story?></p>
+                             <p> <?=str_replace("\'", "'", preg_replace("/(\\\\\\\\)+'/", "'", $custom_fields->story))?></p>
                          </div>
                          <div class="right">
                              <p>Story from</p>
