@@ -105,9 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //tags end
 
-    $('.single_story_holder[data-url="test"]').remove();
-    $('.single_story_holder[data-url="qwe"]').remove();
-
     $(".form_swiper").slick({
       dots: true,
       swipe: false,
@@ -382,8 +379,8 @@ window.addEventListener("load", function () {
     ".home .single_story_holder.families"
   );
 
-  gsap.to(trigger, 1.5, {
-    opacity: 1,
+  gsap.from(trigger, 1.5, {
+    opacity: 0,
     stagger: 0.1,
     ease: Quint.easeOut,
     scrollTrigger: {
