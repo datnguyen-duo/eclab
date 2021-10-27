@@ -393,8 +393,8 @@ window.addEventListener("load", function () {
     ".page-template-template-community .single_story_holder"
   );
 
-  gsap.to(mocTrigger, 1.5, {
-    opacity: 1,
+  gsap.from(mocTrigger, 1.5, {
+    opacity: 0,
     stagger: 0.1,
     ease: Quint.easeOut,
     scrollTrigger: {
