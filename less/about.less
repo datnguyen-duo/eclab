@@ -1,18 +1,41 @@
 .about_wrap {
   .first_section,
   .second_section {
-    background-color: @color3;
+    background-color: @color7;
     padding: 60px 0px;
+    padding-top: 80px;
     box-sizing: border-box;
-    border-bottom: 1px solid @color2;
+    // border-bottom: 1px solid @color2;
 
     @media @750 {
+      padding-top: 40px;
       padding: 30px 0px;
+    }
+
+    h1{
+      font-size: 58px;
+      color: @color3;
+      .font1R();
+      margin-right: 15px;
+      margin-bottom: 60px;
+
+      @media @1100 {
+        font-size: 42px;
+      }
+
+      @media @1020 {
+        font-size: 38px;
+      }
+
+      @media @750 {
+        font-size: 28px;
+        margin-bottom: 30px;
+      }
     }
 
     h2 {
       font-size: 38px;
-      color: @color2;
+      color: @color3;
       .font1R();
       margin-right: 15px;
       margin-bottom: 20px;
@@ -37,7 +60,7 @@
     p,
     ul li {
       font-size: 24px;
-      color: @color2;
+      color: @color3;
       line-height: 1.3em;
       .font2();
 
@@ -62,6 +85,7 @@
 
   .second_section {
     border: none;
+    padding-top: 0px;
   }
 
   .third_section {
@@ -150,7 +174,7 @@
           content: "";
           width: 100vw;
           height: 100%;
-          background-color: @color6;
+          background-color: @color3;
           right: 0px;
           top: 0;
           position: absolute;
@@ -489,6 +513,11 @@
     box-sizing: border-box;
     padding-bottom: 80px;
 
+    &.banner{
+      padding: 0px;
+      padding-bottom: 0px;
+    }
+
     @media @1100 {
       padding: 20px;
     }
@@ -737,10 +766,97 @@
         }
       }
     }
+
+    .event_banner{
+      position: relative;
+      overflow: hidden;
+
+      &:after{
+        content: '';
+        background-color: @color6;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.7;
+        z-index: 2;
+      }
+
+      img{
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .event_banner_content{
+        position: relative;
+        padding: 150px 35px;
+        box-sizing: border-box;
+        z-index: 5;
+        text-align: center;
+
+        @media @750 {
+          padding: 100px 35px;
+        }
+
+        h2 {
+          margin-bottom: 20px;
+          display: inline-block;
+          font-size: 34px;
+          color: @color2;
+          .font1R();
+  
+          @media @1100 {
+            font-size: 30px;
+          }
+  
+          @media @1020 {
+            font-size: 26px;
+          }
+  
+          @media @750 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+          }
+        }
+  
+        p {
+          font-size: 24px;
+          .font2();
+          color: @color2;
+          margin-bottom: 45px;
+          line-height: 1.4em;
+    
+          @media @1100 {
+            font-size: 22px;
+          }
+    
+          @media @1020 {
+            font-size: 20px;
+            margin-bottom: 25px;
+          }
+    
+          @media @750 {
+            font-size: 18px;
+          }
+        }
+
+        .button.light:hover{
+          background-color: @color3;
+          color: @color2;
+        }
+      }
+    }
   }
 
   .sixth_section {
-    background-color: @color6;
+    background-color: @color4;
     padding: 60px 0;
     box-sizing: border-box;
 
@@ -749,9 +865,11 @@
     }
 
     .sixth_section_content {
+      overflow: hidden;
+
       h2 {
         font-size: 38px;
-        color: @color2;
+        color: @color1;
         .font1R();
         margin-bottom: 30px;
 
@@ -771,6 +889,8 @@
       ul {
         display: flex;
         flex-wrap: wrap;
+        margin-left: -60px;
+        margin-right: -60px;
 
         @media @750 {
           padding: 0 30px;
@@ -778,8 +898,10 @@
         }
 
         li {
-          width: 33.3333%;
+          width: 50%;
           margin-bottom: 45px;
+          padding: 0 60px;
+          box-sizing: border-box;
 
           @media @1020 {
             width: 50%;
@@ -788,16 +910,64 @@
           @media @750 {
             width: 100%;
             margin-bottom: 20px;
+            padding: 0 30px;
             text-decoration: underline;
+          }
+
+          .info{
+            display: flex;
+            align-items: flex-start;
+            margin-top: 20px;
+
+            svg {
+              margin-right: 30px;
+              position: relative;
+              top: 5px;
+              left: 0;
+              .transition();
+            }
+          }
+
+          .image_holder{
+            position: relative;
+            padding-top: 75%;
+            overflow: hidden;
+
+            &:after{
+              content: '';
+              background-color: @color6;
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              opacity: 0.7;
+              z-index: 2;
+            }
+
+            img{
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              z-index: 1;
+              height: 100%;
+              object-fit: cover;
+            }
           }
 
           a {
             display: flex;
             align-items: flex-start;
+            flex-direction: column;
             font-size: 24px;
-            color: @color2;
+            color: @color3;
             line-height: 1.3em;
-            .font2();
+            .font1B();
+
+            span{
+              .font2();
+            }
 
             @media @1100 {
               font-size: 22px;
@@ -811,19 +981,16 @@
               font-size: 18px;
             }
 
-            img {
-              margin-right: 30px;
-              position: relative;
-              top: 5px;
-              left: 0;
-              .transition();
-            }
+          }
 
-            &:hover {
-              color: @color4;
-              text-decoration: underline;
+          &:hover {
+            .info{
+              a{
+                color: @color2;
+                text-decoration: underline;
+              }
 
-              img {
+              svg {
                 left: 5px;
               }
             }
