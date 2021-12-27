@@ -119,6 +119,7 @@ get_header();
 
     <div class="second_section_landing">
         <?php $stories_section = get_field('stories_section'); ?>
+        
         <div class="second_section_landing_content content_holder">
             <?php if($stories_section['stories_section_headline']): ?>
                 <h2>
@@ -135,24 +136,24 @@ get_header();
             <div class="second_section_inner">
                 <div class="left">
                     <div class="image_holder">
-                        <img src="<?php echo get_template_directory_uri(); ?>/images/big_post_shark.png">
+                        <img src="<?php echo $stories_section['stories'][0]['story_image']['url'] ?>">
                     </div>
                 </div>
 
                 <div class="right">
                     <h2>
-                        Moms & The Pandemic
+                        <?php echo $stories_section['stories'][0]['story_headline']; ?>
                     </h2>
                     <p>
-                        The pandemic turned mothers’ lives upside down. Moms were forced to leave the workforce because the high cost of child care meant they had to choose between their job and their kids, a choice no mother should ever have to make.
+                        <?php echo $stories_section['stories'][0]['story_description']; ?>
                     </p>
 
                     <blockquote>
-                        “Unaffordable child care is forcing me to choose between my kids and my career. What is a Mom supposed to  do-do-do?”
+                        <?php echo $stories_section['stories'][0]['story_quote']; ?>
                     </blockquote>
 
                     <div class="author">
-                    — Sharlene, Mommy Shark
+                        <?php echo $stories_section['stories'][0]['story_author']; ?>
                     </div>
                 </div>
             </div>
@@ -162,39 +163,23 @@ get_header();
                 <img src="<?php echo get_template_directory_uri(); ?>/images/prev_white_arrow.svg" class="prev_arrow">
                 <img src="<?php echo get_template_directory_uri(); ?>/images/next_white_arrow.svg" class="next_arrow">
                 <div class="all_stories_wrap">
-                    <div class="image_holder_wrap">
-                        <h3>MOMMY SHARK</h3>
-                        <div class="image_holder">
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/post_shark.png">
+                    <?php 
+                        $i = 0;
+                        $len = count($stories_section['stories']);
+                    ?>
+                    <?php foreach ($stories_section['stories'] as $singleStory): ?>
+
+                        <div class="image_holder_wrap<?php if($i == 0): ?> active<?php endif; ?>" data-headline="<?php echo $singleStory['story_headline'] ?>" data-description="<?php echo $singleStory['story_description'] ?>" data-quote="<?php echo $singleStory['story_quote'] ?>" data-author="<?php echo $singleStory['story_author'] ?>" data-image="<?php echo $singleStory['story_image']['url'] ?>">
+                            <h3><?php echo $singleStory['story_headline'] ?></h3>
+                            <div class="image_holder">
+                                <img src="<?php echo $singleStory['story_image']['url'] ?>">
+                            </div>
                         </div>
-                    </div>
-                    <div class="image_holder_wrap">
-                        <h3>MOMMY SHARK</h3>
-                        <div class="image_holder">
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/post_shark.png">
-                        </div>
-                    </div>
-                    <div class="image_holder_wrap">
-                        <h3>MOMMY SHARK</h3>
-                        <div class="image_holder">
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/post_shark.png">
-                        </div>
-                    </div>
-                    <div class="image_holder_wrap">
-                        <h3>MOMMY SHARK</h3>
-                        <div class="image_holder">
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/post_shark.png">
-                        </div>
-                    </div>
-                    <div class="image_holder_wrap">
-                        <h3>MOMMY SHARK</h3>
-                        <div class="image_holder">
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/post_shark.png">
-                        </div>
-                    </div>
+                    <?php $i++; endforeach; ?>
                 </div>
-                <a href="">
-                    EXPLORE MORE STORIES
+                <a href="<?php echo $stories_section['stories_section_button']['url']; ?>" target="<?php echo $stories_section['stories_section_button']['target']; ?>">
+                    <?php echo $stories_section['stories_section_button']['title']; ?>
+                    
                     <img src="<?php echo get_template_directory_uri(); ?>/images/arrow_right_white.svg">
                     
                 </a>
