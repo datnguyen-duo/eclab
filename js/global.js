@@ -255,7 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
       $("body").removeClass("no_scroll");
     });
 
-    if ($("body").hasClass("page-template-template-home")) {
+    if ($("body").hasClass("page-template-template-home") || $("body").hasClass("page-template-template-about")) {
       var timeoutId = setTimeout(function () {
         if (
           $.cookie("email_popup") == undefined ||

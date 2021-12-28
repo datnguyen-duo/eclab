@@ -6,11 +6,14 @@ get_header(); ?>
     
     <?php
     $desc_section = get_field('description_section');
+    $main_title = get_field('main_title');
     if ($desc_section['title'] || $desc_section['description']) : ?>
         <div class="first_section" id="story">
             <div class="content_holder">
                 <div class="second_section_content">
-                    <h1>About the We, The Village Coalition</h1>
+                    <?php if($main_title): ?>
+                        <h1><?php echo $main_title; ?></h1>
+                    <?php endif; ?>
                     <h2><?php echo $desc_section['title']; ?></h2>
                     <?php echo $desc_section['description']; ?>
                 </div>
@@ -150,14 +153,14 @@ get_header(); ?>
             <?php endif; ?>
         </div>
     </div>
-    <?php else: ?>
+    <?php else: $event_banner = get_field('event_banner'); ?>
         <div class="event_section banner" id="events">
             <div class="event_banner">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/social3.jpg" class="event_banner_background">
+                <img src="<?php echo $event_banner['event_banner_image']['url']; ?>" class="event_banner_background">
                 <div class="event_banner_content content_holder">
-                    <h2>Attend a Coalition Event</h2>
-                    <p>Sign up to receive alerts about future We, The Village events</p>
-                    <a href="" class="button light">SIGN ME UP</a>
+                    <h2><?php echo $event_banner['event_banner_headline']; ?></h2>
+                    <p><?php echo $event_banner['event_banner_description']; ?></p>
+                    <a href="<?php echo $event_banner['event_banner_button']['url']; ?>" target="<?php echo $event_banner['event_banner_button']['target']; ?>" class="button light"><?php echo $event_banner['event_banner_button']['title']; ?></a>
                 </div>
             </div>
         </div>
