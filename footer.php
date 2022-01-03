@@ -148,7 +148,7 @@
                     }
                 });
             }else{
-                alert('Please enter all field!');
+                alert('Please complete all fields!');
             }
             
         });
@@ -187,7 +187,7 @@
                     }
                 });
             }else{
-                alert('Please enter all field!');
+                alert('Please complete all fields!');
             }
         });
         

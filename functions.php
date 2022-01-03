@@ -137,6 +137,10 @@ function eclab_scripts()
         wp_enqueue_script('about-page', get_template_directory_uri() . '/js/about-page.js', array(), _S_VERSION, true);
     }
 
+    if (is_page_template("template-landing.php")) {
+        wp_enqueue_script('landing-page', get_template_directory_uri() . '/js/landing-page.js', array(), _S_VERSION, true);
+    }
+
     if (is_front_page() || is_page_template("template-landing.php")) {
         wp_enqueue_script('validate', get_template_directory_uri() . '/js/jquery.validate.min.js', array(), _S_VERSION, true);
         wp_enqueue_script('validate-steps', get_template_directory_uri() . '/js/jquery.steps.js', array(), _S_VERSION, true);
@@ -368,7 +372,7 @@ function signup_email_an()
         curl_close($ch);
         wp_send_json_success($server_output);
     } else {
-        wp_send_json_success('Nothing!!!!!!');
+        wp_send_json_success('null');
     }
 }
 
@@ -419,7 +423,7 @@ function childhoodFundingCoalition()
         curl_close($ch);
         wp_send_json_success($server_output);
     } else {
-        wp_send_json_success('Nothing!!!!!!');
+        wp_send_json_success('null');
     }
 }
 
