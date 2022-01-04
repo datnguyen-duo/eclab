@@ -17,6 +17,7 @@
                 padding-top: 50px;
                 padding-bottom: 50px;
                 position: relative;
+                overflow: hidden;
             }
             
             .left{
@@ -47,6 +48,13 @@
 
                         .hero_shark{
                             width: 100%;
+
+                            @media @750{
+                                width: 130%;
+                                position: relative;
+                                left: -20px;
+                                top: -20px;
+                            }
                         }
         
                         span{
@@ -264,6 +272,7 @@
                         justify-content: center;
                         align-items: center;
                         display: none;
+                        z-index: 2;
             
                         &.active {
                           display: flex;
@@ -637,9 +646,21 @@
                 }
             }
 
+            .divider{
+                margin-top: 40px;
+                margin-bottom: 40px;
+                height: 1px;
+                width: 100%;
+                background-color: @color2;
+
+                @media @750{
+                    display: none;
+                }
+            }
+
             .all_stories{
                 text-align: right;
-                margin-top: 80px;
+                // margin-top: 80px;
 
                 .prev_arrow, .next_arrow{
                     display: none;

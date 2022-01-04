@@ -157,7 +157,7 @@ get_header();
                     </div>
                 </div>
             </div>
-
+            <div class="divider"></div>
             <div class="all_stories">
                 
                 <img src="<?php echo get_template_directory_uri(); ?>/images/prev_white_arrow.svg" class="prev_arrow">
@@ -170,7 +170,7 @@ get_header();
                     <?php foreach ($stories_section['stories'] as $singleStory): ?>
 
                         <div class="image_holder_wrap<?php if($i == 0): ?> active<?php endif; ?>" data-headline="<?php echo $singleStory['story_headline'] ?>" data-description="<?php echo $singleStory['story_description'] ?>" data-quote="<?php echo $singleStory['story_quote'] ?>" data-author="<?php echo $singleStory['story_author'] ?>" data-image="<?php echo $singleStory['story_image']['url'] ?>">
-                            <h3><?php echo $singleStory['story_headline'] ?></h3>
+                            <h3><?php echo $singleStory['stories_hover_image_label'] ?></h3>
                             <div class="image_holder">
                                 <img src="<?php echo $singleStory['story_image']['url'] ?>">
                             </div>

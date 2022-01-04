@@ -30,7 +30,7 @@
                                 <p><?php echo $description; ?></p>
                             <?php endif; ?>
                         </div>
-                        <form id="community_signup" >
+                        <form id="footer_signup" >
                         <?php $footer_form_fields = get_field('footer_form_fields', get_pll_option_page()); ?>
                             <div class="thank_you_message">
                                 <p>
@@ -38,13 +38,19 @@
                                 </p>
                             </div>
                             
-                            <input type="text" name="fname" id="first_name" placeholder="<?php echo $footer_form_fields['first_name']; ?>" required>
-                            <input type="text" name="lname" id="last_name" placeholder="<?php echo $footer_form_fields['last_name']; ?>" required>
-                            <input type="email" name="email" id="email" placeholder="<?php echo $footer_form_fields['email_address']; ?>" required>
-                            <input type="text" name="zipcode" id="zipcode" placeholder="<?php echo $footer_form_fields['zip_code']; ?>" required>
-                            <button class="button light" id="signup_btn" type="button" name="signup_btn">
-                                <?php echo $footer_form_fields['form_button']; ?>
-                            </button>
+                            <input type="text" name="fname" id="firstname" placeholder="<?php echo $footer_form_fields['first_name']; ?>" required>
+                            <input type="text" name="lname" id="lastname" placeholder="<?php echo $footer_form_fields['last_name']; ?>" required>
+                            <input type="email" name="email" id="emailf" placeholder="<?php echo $footer_form_fields['email_address']; ?>" required>
+                            <input type="text" name="zipcode" id="zipcodef" placeholder="<?php echo $footer_form_fields['zip_code']; ?>" required>
+                            <div class="bottom_wrap">
+                                <label class="container">Sign me up to join the We, the Village Coalition too!
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <button class="button light" id="signup_btnf" type="button" name="signup_btn">
+                                    <?php echo $footer_form_fields['form_button']; ?>
+                                </button>
+                            </div>
                         </form>
                     </div>
 
@@ -152,6 +158,45 @@
             }
             
         });
+        $("#footer_signup").on('click', "#signup_btnf", function (e) {
+            e.preventDefault();
+            let fname = $("input#firstname").val(), 
+            lname = $("input#lastname").val(), 
+            email = $("input#emailf").val(), 
+            zipcode = $("input#zipcodef").val();
+            if( fname!=='' && lname!=='' && email!=='' &&zipcode!=='' ){
+                $.ajax({
+                    url: ajaxURL,
+                    type: 'post',
+                    data: {
+                     action: 'signup_email_an',
+                     email: email,
+                     fname: fname,
+                     lname:lname,
+                     zipcode: zipcode,
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        $("#footer_signup").find(".thank_you_message").css("display","flex");
+                        // $("#signup_popup").fadeIn();
+                        // $("body").addClass("no_scroll");
+                        $("input#first_name").val('');
+                        $("input#last_name").val(''); 
+                        $("input#email").val(''); 
+                        $("input#zipcode").val('');
+                        // console.log(response.data);
+                     // console.log(response.data);
+                     // location.reload();
+                    },
+                    error: function () {
+                     console.log('obj');
+                    }
+                });
+            }else{
+                alert('Please complete all fields!');
+            }
+        });
+
         $("#community_signup").on('click', "#signup_btn", function (e) {
             e.preventDefault();
             let fname = $("input#first_name").val(), 
