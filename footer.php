@@ -20,6 +20,7 @@
                     if ($logo) : ?>
                         <a href="<?php echo get_pll_home_url(); ?>" class="logo_holder">
                             <img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
+                            <p>Powered by We, The Village</p>
                         </a>
                     <?php endif; ?>
                         
