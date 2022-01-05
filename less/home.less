@@ -593,13 +593,51 @@
         text-align: center;
       }
 
-      .button {
-        &.light {
-          &:hover {
-            color: @color2;
-            border: 3px solid @color2;
-            background-color: transparent;
+      a{
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 50px;
+        .font1B();
+        color: @color4;
+        opacity: 1;
+        .transition();
+        text-transform: uppercase;
+
+        img{
+            position: relative;
+            left: 5px;
+            .transition();
+            margin-left: 5px;
+        }
+
+        @media @1100 {
+          font-size: 22px;
+        }
+
+        @media @1020 {
+          font-size: 20px;
+        }
+
+        @media @750 {
+          font-size: 18px;
+          text-align: center;
+          display: block;
+          margin-top: 30px;
+
+          img{
+              max-width: 25px;
+              top: 3px;
           }
+        }
+
+        &:hover{
+            opacity: 0.8;
+
+            img{
+                left: 7px;
+            }
         }
       }
     }

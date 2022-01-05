@@ -301,10 +301,13 @@ $person_link = array_reverse($person_link);*/
                 </div>
                 <?php if ($press_button) : ?>
                     <div class="button_holder">
-                        <a href="<?php echo $press_button['url']; ?>" target="<?php echo $press_button['target']; ?>" class="button light">
+                        <a href="<?php echo $press_button['url']; ?>" target="<?php echo $press_button['target']; ?>">
                             <?php echo $press_button['title']; ?>
+
+                            <img src="<?php echo get_template_directory_uri(); ?>/images/arrow_right_white.svg">
                         </a>
-                    </div>    
+                    </div>
+
                 <?php endif; ?>
                 
             </div>
@@ -668,30 +671,15 @@ $person_link = array_reverse($person_link);*/
                     <?php endif; ?>
 
                     <?php if ($files_section['documents']) : ?>
-                        <div class="document_holder">
+                        <div class="fourth_section_additional_content">
                             <?php foreach ($files_section['documents'] as $documents) : ?>
-                                <a href="<?php echo $documents['file']['url']; ?>" download class="single_document_wrap">
-                                    <div class="single_document">
-                                        <?php if ($documents['title']) : ?>
-                                            <h4><?php echo $documents['title']; ?></h4>
-                                        <?php endif; ?>
-                                    </div>
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/download_arrow.svg" alt="">
+
+                                <a href="<?php echo $documents['file']['url']; ?>" target="_blank" download class="single_box">
+                                    <h3 class="static"><span><?php echo $documents['title']; ?></span></h3>
                                 </a>
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
-                </div>
-                <div class="fourth_section_additional_content">
-                    <a href="/" target="_blank" class="single_box">
-                        <h3 class="static"><span>Pledge</span></h3>
-                    </a>
-                    <a href="/" target="_blank" class="single_box">
-                        <h3 class="static"><span>Write</span></h3>
-                    </a>
-                    <a href="/" target="_blank" class="single_box">
-                        <h3 class="static"><span>Discover</span></h3>
-                    </a>
                 </div>
             </div>
         </div>

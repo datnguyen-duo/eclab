@@ -456,6 +456,75 @@ button {
               justify-content: center;
             }
 
+            /* The container */
+            .container {
+              display: block;
+              position: relative;
+              margin-top: 20px;
+              width: 100%;
+              padding-left: 25px;
+              cursor: pointer;
+              font-size: 19px;
+              .font2();
+              color: @color3;
+              user-select: none;
+          }
+          
+          /* Hide the browser's default checkbox */
+          .container input {
+              position: absolute;
+              opacity: 0;
+              cursor: pointer;
+              height: 0;
+              width: 0;
+          }
+          
+          /* Create a custom checkbox */
+          .checkmark {
+              position: absolute;
+              top: 0;
+              left: 0;
+              height: 14px;
+              width: 14px;
+              background-color: transparent;
+              border: 1px solid @color3;
+          }
+          
+          /* On mouse-over, add a grey background color */
+          .container:hover input ~ .checkmark {
+              // background-color: @color2;
+          }
+          
+          /* When the checkbox is checked, add a blue background */
+          .container input:checked ~ .checkmark {
+              background-color: @color3;
+          }
+          
+          /* Create the checkmark/indicator (hidden when not checked) */
+          .checkmark:after {
+              content: "";
+              position: absolute;
+              display: none;
+          }
+          
+          /* Show the checkmark when checked */
+          .container input:checked ~ .checkmark:after {
+              display: block;
+          }
+          
+          /* Style the checkmark/indicator */
+          .container .checkmark:after {
+              left: 4px;
+              top: 0px;
+              width: 5px;
+              height: 8px;
+              border: solid @color2;
+              border-width: 0 2px 2px 0;
+              -webkit-transform: rotate(45deg);
+              -ms-transform: rotate(45deg);
+              transform: rotate(45deg);
+          }
+
             input {
               width: 45%;
               box-sizing: border-box;

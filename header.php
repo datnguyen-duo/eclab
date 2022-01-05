@@ -288,6 +288,10 @@ if (isset($_POST['popup_submit']) && (isset($_POST['popup_fname'])&& !empty($_PO
                             <button class="button dark" type="button" name="popup_submit" id="popup_submit">
                                 <?php echo $popup_form_fields['form_button']; ?>
                             </button>
+                            <label class="container">Sign me up to join the We, the Village Coalition too!
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
                         </form>
                     </div>
                 </div>

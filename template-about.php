@@ -160,7 +160,7 @@ get_header(); ?>
                 <div class="event_banner_content content_holder">
                     <h2><?php echo $event_banner['event_banner_headline']; ?></h2>
                     <p><?php echo $event_banner['event_banner_description']; ?></p>
-                    <a href="<?php echo $event_banner['event_banner_button']['url']; ?>" target="<?php echo $event_banner['event_banner_button']['target']; ?>" class="button light"><?php echo $event_banner['event_banner_button']['title']; ?></a>
+                    <a href="<?php echo $event_banner['event_banner_button']['url']; ?>" target="<?php echo $event_banner['event_banner_button']['target']; ?>" class="button light join_us"><?php echo $event_banner['event_banner_button']['title']; ?></a>
                 </div>
             </div>
         </div>
