@@ -3,12 +3,17 @@
 get_header(); ?>
 
 <div class="about_wrap page_container">
+    
     <?php
     $desc_section = get_field('description_section');
+    $main_title = get_field('main_title');
     if ($desc_section['title'] || $desc_section['description']) : ?>
         <div class="first_section" id="story">
             <div class="content_holder">
                 <div class="second_section_content">
+                    <?php if($main_title): ?>
+                        <h1><?php echo $main_title; ?></h1>
+                    <?php endif; ?>
                     <h2><?php echo $desc_section['title']; ?></h2>
                     <?php echo $desc_section['description']; ?>
                 </div>
@@ -71,7 +76,7 @@ get_header(); ?>
     </div>
     <?php endif; ?>
 
-    <?php
+    <!-- <?php
     $resources_section = get_field('resources_section');
     if ($resources_section['title'] || $resources_section['description']) : ?>
     <div class="fourth_section" id="resources">
@@ -96,7 +101,7 @@ get_header(); ?>
                 </div>
             </div>
         </div>
-    <?php endif; ?>
+    <?php endif; ?> -->
 
     <?php
         $event_section = get_field('event_section');
@@ -104,7 +109,7 @@ get_header(); ?>
         $event_section_description = get_field('event_section_description');
     ?>
 
-    <?php if ($event_section || $event_section_headline || $event_section_description) : ?>
+    <?php if ($event_section) : ?>
     <div class="event_section" id="events">
         <div class="content_holder">
             <?php if ($event_section_headline) : ?>
@@ -148,6 +153,17 @@ get_header(); ?>
             <?php endif; ?>
         </div>
     </div>
+    <?php else: $event_banner = get_field('event_banner'); ?>
+        <div class="event_section banner" id="events">
+            <div class="event_banner">
+                <img src="<?php echo $event_banner['event_banner_image']['url']; ?>" class="event_banner_background">
+                <div class="event_banner_content content_holder">
+                    <h2><?php echo $event_banner['event_banner_headline']; ?></h2>
+                    <p><?php echo $event_banner['event_banner_description']; ?></p>
+                    <a href="<?php echo $event_banner['event_banner_button']['url']; ?>" target="<?php echo $event_banner['event_banner_button']['target']; ?>" class="button light"><?php echo $event_banner['event_banner_button']['title']; ?></a>
+                </div>
+            </div>
+        </div>
     <?php endif; ?>
     <?php
     $press_section = get_field('press_section');
@@ -164,16 +180,42 @@ get_header(); ?>
                             <?php foreach ($press_section['links'] as $item) : ?>
                                 <?php
                                 $link = $item['link'];
+                                $publisher = $item['publisher'];
+                                $itemImage = $item['image']['url'];
                                 if ($link) :
                                     $link_url = $link['url'];
                                     $link_title = $link['title'];
                                     $link_target = $link['target'] ? $link['target'] : '_self';
                                     ?>
                                     <li>
-                                        <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/arrow_right.svg" alt="">
-                                            <?php echo esc_html($link_title); ?>
-                                        </a>
+                                        <div class="image_holder">
+                                          <img src="<?php echo $itemImage; ?>" alt="">  
+                                        </div>
+                                        <div class="info">
+                                        <svg width="27px" height="28px" viewBox="0 0 27 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                            
+                                            <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+                                                <g id="Coalition" transform="translate(-123.000000, -2345.000000)" stroke="#fcf3dc" stroke-width="2.8">
+                                                    <g id="In-The-News" transform="translate(0.000000, 2189.000000)">
+                                                        <g id="Group-43" transform="translate(124.500000, 147.000000)">
+                                                            <g id="Group-39" transform="translate(0.000000, 11.000000)">
+                                                                <g id="Group-6" transform="translate(17.000000, 12.000000) rotate(-90.000000) translate(-17.000000, -12.000000) translate(5.000000, 5.500000)">
+                                                                    <line x1="0.352941176" y1="0.361111111" x2="12.3529412" y2="12.6388889" id="Line"></line>
+                                                                    <line x1="13.0196078" y1="12.6388889" x2="23.6862745" y2="0.361111111" id="Line-2"></line>
+                                                                </g>
+                                                                <line x1="23" y1="11.5" x2="0" y2="11.5" id="Line-12"></line>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                            <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                                                <?php echo esc_html($link_title); ?>
+                                                <span><?php echo $publisher; ?></span>
+                                            </a>
+                                        </div>
+                                        
                                     </li>
                                 <?php endif; ?>
                             <?php endforeach; ?>

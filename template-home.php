@@ -182,12 +182,16 @@ $person_link = array_reverse($person_link);*/
     <?php endif; ?>
     
     <?php $press_section_title = get_field('press_section_title');
-    $press_button = get_field('press_button'); ?>
+    $press_button = get_field('press_button'); $press_section_description = get_field('press_section_description'); ?>
     <div class="second_section">
         <div class="content_holder">
             <div class="second_section_content">
                 <?php if ($press_section_title) : ?>
                     <h2><?php echo $press_section_title; ?></h2>
+                <?php endif; ?>
+
+                <?php if ($press_section_description) : ?>
+                    <p class="stories_description"><?php echo $press_section_description; ?></p>
                 <?php endif; ?>
                 
                 <div class="filter_wrap">
@@ -591,6 +595,41 @@ $person_link = array_reverse($person_link);*/
             </div>
         </div>
     <?php endif; ?>
+    
+    <?php
+    $banner_section = get_field('banner_section');
+    if ($banner_section['title'] || $banner_section['button']) : ?>
+        <div class="call_to_action">
+            <!-- <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape desktop">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape second desktop"> -->
+
+            <!-- <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_left.svg" alt="" class="shape mobile">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_right.svg" alt="" class="shape second mobile"> -->
+            <div class="call_to_action_content">
+                <?php if ($banner_section['title']) : ?>
+                    <h2><?php echo $banner_section['title']; ?></h2>
+                <?php endif;?>
+
+                <?php if ($banner_section['description']) : ?>
+                    <p><?php echo $banner_section['description']; ?></p>
+                <?php endif;?>
+
+                <?php
+                $link = $banner_section['button'];
+                if ($link) :
+                    $link_url = $link['url'];
+                    $link_title = $link['title'];
+                    $link_target = $link['target'] ? $link['target'] : '_self';
+                    ?>
+                    <div class="button_holder">
+                        <a class="button light join_us" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                            <?php echo esc_html($link_title); ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <?php
     $files_section = get_field('files_section');
@@ -643,38 +682,22 @@ $person_link = array_reverse($person_link);*/
                         </div>
                     <?php endif; ?>
                 </div>
-            </div>
-        </div>
-    <?php endif; ?>
-
-    <?php
-    $banner_section = get_field('banner_section');
-    if ($banner_section['title'] || $banner_section['button']) : ?>
-        <div class="call_to_action">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape desktop">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape second desktop">
-
-            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_left.svg" alt="" class="shape mobile">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_right.svg" alt="" class="shape second mobile">
-            <div class="call_to_action_content">
-                <?php if ($banner_section['title']) : ?>
-                    <h2><?php echo $banner_section['title']; ?></h2>
-                <?php endif;?>
-
-                <?php
-                $link = $banner_section['button'];
-                if ($link) :
-                    $link_url = $link['url'];
-                    $link_title = $link['title'];
-                    $link_target = $link['target'] ? $link['target'] : '_self';
-                    ?>
-                    <a class="button light join_us" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
-                        <?php echo esc_html($link_title); ?>
+                <div class="fourth_section_additional_content">
+                    <a href="/" target="_blank" class="single_box">
+                        <h3 class="static"><span>Pledge</span></h3>
                     </a>
-                <?php endif; ?>
+                    <a href="/" target="_blank" class="single_box">
+                        <h3 class="static"><span>Write</span></h3>
+                    </a>
+                    <a href="/" target="_blank" class="single_box">
+                        <h3 class="static"><span>Discover</span></h3>
+                    </a>
+                </div>
             </div>
         </div>
     <?php endif; ?>
+
+    
     <?php
         $social_secton_headline = get_field('social_secton_headline');
         $social_secton_shortcode = get_field('social_secton_shortcode');
