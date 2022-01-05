@@ -183,7 +183,7 @@ $person_link = array_reverse($person_link);*/
     
     <?php $press_section_title = get_field('press_section_title');
     $press_button = get_field('press_button'); $press_section_description = get_field('press_section_description'); ?>
-    <div class="second_section">
+    <div class="second_section" id="second_section">
         <div class="content_holder">
             <div class="second_section_content">
                 <?php if ($press_section_title) : ?>
