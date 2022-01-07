@@ -78,7 +78,7 @@ get_header();
                         <input type="email" name="email" id="email" placeholder="<?php echo $footer_form_fields['email_address']; ?>" required>
                         <input type="text" name="zipcode" id="zipcode" placeholder="<?php echo $footer_form_fields['zip_code']; ?>" required>
                         <div class="bottom_wrap">
-                            <label class="container">Sign me up to join the We, the Village Coalition too!
+                            <label class="container">I’d like someone to contact me about getting more involved in structuring policy, advocacy, and care in IL
                                 <input type="checkbox">
                                 <span class="checkmark"></span>
                             </label>

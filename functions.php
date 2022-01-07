@@ -426,6 +426,56 @@ function childhoodFundingCoalition()
         wp_send_json_success('null');
     }
 }
+add_action('wp_ajax_optinform', 'optinform');
+add_action('wp_ajax_nopriv_optinform', 'optinform');
+function optinform()
+{
+    if ((isset($_POST['email'])&& !empty($_POST['email'])) &&
+            (isset($_POST['zipcode']) &&!empty($_POST['zipcode']) )) {
+        $first_name = sanitize_text_field($_POST['fname']);
+        $last_name = sanitize_text_field($_POST['lname']);
+        if (empty($first_name) && empty($last_name)) {
+            $first_name = "Anonymous";
+            $last_name = "Anonymous";
+        }
+        $email = sanitize_email($_POST['email']);
+        $zipcode = sanitize_text_field($_POST['zipcode']);
+        $api_key = "78e7e43ff662bc958e6b869a9ea44307";
+        $api_request_url = "https://actionnetwork.org/api/v2/forms/0a455cc1-352c-4f6a-a55a-4bf225952ffd/submissions/";
+        $headers = array(
+               "Content-Type: application/json",
+               'OSDI-API-Token: '.$api_key
+            );
+        $string = '{
+              "person" : {
+                "family_name" : "'.$last_name.'",
+                "given_name" : "'.$first_name.'",
+                "postal_addresses" : [ { "postal_code" : "'.$zipcode.'" }],
+                "email_addresses" : [ { "address" : "'.$email.'" }]
+               },
+                   "triggers":{"autoresponse":{"enabled":true}},
+              "add_tags": [
+                "volunteer",
+                "member"
+              ]
+            }';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_URL, $api_request_url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $string);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+        curl_close($ch);
+        wp_send_json_success($server_output);
+    } else {
+        wp_send_json_success('null');
+    }
+}
 
 
 function upload_user_file($file)

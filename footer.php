@@ -20,7 +20,6 @@
                     if ($logo) : ?>
                         <a href="<?php echo get_pll_home_url(); ?>" class="logo_holder">
                             <img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
-                            <p>Powered by We, The Village</p>
                         </a>
                     <?php endif; ?>
                         
@@ -44,7 +43,7 @@
                             <input type="email" name="email" id="emailf" placeholder="<?php echo $footer_form_fields['email_address']; ?>" required>
                             <input type="text" name="zipcode" id="zipcodef" placeholder="<?php echo $footer_form_fields['zip_code']; ?>" required>
                             <div class="bottom_wrap">
-                                <label class="container">Sign me up to join the We, the Village Coalition too!
+                                <label class="container">I’d like someone to contact me about getting more involved in structuring policy, advocacy, and care in IL
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>

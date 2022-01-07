@@ -16,7 +16,7 @@
             url: ajaxURL,
             type: "post",
             data: {
-              action: "childhoodFundingCoalition",
+              action: "optinform",
               email: email,
               fname: fname,
               lname: lname,

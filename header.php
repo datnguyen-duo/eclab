@@ -22,7 +22,30 @@ $google_analytics_script = get_field('google_analytics_script', 'option');
     <link rel="stylesheet" href="https://use.typekit.net/qyl4nbu.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer="defer"></script>
-
+    <?php 
+        if (is_page_template("template-landing.php")) {
+            ?>
+            <!-- Facebook Pixel Code -->
+            <script>
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '512592649968663');
+            fbq('track', 'PageView');
+            </script>
+            <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=512592649968663&ev=PageView&noscript=1"
+            /></noscript>
+            <!-- End Facebook Pixel Code -->
+            <meta name="facebook-domain-verification" content="q75n5csfmo1jrmimt29bbg4w811f6i" />
+            <?php
+        }
+    ?>
     <?php wp_head(); ?>
     <style type="text/css">
         .single_news_popup .single_news_popup_content .news_content .right .tags {
@@ -131,7 +154,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             if ($logo) : ?>
                 <a href="<?php echo get_pll_home_url(); ?>" class="logo_holder">
                     <img src="<?php echo $logo['url']; ?>" alt="<?php echo $logo['alt']; ?>">
-                    <p>Powered by We, The Village</p>
                 </a>
             <?php endif; ?>
 
@@ -288,7 +310,7 @@ if (isset($_POST['popup_submit']) && (isset($_POST['popup_fname'])&& !empty($_PO
                             <button class="button dark" type="button" name="popup_submit" id="popup_submit">
                                 <?php echo $popup_form_fields['form_button']; ?>
                             </button>
-                            <label class="container">Sign me up to join the We, the Village Coalition too!
+                            <label class="container">I’d like someone to contact me about getting more involved in structuring policy, advocacy, and care in IL
                                 <input type="checkbox">
                                 <span class="checkmark"></span>
                             </label>
