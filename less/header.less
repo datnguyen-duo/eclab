@@ -50,7 +50,7 @@ header {
       margin-right: 45px;
       display: inline-block;
 
-      p{
+      p {
         .font2;
         font-size: 12px;
         color: @color1;
@@ -140,6 +140,12 @@ header {
           margin-right: 0px;
           display: block;
           text-align: center;
+        }
+
+        body.page-template-template-landing & {
+          &.lang-item {
+            display: none;
+          }
         }
 
         a {

@@ -172,7 +172,7 @@ get_header();
                         <div class="image_holder_wrap<?php if($i == 0): ?> active<?php endif; ?>" data-headline="<?php echo $singleStory['story_headline'] ?>" data-description="<?php echo $singleStory['story_description'] ?>" data-quote="<?php echo $singleStory['story_quote'] ?>" data-author="<?php echo $singleStory['story_author'] ?>" data-image="<?php echo $singleStory['story_image']['url'] ?>">
                             <h3><?php echo $singleStory['stories_hover_image_label'] ?></h3>
                             <div class="image_holder">
-                                <img src="<?php echo $singleStory['story_image']['url'] ?>">
+                                <img src="<?php echo $singleStory['story_image_thumbnail']['url'] ?>">
                             </div>
                         </div>
                     <?php $i++; endforeach; ?>
