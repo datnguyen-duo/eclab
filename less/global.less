@@ -63,10 +63,40 @@ body {
   }
 }
 
+.thank_you_page{
+  background-color: @color6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+
+  .thank_you_wrap{
+    padding: 190px 20px;
+    box-sizing: border-box;
+
+    h1{
+      .font1B();
+      font-size: 38px;
+      color: @color2;
+      line-height: 1.4em;
+      text-align: center;
+
+      @media @1100 {
+        font-size: 32px;
+      }
+
+      @media @1020 {
+        font-size: 28px;
+      }
+    }
+  }
+}
+
 .about_wrap,
 .home_wrap,
 .community_wrap,
-.privacy_wrap {
+.privacy_wrap,
+.thank_you_page {
   padding-top: 128px;
 
   &.logged-in {
