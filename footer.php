@@ -216,7 +216,7 @@
                     },
                     dataType: "json",
                     success: function (response) {
-                        $("#community_signup").find(".thank_you_message").css("display","flex");
+                        // $("#community_signup").find(".thank_you_message").css("display","flex");
                         // $("#signup_popup").fadeIn();
                         // $("body").addClass("no_scroll");
                         $("input#first_name").val('');
@@ -226,6 +226,7 @@
                         // console.log(response.data);
                      // console.log(response.data);
                      // location.reload();
+                     window.location.href = '/thank-you/'
                     },
                     error: function () {
                      console.log('obj');

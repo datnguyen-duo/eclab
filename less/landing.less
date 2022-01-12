@@ -834,3 +834,30 @@
   img {
   object-fit: contain;
 }
+
+#thank-you {
+  padding: calc(130px + 12vw) 2em 12vw;
+  text-align: center;
+  background-color: @color6;
+  h1 {
+    font-size: 58px;
+    .font1R();
+    color: @color2;
+    margin-bottom: 50px;
+    line-height: 1.1em;
+
+    @media @1300 {
+      font-size: 48px;
+    }
+
+    @media @1100 {
+      font-size: 38px;
+      margin-bottom: 30px;
+    }
+
+    @media @750 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+  }
+}
