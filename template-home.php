@@ -656,7 +656,7 @@ $person_link = array_reverse($person_link);*/
                     <?php if ($files_section['graphics']) : ?>
                         <div class="graphics_holder">
                             <?php foreach ($files_section['graphics'] as $graphic) : ?>
-                                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $graphic['image']['url']; ?>&t=<?php echo $graphic['graphic_description']; ?>&p[images][0]=<?php echo $graphic['image']['url']; ?>"
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $graphic['image']['url']; ?>&p[images][0]=<?php echo $graphic['image']['url']; ?>"
 					   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
 					   target="_blank" title="Share on Facebook" class="single_graphic st__img">
                                     <div class="image_holder">
