@@ -603,11 +603,12 @@ $person_link = array_reverse($person_link);*/
     $banner_section = get_field('banner_section');
     if ($banner_section['title'] || $banner_section['button']) : ?>
         <div class="call_to_action">
-            <!-- <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape desktop">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape second desktop"> -->
+            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape desktop">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape.svg" alt="" class="shape second desktop"> 
 
-            <!-- <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_left.svg" alt="" class="shape mobile">
-            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_right.svg" alt="" class="shape second mobile"> -->
+            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_left.svg" alt="" class="shape mobile">
+            <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_right.svg" alt="" class="shape second mobile">
+            
             <div class="call_to_action_content">
                 <?php if ($banner_section['title']) : ?>
                     <h2><?php echo $banner_section['title']; ?></h2>
@@ -655,11 +656,20 @@ $person_link = array_reverse($person_link);*/
                     <?php if ($files_section['graphics']) : ?>
                         <div class="graphics_holder">
                             <?php foreach ($files_section['graphics'] as $graphic) : ?>
-                                <a href="<?php echo $graphic['image']['url']; ?>" target="_blank" class="single_graphic st__img">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php the_permalink(); ?>&t=<?php echo $graphic['graphic_description']; ?>&p[images][0]=<?php echo $graphic['image']['url']; ?>"
+					   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+					   target="_blank" title="Share on Facebook" class="single_graphic st__img">
                                     <div class="image_holder">
                                         <img src="<?php echo $graphic['image']['url']; ?>" alt="<?php echo $graphic['image']['alt']; ?>">
+
+                                        <div class="overlay">
+                                            <p>
+                                                Share on Social
+                                            </p>
+                                        </div>
                                     </div>
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/download_arrow.svg" alt="" class="download_icon">
+                                    
+                                    <!-- <img src="<?php echo get_template_directory_uri(); ?>/images/download_arrow.svg" alt="" class="download_icon"> -->
                                 </a>
                                 
                             <?php endforeach; ?>

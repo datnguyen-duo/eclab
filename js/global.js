@@ -144,6 +144,13 @@ document.addEventListener("DOMContentLoaded", function () {
         slidesToShow: 1.2,
       });
 
+      $(".fourth_section_additional_content").slick({
+        infinite: false,
+        arrows: false,
+        speed: 300,
+        slidesToShow: 1.2,
+      });
+
       $(".document_holder").slick({
         infinite: false,
         arrows: false,

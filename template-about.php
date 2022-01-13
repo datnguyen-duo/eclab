@@ -14,9 +14,36 @@ get_header(); ?>
                     <?php if($main_title): ?>
                         <h1><?php echo $main_title; ?></h1>
                     <?php endif; ?>
-                    <h2><?php echo $desc_section['title']; ?></h2>
-                    <?php echo $desc_section['description']; ?>
+                    <?php if($desc_section['title']): ?>
+                        <h2><?php echo $desc_section['title']; ?></h2>
+                    <?php endif; ?>
+                    <?php if($desc_section['description']): ?>
+                        <?php echo $desc_section['description']; ?>
+                    <?php endif; ?>
                 </div>
+                <?php if($desc_section['timeline']): ?>
+                    <div class="timeline_holder">
+                        <div class="timeline">
+                            <?php foreach ($desc_section['timeline'] as $singleYear) : ?>
+                                <div class="single_year">
+                                    <div class="year">
+                                        <span>
+                                            <?php echo $singleYear['year']; ?>
+                                        </span>
+                                        <div class="circle"></div>
+                                    </div>
+
+                                    <div class="description">
+                                        <p>
+                                            <?php echo $singleYear['year_description']; ?>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     <?php endif; ?>
@@ -37,7 +64,7 @@ get_header(); ?>
     <?php
     $form_section = get_field('form_section');
     if ($form_section) : ?>
-    <div class="third_section">
+    <div class="third_section" id="inquire">
         <div class="content_holder">
             <div class="third_section_content">
                 <div class="left">
@@ -156,7 +183,13 @@ get_header(); ?>
     <?php else: $event_banner = get_field('event_banner'); ?>
         <div class="event_section banner" id="events">
             <div class="event_banner">
-                <img src="<?php echo $event_banner['event_banner_image']['url']; ?>" class="event_banner_background">
+                <!-- <img src="<?php echo $event_banner['event_banner_image']['url']; ?>" class="event_banner_background"> -->
+                <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape_about.svg" alt="" class="shape desktop">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_shape_about.svg" alt="" class="shape second desktop"> 
+
+                <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_left_about.svg" alt="" class="shape mobile">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/triangle_mobile_right_about.svg" alt="" class="shape second mobile">
+
                 <div class="event_banner_content content_holder">
                     <h2><?php echo $event_banner['event_banner_headline']; ?></h2>
                     <p><?php echo $event_banner['event_banner_description']; ?></p>
