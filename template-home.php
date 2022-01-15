@@ -279,7 +279,7 @@ $person_link = array_reverse($person_link);*/
                                         </div>
                                         <div class="post_info">
                                             <h3 class="story_title static">
-                                                '.$custom_fields->storytile.'
+                                                '.str_replace("\'", "'", preg_replace("/(\\\\\\\\)+'/", "'", $custom_fields->storytile)).'
                                             </h3>
                                             <p class="story_author static">
                                                 By '.$custom_fields->fname.' '.$custom_fields->lname.' 
