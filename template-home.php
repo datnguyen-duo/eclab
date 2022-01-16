@@ -168,7 +168,7 @@ $person_link = array_reverse($person_link);*/
                                 $link_target = $link['target'] ? $link['target'] : '_self';
                                 ?>
                                 <div class="button_holder">
-                                    <a class="button light join_us" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                                    <a class="button light" href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
                                         <?php echo esc_html($link_title); ?>
                                     </a>
                                 </div>

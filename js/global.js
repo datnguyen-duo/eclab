@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
       infinite: true,
       speed: 700,
       slidesToShow: 1,
-      autoplaySpeed: 3000,
+      autoplaySpeed: 4000,
       autoplay: true,
     });
 
