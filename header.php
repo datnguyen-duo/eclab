@@ -307,13 +307,15 @@ if (isset($_POST['popup_submit']) && (isset($_POST['popup_fname'])&& !empty($_PO
                             <input type="text" name="popup_lname" placeholder="<?php echo $popup_form_fields['last_name']; ?>" required>
                             <input type="email" name="popup_email" placeholder="<?php echo $popup_form_fields['email_address']; ?>" required>
                             <input type="text" name="popup_zipcode" placeholder="<?php echo $popup_form_fields['zip_code']; ?>" required>
-                            <button class="button dark" type="button" name="popup_submit" id="popup_submit">
-                                <?php echo $popup_form_fields['form_button']; ?>
-                            </button>
-                            <label class="container">I’d like someone to contact me about getting more involved in structuring policy, advocacy, and care in IL
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
+                            <div class="bottom_wrap">
+                                <label class="container">I’d like someone to contact me about getting more involved in structuring policy, advocacy, and care in IL
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <button class="button dark" type="button" name="popup_submit" id="popup_submit">
+                                    <?php echo $popup_form_fields['form_button']; ?>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
