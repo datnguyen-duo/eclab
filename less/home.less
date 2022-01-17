@@ -1684,10 +1684,9 @@
       flex-wrap: wrap;
       justify-content: space-between;
       padding-bottom: 100px;
-      margin-top: 30px;
+      margin-top: 18px;
       box-sizing: border-box;
-      margin-left: -7px;
-      margin-right: -7px;
+
       @media @750 {
         position: relative;
         // left: 5px;
@@ -1700,8 +1699,7 @@
         height: 400px;
         position: relative;
         overflow: hidden;
-        width: calc(100% / 3 - 40px);
-        padding: 0 7px;
+        width: calc(100% / 3 - 12px);
         @media @1100 {
           height: 320px;
         }
@@ -1889,8 +1887,7 @@
       .graphics_holder {
         display: flex;
         flex-wrap: wrap;
-        margin-left: -7px;
-        margin-right: -7px;
+        justify-content: space-between;
         // margin-bottom: 40px;
 
         @media @750 {
@@ -1898,8 +1895,7 @@
         }
 
         .single_graphic {
-          width: 33.3333%;
-          padding: 0 7px;
+          width: calc(100% / 3 - 12px);
           box-sizing: border-box;
           cursor: pointer;
           text-align: right;
@@ -1917,7 +1913,7 @@
             overflow: hidden;
             position: relative;
             padding-top: 100%;
-            border: 6px solid @color4;
+            width: 100%;
             // margin-bottom: 15px;
             .transition();
 
