@@ -93,7 +93,7 @@ get_header(); ?>
                             <input type="email" name="Email" id="coalition-email" placeholder="<?php echo $about_form_fields['email_address']; ?>">
                             <input type="text" name="zip"   id="coalition-zipcode" placeholder="<?php echo $about_form_fields['zip_code']; ?>">
                             <button class="button dark" id="add-your-name" type="button">
-                                <?php echo $about_form_fields['form_button']; ?>
+                                Add My Org
                             </button>
                         </form>
                     </div>
@@ -225,24 +225,23 @@ get_header(); ?>
                                           <img src="<?php echo $itemImage; ?>" alt="">  
                                         </div>
                                         <div class="info">
-                                        <svg width="27px" height="28px" viewBox="0 0 27 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                            
-                                            <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
-                                                <g id="Coalition" transform="translate(-123.000000, -2345.000000)" stroke="#fcf3dc" stroke-width="2.8">
-                                                    <g id="In-The-News" transform="translate(0.000000, 2189.000000)">
-                                                        <g id="Group-43" transform="translate(124.500000, 147.000000)">
-                                                            <g id="Group-39" transform="translate(0.000000, 11.000000)">
-                                                                <g id="Group-6" transform="translate(17.000000, 12.000000) rotate(-90.000000) translate(-17.000000, -12.000000) translate(5.000000, 5.500000)">
-                                                                    <line x1="0.352941176" y1="0.361111111" x2="12.3529412" y2="12.6388889" id="Line"></line>
-                                                                    <line x1="13.0196078" y1="12.6388889" x2="23.6862745" y2="0.361111111" id="Line-2"></line>
-                                                                </g>
-                                                                <line x1="23" y1="11.5" x2="0" y2="11.5" id="Line-12"></line>
-                                                            </g>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="65.699" height="27.288" viewBox="0 0 65.699 27.288">
+                                            <g id="Desktop" transform="translate(39.081 -0.339)">
+                                                <g id="Coalition" transform="translate(-123 -2345)">
+                                                <g id="In-The-News" transform="translate(0 2189)">
+                                                    <g id="Group-43" transform="translate(124.5 147)">
+                                                    <g id="Group-39" transform="translate(0 11)">
+                                                        <g id="Group-6" transform="translate(10.5 24) rotate(-90)">
+                                                        <line id="Line" x2="12" y2="12.278" transform="translate(0.353 0.361)" fill="none" stroke="#fcf3dc" stroke-linecap="square" stroke-width="2.8"/>
+                                                        <line id="Line-2" y1="12.278" x2="10.667" transform="translate(13.02 0.361)" fill="none" stroke="#fcf3dc" stroke-linecap="square" stroke-width="2.8"/>
                                                         </g>
+                                                        <line id="Line-12" x1="61" transform="translate(-39.181 11.5)" fill="none" stroke="#fcf3dc" stroke-linecap="square" stroke-width="2.8"/>
+                                                    </g>
                                                     </g>
                                                 </g>
+                                                </g>
                                             </g>
-                                        </svg>
+                                            </svg>
                                             <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
                                                 <?php echo esc_html($link_title); ?>
                                                 <span><?php echo $publisher; ?></span>
