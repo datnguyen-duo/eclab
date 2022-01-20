@@ -490,8 +490,23 @@ get_header();
                         <div class="headline_holder">
                             <h3><?php echo $files_section['graphics_title']; ?></h3>
                             <div class="arrows_graphics">
-                                <img src="<?php echo get_template_directory_uri(); ?>/images/prev_white_arrow.svg" class="prev_arrow">
-                                <img src="<?php echo get_template_directory_uri(); ?>/images/next_white_arrow.svg" class="next_arrow">
+                                <div class="arrow prev_arrow">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="11.46" height="18.488" viewBox="0 0 11.46 18.488">
+                                        <g id="Group_6_Copy" data-name="Group 6 Copy" transform="translate(9.982 1.482) rotate(90)">
+                                            <path id="Line" d="M.222.222,7.778,7.778" transform="translate(0 0.5)" fill="none" stroke="#fcf3dc" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2.41"/>
+                                            <path id="Line_2" data-name="Line 2" d="M.194,7.778,6.806.222" transform="translate(8.5)" fill="none" stroke="#fcf3dc" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2.41"/>
+                                        </g>
+                                    </svg>
+                                    </div>
+                                    <div class="arrow next_arrow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="11.46" height="18.488" viewBox="0 0 11.46 18.488">
+                                    <g id="Group_6" data-name="Group 6" transform="translate(1.478 17.006) rotate(-90)">
+                                        <path id="Line" d="M.222.222,7.778,7.778" transform="translate(0 0.5)" fill="none" stroke="#fcf3dc" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2.41"/>
+                                        <path id="Line_2" data-name="Line 2" d="M.194,7.778,6.806.222" transform="translate(8.5)" fill="none" stroke="#fcf3dc" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2.41"/>
+                                    </g>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                     <?php endif; ?>

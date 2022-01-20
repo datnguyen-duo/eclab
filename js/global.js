@@ -142,8 +142,8 @@ document.addEventListener("DOMContentLoaded", function () {
         arrows: true,
         speed: 300,
         slidesToShow: 1.2,
-        prevArrow: $(".arrows_graphics .prev_arrow"),
-        nextArrow: $(".arrows_graphics .next_arrow"),
+        prevArrow: $(".headline_holder .arrows_graphics .prev_arrow"),
+        nextArrow: $(".headline_holder .arrows_graphics .next_arrow"),
       });
 
       $(".fourth_section_additional_content").slick({

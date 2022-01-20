@@ -1836,14 +1836,18 @@
           .arrows_graphics{
             display: block;
 
-            img{
+            .arrow{
+              display: inline-block;
+              
               &:first-child{
                 margin-right: 40px;
               }
             }
 
-            .slick-disabled{
-              opacity: 0.6;
+            .slick-disabled{ 
+              path{
+                stroke: #1f0812;
+              }
             }
           }
         }
