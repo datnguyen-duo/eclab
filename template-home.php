@@ -650,7 +650,13 @@ $person_link = array_reverse($person_link);*/
                     <?php endif; ?>
 
                     <?php if ($files_section['graphics_title']) :?>
-                        <h3><?php echo $files_section['graphics_title']; ?></h3>
+                        <div class="headline_holder">
+                            <h3><?php echo $files_section['graphics_title']; ?></h3>
+                            <div class="arrows_graphics">
+                                <img src="<?php echo get_template_directory_uri(); ?>/images/prev_white_arrow.svg" class="prev_arrow">
+                                <img src="<?php echo get_template_directory_uri(); ?>/images/next_white_arrow.svg" class="next_arrow">
+                            </div>
+                        </div>
                     <?php endif; ?>
                         
                     <?php if ($files_section['graphics']) : ?>
@@ -677,7 +683,13 @@ $person_link = array_reverse($person_link);*/
                     <?php endif; ?>
 
                     <?php if ($files_section['documents_title']) :?>
-                        <h3><?php echo $files_section['documents_title']; ?></h3>
+                        <div class="document_headline_holder">
+                            <h3><?php echo $files_section['documents_title']; ?></h3>
+                            <div class="arrows_graphics">
+                                <img src="<?php echo get_template_directory_uri(); ?>/images/prev_white_arrow.svg" class="prev_arrow">
+                                <img src="<?php echo get_template_directory_uri(); ?>/images/next_white_arrow.svg" class="next_arrow">
+                            </div>
+                        </div>
                     <?php endif; ?>
 
                     <?php if ($files_section['documents']) : ?>

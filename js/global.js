@@ -139,16 +139,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
       $(".graphics_holder").slick({
         infinite: false,
-        arrows: false,
+        arrows: true,
         speed: 300,
         slidesToShow: 1.2,
+        prevArrow: $(".arrows_graphics .prev_arrow"),
+        nextArrow: $(".arrows_graphics .next_arrow"),
       });
 
       $(".fourth_section_additional_content").slick({
         infinite: false,
-        arrows: false,
         speed: 300,
         slidesToShow: 1.2,
+        arrows: true,
+        prevArrow: $(".document_headline_holder .prev_arrow"),
+        nextArrow: $(".document_headline_holder .next_arrow"),
       });
 
       $(".document_holder").slick({
@@ -163,8 +167,8 @@ document.addEventListener("DOMContentLoaded", function () {
         speed: 300,
         slidesToShow: 1.2,
         arrows: true,
-        prevArrow: $(".prev_arrow"),
-        nextArrow: $(".next_arrow"),
+        prevArrow: $(".all_prev_arrow"),
+        nextArrow: $(".all_next_arrow"),
       });
     }
 

@@ -160,8 +160,8 @@ get_header();
             <div class="divider"></div>
             <div class="all_stories">
                 
-                <img src="<?php echo get_template_directory_uri(); ?>/images/prev_white_arrow.svg" class="prev_arrow">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/next_white_arrow.svg" class="next_arrow">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/prev_white_arrow.svg" class="all_prev_arrow">
+                <img src="<?php echo get_template_directory_uri(); ?>/images/next_white_arrow.svg" class="all_next_arrow">
                 <div class="all_stories_wrap">
                     <?php 
                         $i = 0;
@@ -487,8 +487,15 @@ get_header();
                     <?php endif; ?>
 
                     <?php if ($files_section['graphics_title']) :?>
-                        <h3><?php echo $files_section['graphics_title']; ?></h3>
+                        <div class="headline_holder">
+                            <h3><?php echo $files_section['graphics_title']; ?></h3>
+                            <div class="arrows_graphics">
+                                <img src="<?php echo get_template_directory_uri(); ?>/images/prev_white_arrow.svg" class="prev_arrow">
+                                <img src="<?php echo get_template_directory_uri(); ?>/images/next_white_arrow.svg" class="next_arrow">
+                            </div>
+                        </div>
                     <?php endif; ?>
+                    
                         
                     <?php if ($files_section['graphics']) : ?>
                         <div class="graphics_holder">
