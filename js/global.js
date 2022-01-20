@@ -141,7 +141,9 @@ document.addEventListener("DOMContentLoaded", function () {
         infinite: false,
         arrows: true,
         speed: 300,
-        slidesToShow: 1.2,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        variableWidth: true,
         prevArrow: $(".headline_holder .arrows_graphics .prev_arrow"),
         nextArrow: $(".headline_holder .arrows_graphics .next_arrow"),
       });
@@ -149,7 +151,9 @@ document.addEventListener("DOMContentLoaded", function () {
       $(".fourth_section_additional_content").slick({
         infinite: false,
         speed: 300,
-        slidesToShow: 1.2,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        variableWidth: true,
         arrows: true,
         prevArrow: $(".document_headline_holder .prev_arrow"),
         nextArrow: $(".document_headline_holder .next_arrow"),
@@ -159,7 +163,8 @@ document.addEventListener("DOMContentLoaded", function () {
         infinite: false,
         arrows: false,
         speed: 300,
-        slidesToShow: 1.2,
+        slidesToShow: 1,
+        slidesToScroll: 1,
       });
 
       $(".all_stories_wrap").slick({

@@ -1682,7 +1682,7 @@
 
     .fourth_section_additional_content {
       display: flex;
-      flex-wrap: wrap;
+      // flex-wrap: wrap;
       justify-content: space-between;
       padding-bottom: 100px;
       box-sizing: border-box;
@@ -1709,15 +1709,18 @@
         }
 
         @media @750 {
-          width: 300px;
-          height: 280px;
+          width: 215px !important;
+          height: 215px !important;
           margin: auto;
+          &:not(:first-of-type) {
+            margin-left: 10px;
+          }
         }
 
-        @media @340 {
-          width: 240px;
-          height: 240px;
-        }
+        // @media @340 {
+        //   width: 240px;
+        //   height: 240px;
+        // }
 
         h3 {
           position: relative;
@@ -1736,6 +1739,10 @@
 
           @media @1020 {
             font-size: 18px;
+          }
+
+          @media @750 {
+            margin-bottom: 0;
           }
 
           &:hover {
@@ -1819,33 +1826,34 @@
       overflow: hidden;
       padding-bottom: 0px;
 
-      .arrows_graphics{
+      .arrows_graphics {
         display: none;
       }
-      
-      .document_headline_holder{
+
+      .document_headline_holder {
         display: none;
       }
 
       @media @750 {
-        .headline_holder, .document_headline_holder{
+        .headline_holder,
+        .document_headline_holder {
           display: flex;
           justify-content: space-between;
           padding-right: 30px;
 
-          .arrows_graphics{
+          .arrows_graphics {
             display: block;
 
-            .arrow{
+            .arrow {
               display: inline-block;
-              
-              &:first-child{
+
+              &:first-child {
                 margin-right: 40px;
               }
             }
 
-            .slick-disabled{ 
-              path{
+            .slick-disabled {
+              path {
                 stroke: #1f0812;
               }
             }
@@ -1874,7 +1882,6 @@
           padding-right: 30px;
         }
       }
-      
 
       h3 {
         font-size: 28px;
@@ -1917,12 +1924,12 @@
 
       .graphics_holder {
         display: flex;
-        flex-wrap: wrap;
+        // flex-wrap: wrap;
         justify-content: space-between;
         margin-bottom: 18px;
 
         @media @750 {
-          left: -5px;
+          // left: -5px;
         }
 
         .single_graphic {
@@ -1932,9 +1939,12 @@
           text-align: right;
 
           @media @750 {
-            width: 300px;
-            height: 280px;
+            width: 215px !important;
+            height: 215px !important;
             margin: auto;
+            &:not(:first-of-type) {
+              margin-left: 10px;
+            }
           }
 
           .download_icon {
