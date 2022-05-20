@@ -203,13 +203,26 @@ get_header(); ?>
                                 // $link = $item['link'];
                                 // $publisher = $item['publisher'];
                                 // $itemImage = $item['image']['url'];
-
                                 $media_type = $item['media_type'];
                                 $links = $item['links'];
                                ?>
                                     <h3 id="<?php echo str_replace(' ', '-', strtolower($media_type)); ?>"><?php echo $media_type; ?></h3>
-                                    <?php foreach ($links as $item) :
-                                        $link = $item['link'];
+                                    <?php 
+
+                                        $repeater = $links;
+                                        $order = array();
+
+                                        foreach ( $repeater as $i => $row ) {
+	
+                                            $order[ $i ] = strtotime($row['date']);
+                                            
+                                        }
+
+                                        array_multisort( $order, SORT_DESC, $repeater );
+                                        // var_dump($order);
+
+                                        foreach ($repeater as $i => $row) :
+                                        $link = $row['link'];
                                         // $publisher = $item['publisher'];
                                         // $itemImage = $item['image']['url']; 
 
@@ -222,9 +235,9 @@ get_header(); ?>
                                         
                                         <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
 
-                                        <?php if ($item['image']): ?>
+                                        <?php if ($row['image']): ?>
                                             <div class="image_holder">
-                                                <img src="<?php echo $item['image']['url']; ?>" alt="<?php echo $item['image']['alt']?>">  
+                                                <img src="<?php echo $row['image']['url']; ?>" alt="<?php echo $row['image']['alt']?>">  
                                             </div>
                                         <?php endif; ?>
 
@@ -248,8 +261,11 @@ get_header(); ?>
                                             </svg>
                                             <div class="inner">
                                                 <?php echo esc_html($link_title); ?>
-                                                <?php if ($item['publisher']): ?>
-                                                    <span><?php echo $item['publisher']; ?></span>
+                                                <?php if ($row['publisher']): ?>
+                                                    <span><?php echo $row['publisher']; ?></span>
+                                                <?php endif; ?>
+                                                <?php if ($row['date']): ?>
+                                                    <span><?php echo $row['date']; ?></span>
                                                 <?php endif; ?>
                                             </div>
                                         </div>
