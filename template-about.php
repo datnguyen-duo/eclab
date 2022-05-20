@@ -103,32 +103,7 @@ get_header(); ?>
     </div>
     <?php endif; ?>
 
-    <!-- <?php
-    $resources_section = get_field('resources_section');
-    if ($resources_section['title'] || $resources_section['description']) : ?>
-    <div class="fourth_section" id="resources">
-        <div class="content_holder">
-            <h2>Resources</h2>
-            <?php if ($resources_section['description']) : ?>
-                <p><?php echo $resources_section['description']; ?></p>
-            <?php endif; ?>
-        </div>
-    </div>
-    <?php endif;
 
-    if ($resources_section['resources']) : ?>
-        <div class="fifth_section">
-            <div class="content_holder">
-                <div class="fifth_section_content">
-                    <?php foreach ($resources_section['resources'] as $resoruce) : ?>
-                        <a href="<?php echo $resoruce['url']; ?>" target="_blank" class="single_box">
-                            <h3 class="static"><span><?php echo $resoruce['text']; ?></span></h3>
-                        </a>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?> -->
 
     <?php
         $event_section = get_field('event_section');
@@ -200,30 +175,59 @@ get_header(); ?>
     <?php endif; ?>
     <?php
     $press_section = get_field('press_section');
-    if ($press_section['title'] || $press_section['links']) : ?>
+    if ($press_section['title']) : ?>
         <div class="sixth_section" id="news">
             <div class="content_holder">
                 <div class="sixth_section_content">
-                    <?php if ($press_section['title']) : ?>
-                        <h2><?php echo $press_section['title']; ?></h2>
-                    <?php endif; ?>
+                    <div class="header_wrapper">
+                        <?php if ($press_section['title']) : ?>
+                            <h2><?php echo $press_section['title']; ?></h2>
+                        <?php endif; ?>
 
-                    <?php if ($press_section['links']) : ?>
+                        <?php if ($press_section['media_repeater']) : ?>
+                            <div class="anchor_wrapper">
+                                Jump to:
+                                <div class="inner">
+                                    <?php foreach ($press_section['media_repeater'] as $item) : 
+                                        $media_type = $item['media_type'];?>
+                                        <a href="#<?php echo str_replace(' ', '-', strtolower($media_type)); ?>"><?php echo $media_type; ?></a>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php if ($press_section['media_repeater']) : ?>
                         <ul>
-                            <?php foreach ($press_section['links'] as $item) : ?>
+                            <?php foreach ($press_section['media_repeater'] as $item) : ?>
                                 <?php
-                                $link = $item['link'];
-                                $publisher = $item['publisher'];
-                                $itemImage = $item['image']['url'];
-                                if ($link) :
-                                    $link_url = $link['url'];
-                                    $link_title = $link['title'];
-                                    $link_target = $link['target'] ? $link['target'] : '_self';
-                                    ?>
-                                    <li>
-                                        <div class="image_holder">
-                                          <img src="<?php echo $itemImage; ?>" alt="">  
-                                        </div>
+                                // $link = $item['link'];
+                                // $publisher = $item['publisher'];
+                                // $itemImage = $item['image']['url'];
+
+                                $media_type = $item['media_type'];
+                                $links = $item['links'];
+                               ?>
+                                    <h3 id="<?php echo str_replace(' ', '-', strtolower($media_type)); ?>"><?php echo $media_type; ?></h3>
+                                    <?php foreach ($links as $item) :
+                                        $link = $item['link'];
+                                        // $publisher = $item['publisher'];
+                                        // $itemImage = $item['image']['url']; 
+
+                                        if ($link) :
+                                            $link_url = $link['url'];
+                                            $link_title = $link['title'];
+                                            $link_target = $link['target'] ? $link['target'] : '_self';
+                                        ?>
+                                        <?php endif; ?>
+                                        
+                                        <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+
+                                        <?php if ($item['image']): ?>
+                                            <div class="image_holder">
+                                                <img src="<?php echo $item['image']['url']; ?>" alt="<?php echo $item['image']['alt']?>">  
+                                            </div>
+                                        <?php endif; ?>
+
                                         <div class="info">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="65.699" height="27.288" viewBox="0 0 65.699 27.288">
                                             <g id="Desktop" transform="translate(39.081 -0.339)">
@@ -242,14 +246,15 @@ get_header(); ?>
                                                 </g>
                                             </g>
                                             </svg>
-                                            <a href="<?php echo esc_url($link_url); ?>" target="<?php echo esc_attr($link_target); ?>">
+                                            <div class="inner">
                                                 <?php echo esc_html($link_title); ?>
-                                                <span><?php echo $publisher; ?></span>
-                                            </a>
+                                                <?php if ($item['publisher']): ?>
+                                                    <span><?php echo $item['publisher']; ?></span>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
-                                        
-                                    </li>
-                                <?php endif; ?>
+                                        </a>
+                                    <?php endforeach; ?>
                             <?php endforeach; ?>
                         </ul>
                     <?php endif; ?>

@@ -265,7 +265,10 @@ function t311_submissions()
                 'autoresponse' => array(
                     'enabled' => true
                 )
-            )
+            ),
+			"add_tags"=> array(
+				"RTC web sign up"
+			)
         );
 
 
@@ -354,8 +357,7 @@ function signup_email_an()
 		   },
            "triggers":{"autoresponse":{"enabled":true}},
 		  "add_tags": [
-		    "volunteer",
-		    "member"
+			"RTC web sign up"
 		  ]
 		}';
         $ch = curl_init();
@@ -369,6 +371,8 @@ function signup_email_an()
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
+		
+		//print_r($server_output);die;
         curl_close($ch);
         wp_send_json_success($server_output);
     } else {
@@ -405,8 +409,7 @@ function childhoodFundingCoalition()
                },
                    "triggers":{"autoresponse":{"enabled":true}},
               "add_tags": [
-                "volunteer",
-                "member"
+				"WtV web sign up"
               ]
             }';
         $ch = curl_init();
@@ -455,8 +458,7 @@ function optinform()
                },
                    "triggers":{"autoresponse":{"enabled":true}},
               "add_tags": [
-                "volunteer",
-                "member"
+				"WtV web sign up"
               ]
             }';
         $ch = curl_init();

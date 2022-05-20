@@ -47,8 +47,9 @@ header {
     }
 
     .logo_holder {
-      margin-right: 45px;
+      margin-right: 25px;
       display: inline-block;
+      max-width: 125px;
 
       p {
         .font2;
@@ -61,14 +62,13 @@ header {
           white-space: break-spaces;
         }
       }
+      img {
+        width: 100%;
+      }
 
       @media @750 {
         max-width: 90px;
         margin-right: 15px;
-
-        img {
-          width: 100%;
-        }
       }
     }
     nav {
@@ -122,7 +122,7 @@ header {
 
       li {
         display: inline-block;
-        margin-right: 45px;
+        margin-right: 25px;
         position: relative;
         box-sizing: border-box;
         padding: 20px 0px;
@@ -149,15 +149,11 @@ header {
         }
 
         a {
-          font-size: 20px;
+          font-size: 18px;
           color: @color1;
           position: relative;
           display: inline-block;
           .font1R();
-
-          @media @1500 {
-            font-size: 18px;
-          }
 
           .arrow_holder {
             margin-left: 5px;
