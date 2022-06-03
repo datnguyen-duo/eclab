@@ -62,7 +62,7 @@
           box-sizing: border-box;
           border-top: 1px solid @color2;
           position: relative;
-
+          margin-bottom: 6em;
           @media @1020 {
             padding-right: 20px;
           }
@@ -1131,6 +1131,9 @@
           .font1R();
           text-align: center;
           padding: 2em 2em 1em;
+          &:not(:first-of-type) {
+            border-top: 1px solid @color1;
+          }
         }
 
         a {

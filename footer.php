@@ -43,7 +43,7 @@
                             <input type="email" name="email" id="emailf" placeholder="<?php echo $footer_form_fields['email_address']; ?>" required>
                             <input type="text" name="zipcode" id="zipcodef" placeholder="<?php echo $footer_form_fields['zip_code']; ?>" required>
                             <div class="bottom_wrap">
-                                <label class="container">I’d like someone to contact me about getting more involved in structuring policy, advocacy, and care in IL
+                                <label class="container"><?php echo $footer_form_fields['checkbox_message']; ?>
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>

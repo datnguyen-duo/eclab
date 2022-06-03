@@ -93,7 +93,7 @@ get_header(); ?>
                             <input type="email" name="Email" id="coalition-email" placeholder="<?php echo $about_form_fields['email_address']; ?>">
                             <input type="text" name="zip"   id="coalition-zipcode" placeholder="<?php echo $about_form_fields['zip_code']; ?>">
                             <button class="button dark" id="add-your-name" type="button">
-                                Add My Org
+                                <?php echo $about_form_fields['form_button']; ?>
                             </button>
                         </form>
                     </div>

@@ -246,7 +246,7 @@ if (isset($_POST['popup_submit']) && (isset($_POST['popup_fname'])&& !empty($_PO
                             <input type="email" name="popup_email" placeholder="<?php echo $popup_form_fields['email_address']; ?>" required>
                             <input type="text" name="popup_zipcode" placeholder="<?php echo $popup_form_fields['zip_code']; ?>" required>
                             <div class="bottom_wrap">
-                                <label class="container">I’d like someone to contact me about getting more involved in structuring policy, advocacy, and care in IL
+                                <label class="container"><?php echo $popup_form_fields['checkbox_message']; ?>
                                     <input type="checkbox">
                                     <span class="checkmark"></span>
                                 </label>
