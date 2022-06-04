@@ -80,7 +80,7 @@ get_header(); ?>
                 </div>
                 <div class="right">
                     <div class="form_holder" id="coalition-wrap">
-                        <?php $about_form_fields = get_field('footer_form_fields', get_pll_option_page()); ?>
+                        <?php $about_form_fields = get_field('about_form_fields', get_pll_option_page()); ?>
                         <div class="thank_you_message">
                             <p>
                             <?php echo $about_form_fields['thank_you_message']; ?>
@@ -93,7 +93,7 @@ get_header(); ?>
                             <input type="email" name="Email" id="coalition-email" placeholder="<?php echo $about_form_fields['email_address']; ?>">
                             <input type="text" name="zip"   id="coalition-zipcode" placeholder="<?php echo $about_form_fields['zip_code']; ?>">
                             <button class="button dark" id="add-your-name" type="button">
-                                <?php echo $about_form_fields['form_button']; ?>
+                                <?php echo $about_form_fields['form_button_about']; ?>
                             </button>
                         </form>
                     </div>
@@ -186,7 +186,6 @@ get_header(); ?>
 
                         <?php if ($press_section['media_repeater']) : ?>
                             <div class="anchor_wrapper">
-                                Jump to:
                                 <div class="inner">
                                     <?php foreach ($press_section['media_repeater'] as $item) : 
                                         $media_type = $item['media_type'];?>
