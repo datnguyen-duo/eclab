@@ -187,6 +187,7 @@ get_header(); ?>
                         <?php if ($press_section['media_repeater']) : ?>
                             <div class="anchor_wrapper">
                                 <div class="inner">
+                                    <span><?php if ($press_section['anchor_label']) {echo $press_section['anchor_label']; } ?></span>
                                     <?php foreach ($press_section['media_repeater'] as $item) : 
                                         $media_type = $item['media_type'];?>
                                         <a href="#<?php echo str_replace(' ', '-', strtolower($media_type)); ?>"><?php echo $media_type; ?></a>
@@ -196,7 +197,7 @@ get_header(); ?>
                         <?php endif; ?>
                     </div>
                     <?php if ($press_section['media_repeater']) : ?>
-                        <ul>
+                        <ul>                        
                             <?php foreach ($press_section['media_repeater'] as $item) : ?>
                                 <?php
                                 // $link = $item['link'];
@@ -272,6 +273,17 @@ get_header(); ?>
                                     <?php endforeach; ?>
                             <?php endforeach; ?>
                         </ul>
+                    <?php endif; ?>
+                    <?php if ($press_section['media_repeater']) : ?>
+                        <div class="anchor_wrapper">
+                            <div class="inner">
+                                <span><?php if ($press_section['anchor_label']) {echo $press_section['anchor_label']; } ?></span>
+                                <?php foreach ($press_section['media_repeater'] as $item) : 
+                                    $media_type = $item['media_type'];?>
+                                    <a href="#<?php echo str_replace(' ', '-', strtolower($media_type)); ?>"><?php echo $media_type; ?></a>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>

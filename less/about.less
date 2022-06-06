@@ -1064,56 +1064,6 @@
             font-size: 24px;
           }
         }
-
-        .anchor_wrapper {
-          font-size: 18px;
-          .font2();
-          display: flex;
-          align-items: center;
-
-          @media @750 {
-            flex-direction: column;
-            margin-top: 1em;
-          }
-          .inner {
-            margin-left: 5px;
-            @media @750 {
-              margin-left: 0;
-              margin-top: 5px;
-            }
-            a {
-              color: @color1;
-              position: relative;
-
-              &:not(:last-of-type) {
-                margin-right: 10px;
-
-                &::before {
-                  content: "|";
-                  position: absolute;
-                  right: -9px;
-                }
-              }
-
-              &:after {
-                content: "";
-                position: absolute;
-                height: 3px;
-                width: 0%;
-                left: 0;
-                bottom: -8px;
-                background-color: @color1;
-                .transition();
-              }
-
-              &:hover {
-                &:after {
-                  width: 100%;
-                }
-              }
-            }
-          }
-        }
       }
 
       ul {
@@ -1351,6 +1301,61 @@
           @media @750 {
             font-size: 18px;
           }
+        }
+      }
+    }
+  }
+}
+.anchor_wrapper {
+  font-size: 18px;
+  .font2();
+  display: flex;
+  align-items: center;
+
+  @media @750 {
+    flex-direction: column;
+    margin-top: 1em;
+
+    span {
+      display: block;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+  }
+  .inner {
+    margin-left: auto;
+    @media @750 {
+      margin-left: 0;
+      margin-top: 5px;
+    }
+    a {
+      color: @color1;
+      position: relative;
+
+      &:not(:last-of-type) {
+        margin-right: 10px;
+
+        &::before {
+          content: "|";
+          position: absolute;
+          right: -9px;
+        }
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        height: 3px;
+        width: 0%;
+        left: 0;
+        bottom: -8px;
+        background-color: @color1;
+        .transition();
+      }
+
+      &:hover {
+        &:after {
+          width: 100%;
         }
       }
     }

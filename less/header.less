@@ -50,7 +50,10 @@ header {
       margin-right: 25px;
       display: inline-block;
       max-width: 125px;
-
+      min-width: 125px;
+      @media @750 {
+        min-width: unset;
+      }
       p {
         .font2;
         font-size: 12px;
